@@ -1,0 +1,71 @@
+body[data-sidebar=dark] .vertical-menu,
+body[data-sidebar=dark] .navbar-brand-box {
+    background: #00293C !important;
+}
+
+.btn-outline-primary:not(:disabled):not(.disabled).active,
+.btn-outline-primary:not(:disabled):not(.disabled):active,
+.show>.btn-outline-primary.dropdown-toggle,
+.btn-primary,
+.btn-outline-primary:hover {
+    color: #fff !important;
+    background-color: #2143EB !important;
+    border-color: #2143EB !important;
+}
+
+.btn-danger,
+.btn-outline-danger {
+    color: #fff;
+    background-color: #F62A00 !important;
+    border-color: #F62A00 !important;
+}
+
+.bg1 {
+    background-color: #1E656D !important;
+}
+
+.bg2 {
+    background-color: #F1FECE !important;
+}
+
+.text1 {
+    color: #F1FECE !important;
+}
+
+.fw-600 {
+    font-weight: 600 !important;
+}
+
+.text-danger {
+    color: #F62A00 !important;
+}
+
+.glow {
+    box-shadow: 0 0px 10px #F1FECE !important;
+}
+
+.glow2 {
+    box-shadow: 0 0px 10px #01293C !important;
+}
+
+
+/* placeholder miring */
+
+::-webkit-input-placeholder {
+    font-style: italic !important;
+}
+
+ :-moz-placeholder {
+    font-style: italic !important;
+}
+
+ ::-moz-placeholder {
+    font-style: italic !important;
+}
+
+ :-ms-input-placeholder {
+    font-style: italic !important;
+}
+
+
+/* end placeholder */
