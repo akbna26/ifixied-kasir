@@ -1,8 +1,8 @@
 <div class="row">
     <div class="col-md-12">
         <div class="card">
-            <div class="card-body bg-primary1 br-atas p-3 mb-0">
-                <h3 style="display: inline-block;" class="fw-600 text-white mb-0"><?= $title ?></h3>
+            <div class="card-body bg1 br-atas p-3 mb-0">
+                <h3 style="display: inline-block;" class="fw-600 text1 mb-0"><i class="fa fa-info-circle mr-2"></i> <?= $title ?></h3>
             </div>
 
             <div class="card-body">

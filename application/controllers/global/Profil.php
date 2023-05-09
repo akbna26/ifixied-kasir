@@ -129,7 +129,7 @@ class Profil extends MY_controller
             }
         }
 
-        if (!empty($foto) && in_array($ext,['jpg','jpeg','png'])) {
+        if (!empty($foto) && in_array($ext, ['jpg', 'jpeg', 'png'])) {
             $path = FCPATH . 'uploads/users/' . session('id_akun');
             if (!file_exists($path)) {
                 mkdir($path, 0777, TRUE);
@@ -175,8 +175,8 @@ class Profil extends MY_controller
         $id_prov = $this->input->post('id_prov');
         $data = $this->db->get_where('ref_kabupaten', [
             'kode_prop' => $id_prov,
-        ])        
-        ->result();
+        ])
+            ->result();
         echo json_encode([
             'status' => 'success',
             'data' => $data,
@@ -188,8 +188,8 @@ class Profil extends MY_controller
         $id_kab = $this->input->post('id_kab');
         $data = $this->db->get_where('ref_kecamatan', [
             'kode_kab' => $id_kab,
-        ])        
-        ->result();
+        ])
+            ->result();
         echo json_encode([
             'status' => 'success',
             'data' => $data,
@@ -201,6 +201,19 @@ class Profil extends MY_controller
         $id_kec = $this->input->post('id_kec');
         $data = $this->db->get_where('ref_kelurahan', [
             'kode_kec' => $id_kec,
+        ])->result();
+        echo json_encode([
+            'status' => 'success',
+            'data' => $data,
+        ]);
+    }
+
+    public function get_pegawai()
+    {
+        $id_cabang = $this->input->post('id_cabang');
+        $data = $this->db->get_where('pegawai', [
+            'id_cabang' => $id_cabang,
+            'deleted' => null,
         ])->result();
         echo json_encode([
             'status' => 'success',

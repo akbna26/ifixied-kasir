@@ -46,7 +46,7 @@
                             </span>
                             <span class="logo-lg">
                                 <img src="<?= base_url('uploads/img/logo2.png') ?>" style="border:1px solid #fff;border-radius: 50%;" alt="" height="40">
-                                <span class="ml-2 bold text-white">IFIXIED</span>
+                                <span class="ml-2 bold text1">IFIXIED</span>
                             </span>
                         </a>
                     </div>

@@ -11,6 +11,7 @@ class Login extends CI_Controller
         if (@$_SESSION['is_login']) {
             if ($_SESSION['id_otoritas'] == 1) $link = base_url('super_admin/dashboard');
             elseif ($_SESSION['id_otoritas'] == 2) $link = base_url('admin/dashboard');
+            elseif ($_SESSION['id_otoritas'] == 3) $link = base_url('cabang/dashboard');
             redirect($link);
         }
 

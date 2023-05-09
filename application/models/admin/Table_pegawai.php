@@ -1,10 +1,10 @@
 <?php
 
-class Table_cabang extends CI_Model
+class Table_pegawai extends CI_Model
 {
-    var $column_order = array(null, 'nama', 'lokasi', null); //field yang ada di table user
-    var $column_search = array('nama'); //field yang diizin untuk pencarian
-    var $order = array('id' => 'desc'); // default order
+    var $column_order = array(null, 'a.nama', 'b.nama', 'c.nama', null); //field yang ada di table user
+    var $column_search = array('a.nama'); //field yang diizin untuk pencarian
+    var $order = array('a.id' => 'desc'); // default order
 
     public function __construct()
     {
@@ -13,8 +13,18 @@ class Table_cabang extends CI_Model
 
     private function _get_datatables_query()
     {
-        $this->db->where('deleted', null);
-        $this->db->from('ref_cabang');
+
+        $id_cabang = $this->input->get('id_cabang');
+        $id_jabatan = $this->input->get('id_jabatan');
+
+        $this->db->select('a.*, b.nama as cabang, b.lokasi, c.nama as jabatan');
+        $this->db->from('pegawai a');
+        $this->db->join('ref_cabang b', 'b.id = a.id_cabang', 'left');
+        $this->db->join('ref_jabatan c', 'c.id = a.id_jabatan', 'left');
+        $this->db->where('a.deleted', null);
+        
+        if($id_cabang != 'all') $this->db->where('a.id_cabang', $id_cabang);
+        if($id_jabatan != 'all') $this->db->where('a.id_jabatan', $id_jabatan);        
 
         $i = 0;
 
@@ -77,8 +87,9 @@ class Table_cabang extends CI_Model
 
             $row[] = $no;
             $row[] = $field->nama;
-            $row[] = $field->lokasi;
-            $row[] = $field->kontak;
+            $row[] = $field->cabang
+                . '<span class="d-block text-primary">' . $field->lokasi . '</span>';
+            $row[] = $field->jabatan;
             $row[] = '
                 <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
                 <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>

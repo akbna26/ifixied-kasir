@@ -91,4 +91,18 @@ function full_page(dt, id_target, type) {
     //! how to use ? add this in html
     // <button id="btn_full_page" onclick="full_page(this,'btn_exit_page',1)" class="btn btn_page btn-outline-primary w-25 fw-600">Full Page</button>
     // <button id="btn_exit_page" style="display: none;" onclick="full_page(this,'btn_full_page',0)" class="btn btn_page btn-outline-primary w-25 fw-600">Exit Full Page</button>
+
+}
+
+function detail_gambar(dt) {
+    var img = $(dt).attr('href');
+    var html = `
+        <img class="img rounded" style="width:100%;" src="${img}" />
+    `;
+
+    show_modal_custom({
+        judul: 'Detail Gambar',
+        html: html,
+        size: 'modal-lg',
+    });
 }

@@ -20,9 +20,16 @@ class MY_controller extends CI_Controller
 
         $this->id_akun = session('id_akun');
         $this->id_otoritas = session('id_otoritas');
-        $this->id_pemilik = session('id_pemilik');
+        $this->id_cabang = session('id_cabang');
         $this->nama = session('nama');
+        $this->foto = session('foto');
+        $this->provinsi = session('provinsi');
+        $this->kabupaten = session('kabupaten');
+        $this->kecamatan = session('kecamatan');
+        $this->kelurahan = session('kelurahan');
         $this->username = session('username');
+        $this->type = session('type');
+
         $this->foto = session('foto');
     }
 }

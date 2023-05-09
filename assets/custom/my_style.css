@@ -3,6 +3,11 @@ body[data-sidebar=dark] .navbar-brand-box {
     background: #00293C !important;
 }
 
+.page-item.active .page-link {
+    background-color: #2143eb !important;
+    border-color: #2143eb !important;
+}
+
 .btn-outline-primary:not(:disabled):not(.disabled).active,
 .btn-outline-primary:not(:disabled):not(.disabled):active,
 .show>.btn-outline-primary.dropdown-toggle,
@@ -32,6 +37,14 @@ body[data-sidebar=dark] .navbar-brand-box {
     color: #F1FECE !important;
 }
 
+.text2 {
+    color: #1e2a78 !important;
+}
+
+.border1 {
+    border: 1px solid #1f656d !important;
+}
+
 .fw-600 {
     font-weight: 600 !important;
 }
@@ -40,12 +53,20 @@ body[data-sidebar=dark] .navbar-brand-box {
     color: #F62A00 !important;
 }
 
+.text-primary {
+    color: #2143eb!important;
+}
+
 .glow {
     box-shadow: 0 0px 10px #F1FECE !important;
 }
 
 .glow2 {
     box-shadow: 0 0px 10px #01293C !important;
+}
+
+.text-underline {
+    text-decoration: underline !important;
 }
 
 

@@ -1,10 +1,10 @@
 <?php
 
-class Table_cabang extends CI_Model
+class Table_setting_pegawai extends CI_Model
 {
-    var $column_order = array(null, 'nama', 'lokasi', null); //field yang ada di table user
-    var $column_search = array('nama'); //field yang diizin untuk pencarian
-    var $order = array('id' => 'desc'); // default order
+    var $column_order = array(null, 'b.nama', 'c.nama', 'd.nama', 'a.prosentase', null); //field yang ada di table user
+    var $column_search = array('b.nama', 'c.nama', 'd.nama',); //field yang diizin untuk pencarian
+    var $order = array('a.id' => 'desc'); // default order
 
     public function __construct()
     {
@@ -13,8 +13,18 @@ class Table_cabang extends CI_Model
 
     private function _get_datatables_query()
     {
-        $this->db->where('deleted', null);
-        $this->db->from('ref_cabang');
+        $id_cabang = $this->input->get('id_cabang');
+
+        $this->db->select('a.*, b.nama as nm_pegawai, c.nama as nm_cabang, d.nama as nm_tindakan, e.nama as nm_jabatan ');
+        $this->db->from('setting_pegawai a');
+        $this->db->join('pegawai b', 'b.id = a.id_pegawai', 'left');
+        $this->db->join('ref_cabang c', 'c.id = b.id_cabang', 'left');
+        $this->db->join('ref_tindakan d', 'd.id = a.id_tindakan', 'left');
+        $this->db->join('ref_jabatan e', 'e.id = b.id_jabatan', 'left');
+
+        $this->db->where('a.deleted', null);
+        if ($id_cabang != 'all') $this->db->where('b.id_cabang', $id_cabang);
+        $this->db->order_by('b.id', 'asc');        
 
         $i = 0;
 
@@ -76,9 +86,11 @@ class Table_cabang extends CI_Model
             $row = [];
 
             $row[] = $no;
-            $row[] = $field->nama;
-            $row[] = $field->lokasi;
-            $row[] = $field->kontak;
+            $row[] = $field->nm_pegawai
+            .'<span class="text-primary d-block"><i class="bx bx-user-circle"></i> '.$field->nm_jabatan.'</span>';
+            $row[] = $field->nm_cabang;
+            $row[] = $field->nm_tindakan;
+            $row[] = $field->prosentase . ' %';
             $row[] = '
                 <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
                 <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>

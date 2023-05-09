@@ -1,8 +1,8 @@
 <?php
 
-class Table_cabang extends CI_Model
+class Table_kategori extends CI_Model
 {
-    var $column_order = array(null, 'nama', 'lokasi', null); //field yang ada di table user
+    var $column_order = array(null, 'nama', null); //field yang ada di table user
     var $column_search = array('nama'); //field yang diizin untuk pencarian
     var $order = array('id' => 'desc'); // default order
 
@@ -14,7 +14,7 @@ class Table_cabang extends CI_Model
     private function _get_datatables_query()
     {
         $this->db->where('deleted', null);
-        $this->db->from('ref_cabang');
+        $this->db->from('ref_kategori');
 
         $i = 0;
 
@@ -77,8 +77,6 @@ class Table_cabang extends CI_Model
 
             $row[] = $no;
             $row[] = $field->nama;
-            $row[] = $field->lokasi;
-            $row[] = $field->kontak;
             $row[] = '
                 <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
                 <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>

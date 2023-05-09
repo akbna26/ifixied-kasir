@@ -1,17 +1,27 @@
 <form onsubmit="event.preventDefault();do_submit(this);">
     <div class="form-group">
-        <label>Nama Cabang</label>
+        <label>Nama Pegawai</label>
         <input type="text" required name="nama" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->nama ?>">
-    </div>
-    
-    <div class="form-group">
-        <label>Kontak (WA)</label>
-        <input type="number" required name="kontak" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->kontak ?>">
     </div>
 
     <div class="form-group">
-        <label>Lokasi</label>
-        <textarea name="lokasi" required rows="5" placeholder="Masukkan isian" class="form-control"><?= @$data->lokasi ?></textarea>
+        <label>Cabang</label>
+        <select required name="id_cabang" class="form-control js_select2" data-placeholder="pilih cabang">
+            <option value=""></option>
+            <?php foreach ($ref_cabang as $dt) : ?>
+                <option <?= $dt->id == @$data->id_cabang ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?> - <?= $dt->lokasi ?></option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <div class="form-group">
+        <label>Jabatan</label>
+        <select required name="id_jabatan" class="form-control js_select2" data-placeholder="pilih jabatan">
+            <option value=""></option>
+            <?php foreach ($ref_jabatan as $dt) : ?>
+                <option <?= $dt->id == @$data->id_jabatan ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
@@ -19,10 +29,16 @@
 </form>
 
 <script>
+    $(document).ready(function() {
+        $('.js_select2').select2({
+            width: '100%'
+        });
+    });
+
     function do_submit(dt) {
 
         Swal.fire({
-            title: 'Simpan Data Cabang ?',
+            title: 'Simpan Data Pegawai ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -33,7 +49,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/ref_cabang/do_submit') ?>",
+                    url: "<?= base_url('admin/pegawai/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

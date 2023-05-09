@@ -14,9 +14,9 @@
                         <thead>
                             <tr>
                                 <th class="fw-600">NO</th>
-                                <th class="fw-600">NAMA CABANG</th>
-                                <th class="fw-600">LOKASI</th>
-                                <th class="fw-600">KONTAK (WA)</th>
+                                <th class="fw-600">NAMA/JENIS</th>
+                                <th class="fw-600">NOMER REKENING</th>
+                                <th class="fw-600">POTONGAN(%)</th>
                                 <th class="fw-600" style="width: 250px;">AKSI</th>
                             </tr>
                         </thead>

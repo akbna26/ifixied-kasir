@@ -1,17 +1,17 @@
 <form onsubmit="event.preventDefault();do_submit(this);">
     <div class="form-group">
-        <label>Nama Cabang</label>
+        <label>Nama/Jenis Pembayaran</label>
         <input type="text" required name="nama" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->nama ?>">
-    </div>
-    
-    <div class="form-group">
-        <label>Kontak (WA)</label>
-        <input type="number" required name="kontak" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->kontak ?>">
     </div>
 
     <div class="form-group">
-        <label>Lokasi</label>
-        <textarea name="lokasi" required rows="5" placeholder="Masukkan isian" class="form-control"><?= @$data->lokasi ?></textarea>
+        <label>Nomer Rekening</label>
+        <input type="text" required name="no_rek" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->no_rek ?>">
+    </div>
+
+    <div class="form-group">
+        <label>Prosentase Potongan</label>
+        <input type="text" required name="persen_potongan" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= !empty($data->persen_potongan) ? rupiah($data->persen_potongan,true) : '' ?>">
     </div>
 
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
@@ -22,7 +22,7 @@
     function do_submit(dt) {
 
         Swal.fire({
-            title: 'Simpan Data Cabang ?',
+            title: 'Simpan Jenis Pembayaran ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -33,7 +33,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/ref_cabang/do_submit') ?>",
+                    url: "<?= base_url('admin/ref_jenis_pembayaran/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

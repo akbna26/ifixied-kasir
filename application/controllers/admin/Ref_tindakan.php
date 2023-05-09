@@ -2,20 +2,20 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Ref_cabang extends MY_controller
+class Ref_tindakan extends MY_controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('admin/table_cabang', 'table');
+        $this->load->model('admin/table_tindakan', 'table');
     }
 
     public function index()
     {
         $data = [
-            'index' => 'admin/ref_cabang/index',
-            'index_js' => 'admin/ref_cabang/index_js',
-            'title' => 'Referensi Cabang',
+            'index' => 'admin/ref_tindakan/index',
+            'index_js' => 'admin/ref_tindakan/index_js',
+            'title' => 'Referensi Tindakan Service',
         ];
 
         $this->templates->load($data);
@@ -29,7 +29,7 @@ class Ref_cabang extends MY_controller
     public function tambah()
     {
         $data = [];
-        $html = $this->load->view('admin/ref_cabang/form', $data, true);
+        $html = $this->load->view('admin/ref_tindakan/form', $data, true);
 
         echo json_encode([
             'status' => 'success',
@@ -41,8 +41,8 @@ class Ref_cabang extends MY_controller
     {
         $id = decode_id($this->input->post('id'));
         $data['id'] = $id;
-        $data['data'] = $this->db->query("SELECT * from ref_cabang where id='$id' and deleted is null ")->row();
-        $html = $this->load->view('admin/ref_cabang/form', $data, true);
+        $data['data'] = $this->db->query("SELECT * from ref_tindakan where id='$id' and deleted is null ")->row();
+        $html = $this->load->view('admin/ref_tindakan/form', $data, true);
 
         echo json_encode([
             'status' => 'success',
@@ -57,28 +57,22 @@ class Ref_cabang extends MY_controller
         $hapus = $this->input->post('hapus');
 
         $nama = $this->input->post('nama');
-        $lokasi = $this->input->post('lokasi');
-        $kontak = $this->input->post('kontak');
 
         if (!empty($hapus)) {
             $this->db->where('id', $id);
-            $this->db->update('ref_cabang', [
+            $this->db->update('ref_tindakan', [
                 'deleted' => date('Y-m-d H:i:s'),
             ]);
         } else {
             if (empty($id)) {
-                $this->db->insert('ref_cabang', [
+                $this->db->insert('ref_tindakan', [
                     'nama' => $nama,
-                    'lokasi' => $lokasi,
-                    'kontak' => $kontak,
                     'created' => date('Y-m-d H:i:s'),
                 ]);
             } else {
                 $this->db->where('id', $id);
-                $this->db->update('ref_cabang', [
+                $this->db->update('ref_tindakan', [
                     'nama' => $nama,
-                    'lokasi' => $lokasi,
-                    'kontak' => $kontak,
                     'updated' => date('Y-m-d H:i:s'),
                 ]);
             }

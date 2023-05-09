@@ -1,17 +1,7 @@
 <form onsubmit="event.preventDefault();do_submit(this);">
     <div class="form-group">
-        <label>Nama Cabang</label>
+        <label>Nama Jabatan</label>
         <input type="text" required name="nama" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->nama ?>">
-    </div>
-    
-    <div class="form-group">
-        <label>Kontak (WA)</label>
-        <input type="number" required name="kontak" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->kontak ?>">
-    </div>
-
-    <div class="form-group">
-        <label>Lokasi</label>
-        <textarea name="lokasi" required rows="5" placeholder="Masukkan isian" class="form-control"><?= @$data->lokasi ?></textarea>
     </div>
 
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
@@ -22,7 +12,7 @@
     function do_submit(dt) {
 
         Swal.fire({
-            title: 'Simpan Data Cabang ?',
+            title: 'Simpan Data ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -33,7 +23,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/ref_cabang/do_submit') ?>",
+                    url: "<?= base_url('admin/ref_jabatan/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,
