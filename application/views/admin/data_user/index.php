@@ -7,8 +7,8 @@
         <div style="clear: both;"></div>
     </div>
 </div>
-<div class="card" style="border-top-left-radius: 15px;border-top-right-radius: 15px;">
-    <div class="card-body bg2">
+<div class="card">
+    <div class="card-body bg2 border1" style="border-top-left-radius: 15px;border-top-right-radius: 15px;">
         <h3 class="text-center fw-600">AKSES YANG TERSEDIA</h3>
         <div style="display: flex;flex-direction: row;justify-content: center;">
             <?php foreach ($ref_role as $i => $dt) : ?>
