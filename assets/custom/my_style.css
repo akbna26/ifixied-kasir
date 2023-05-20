@@ -106,7 +106,7 @@ body[data-sidebar=dark] .navbar-brand-box {
 /* end placeholder */
 
 .bg_image1 {
-    background-image: url(http://localhost/ifixied/uploads/file/pattern.png) !important;
+    background-image: url(../../uploads/file/pattern.png) !important;
     background-size: contain !important;
     background-repeat: repeat-y !important;
 }
