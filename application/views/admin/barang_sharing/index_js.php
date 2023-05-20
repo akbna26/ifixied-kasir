@@ -25,7 +25,7 @@
             },
             order: [],
             columnDefs: [{
-                targets: [0, 3, -1],
+                targets: [0, 3, 4, -1],
                 className: 'text-center',
                 orderable: false,
             }],
@@ -130,6 +130,7 @@
                                 })
                                 .then(() => {
                                     $('#table_data').DataTable().ajax.reload();
+                                    $('[data-toggle="tooltip"]').tooltip();
                                 });
                         }
                     }
@@ -178,6 +179,7 @@
                                 })
                                 .then(() => {
                                     $('#table_data').DataTable().ajax.reload();
+                                    $('[data-toggle="tooltip"]').tooltip();
                                 });
                         } else {
                             Swal.fire({
