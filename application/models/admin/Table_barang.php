@@ -2,7 +2,7 @@
 
 class Table_barang extends CI_Model
 {
-    var $column_order = array(null, 'a.nama', 'b.nama', 'c.nama', null); //field yang ada di table user
+    var $column_order = array(null, 'a.nama', 'c.nama', null); //field yang ada di table user
     var $column_search = array('a.nama'); //field yang diizin untuk pencarian
     var $order = array('a.id' => 'desc'); // default order
 
@@ -13,17 +13,13 @@ class Table_barang extends CI_Model
 
     private function _get_datatables_query()
     {
-
-        $id_cabang = $this->input->get('id_cabang');
         $id_kategori = $this->input->get('id_kategori');
 
-        $this->db->select('a.*, b.nama as cabang, b.lokasi, c.nama as kategori');
+        $this->db->select('a.*, c.nama as kategori');
         $this->db->from('barang a');
-        $this->db->join('ref_cabang b', 'b.id = a.id_cabang', 'left');
         $this->db->join('ref_kategori c', 'c.id = a.id_kategori', 'left');
         $this->db->where('a.deleted', null);
 
-        if ($id_cabang != 'all') $this->db->where('a.id_cabang', $id_cabang);
         if ($id_kategori != 'all') $this->db->where('a.id_kategori', $id_kategori);
 
         $i = 0;
@@ -89,8 +85,6 @@ class Table_barang extends CI_Model
             $row[] = $field->nama
                 . '<span class="d-block text-primary fw-600">Kategori : ' . $field->kategori . '</span>';
 
-            $row[] = '<i class="bx bx-map-pin h3"></i><br>' . $field->cabang;
-
             $row[] = '
             <table class="table table-sm table-bordered mb-0">
                 <tr class="bg-white">
@@ -117,14 +111,16 @@ class Table_barang extends CI_Model
                 </tr>';
             }
 
-            $row[] = '<span class="d-block">Barcode : ' . $field->barcode . '</span>'
-                . '<span class="d-block">Ket. : ' . $field->keterangan . '</span>'
+            $row[] = $field->barcode;
+
+            $row[] = '<span class="d-block">Ket. : ' . $field->keterangan . '</span>'
                 . $gambar;
 
             $row[] = '
-                <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm mb-1 btn-primary fw-600"><i class="fas fa-edit"></i> Ubah</button>
-                <br>
-                <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>
+                <div class="btn-group">
+                    <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button"  data-toggle="tooltip" data-placement="top" title="edit barang" class="btn btn-primary fw-600"><i class="fas fa-edit"></i></button>
+                    <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button"  data-toggle="tooltip" data-placement="top" title="hapus barang" class="btn btn-danger fw-600"><i class="fas fa-trash-alt"></i></button>
+                </div>
             ';
 
             $data[] = $row;

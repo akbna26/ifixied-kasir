@@ -5,24 +5,13 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
                 <label>Kategori Produk</label>
                 <select required name="id_kategori" class="form-control js_select2" data-placeholder="pilih kategori">
                     <option value=""></option>
                     <?php foreach ($ref_kategori as $dt) : ?>
                         <option <?= $dt->id == @$data->id_kategori ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
-                    <?php endforeach; ?>
-                </select>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Toko Cabang</label>
-                <select required name="id_cabang" class="form-control js_select2" data-placeholder="pilih cabang">
-                    <option value=""></option>
-                    <?php foreach ($ref_cabang as $dt) : ?>
-                        <option <?= $dt->id == @$data->id_cabang ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?> - <?= $dt->lokasi ?></option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -51,13 +40,13 @@
     </div>
 
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-4" <?= !empty($data) ? 'hidden' : '' ?>>
             <div class="form-group">
                 <label>Stock <small class="text-danger fw-600">*pertama kali barang di input</small></label>
                 <input <?= !empty($data) ? 'disabled' : '' ?> type="text" required name="stock" autocomplete="off" placeholder="Masukkan isian" class="form-control <?= !empty($data) ? 'border border-danger' : '' ?> rupiah" value="<?= !empty($data->stock) ? rupiah($data->stock) : '' ?>">
             </div>
         </div>
-        <div class="col-md-4">
+        <div class="col-md-4" <?= !empty($data) ? 'hidden' : '' ?>>
             <div class="form-group">
                 <label>Tanggal Stock <small class="text-danger fw-600">*pertama kali barang di input</small></label>
                 <input <?= !empty($data) ? 'disabled' : '' ?> type="date" required name="tanggal_restock" placeholder="Masukkan isian" class="form-control <?= !empty($data) ? 'border border-danger' : '' ?>" value="<?= empty($data->tanggal_restock) ? '' : date('Y-m-d', strtotime($data->tanggal_restock)) ?>">

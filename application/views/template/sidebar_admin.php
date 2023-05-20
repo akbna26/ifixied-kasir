@@ -1,7 +1,7 @@
 <!-- ========== Left Sidebar Start ========== -->
 <div class="vertical-menu">
 
-    <div data-simplebar class="h-100">
+    <div data-simplebar class="h-100 bg_image1">
 
         <!--- Sidemenu -->
         <div class="side-menu" id="sidebar-menu">
@@ -15,14 +15,19 @@
                     </a>
                 </li>
 
-                <li class="<?= $this->uri->segment(2) == 'barang' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('admin/barang') ?>" class="waves-effect fw-600">
+                 <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-cube-alt"></i>
-                        <span>Barang</span>
+                        <span>Master Barang</span>
                     </a>
+                    <ul class="sub-menu <?= $this->uri->segment(2) == 'barang' ? 'mm-collapse mm-show' : '' ?>">
+                        <li><a href="<?= base_url('admin/barang') ?>">List Barang</a></li>
+                        <li><a href="<?= base_url('admin/barang_restock') ?>">Restock Barang</a></li>
+                        <li><a href="<?= base_url('admin/barang_sharing') ?>">Sharing</a></li>
+                    </ul>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-cart"></i>
                         <span>Transaksi</span>
@@ -30,7 +35,7 @@
                     <ul class="sub-menu <?= $this->uri->segment(2) == 'transaksi' ? 'mm-collapse mm-show' : '' ?>">
                         <li><a href="<?= base_url('admin/restock_barang') ?>">Restock Barang</a></li>
                     </ul>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -40,6 +45,16 @@
                     <ul class="sub-menu <?= $this->uri->segment(2) == 'pegawai' ? 'mm-collapse mm-show' : '' ?>">
                         <li><a href="<?= base_url('admin/pegawai') ?>">Daftar Pegawai</a></li>
                         <li><a href="<?= base_url('admin/setting_pegawai') ?>">Profit Teknisi</a></li>
+                    </ul>
+                </li>
+
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-line-chart"></i>
+                        <span>Laporan</span>
+                    </a>
+                    <ul class="sub-menu <?= $this->uri->segment(2) == 'laporan' ? 'mm-collapse mm-show' : '' ?>">
+                        <li><a href="<?= base_url('admin/laporan_transaksi') ?>">Transaksi Kasir</a></li>
                     </ul>
                 </li>
 

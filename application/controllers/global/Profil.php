@@ -220,6 +220,19 @@ class Profil extends MY_controller
             'data' => $data,
         ]);
     }
+
+    public function get_barang()
+    {
+        $id_kategori = $this->input->post('id_kategori');
+        $data = $this->db->get_where('barang', [
+            'id_kategori' => $id_kategori,
+            'deleted' => null,
+        ])->result();
+        echo json_encode([
+            'status' => 'success',
+            'data' => $data,
+        ]);
+    }
 }
 
 /* End of file Dashboard.php */

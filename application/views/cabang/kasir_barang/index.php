@@ -21,6 +21,7 @@
     <!-- App Css-->
     <link href="<?= base_url('assets/skote/dist/') ?>assets/css/app.min.css" id="app-style" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('assets/custom/kasir.css?q=') . time() ?>" id="app-style" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" href="<?= base_url('assets/custom/my_style.css?') . time() ?>">
 
     <style>
         .form_focus:focus {
@@ -58,6 +59,12 @@
                                         </div>
                                     </div>
                                 </div>
+                                <div class="col-lg-4 d-flex" style="justify-content: center;align-items: center;flex-direction: column;">
+                                    <h4 class="text-white fw-600">Invoice : <?= $no_invoice ?></h4>
+                                    <div class="text-white">
+                                        <span><?= strftime('%A, %d %B %Y'); ?></span> <i class="fa fa-clock mr-1 ml-2"></i> <span id="info_waktu">-</span> WIB
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -80,7 +87,7 @@
                                         </div>
                                         <div class="col-sm-3 px-0 mt-md-0 mt-4">
                                             <div class="text-sm-right">
-                                                <button id="tombol_cari_manual" type="button" class="btn btn-success rad-10 waves-effect waves-light w-100"><i class="mdi mdi-magnify mr-1"></i> Cari Produk</button>
+                                                <button onclick="cari_manual();" type="button" class="btn btn-success rad-10 waves-effect waves-light w-100"><i class="mdi mdi-magnify mr-1"></i> Cari Produk</button>
                                             </div>
                                         </div><!-- end col-->
                                     </div>
@@ -94,17 +101,16 @@
                                             <thead class="thead-light">
                                                 <tr>
                                                     <th>Produk</th>
+                                                    <th>Barcode</th>
                                                     <th width="100">Quantity</th>
-                                                    <th>Satuan</th>
                                                     <th>Harga</th>
-                                                    <th>Diskon (%)</th>
                                                     <th>Sub Total</th>
                                                     <th><i class="mdi mdi-cog"></i></th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <tr class="text-center tr_default">
-                                                    <td colspan="7">belum ada data</td>
+                                                    <td colspan="6">belum ada data</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -119,45 +125,77 @@
                                     <div class="row mx-0">
                                         <div class="col-md-12 px-0">
                                             <div class="bordd bordd-tb select-cust py-1 px-3">
-                                                <select id="select_member" class="w-100 ph js-select2 form_focus">
-                                                    <option selected value="">Pilih Member</option>
-                                                    <?php foreach ($member as $key) : ?>
+                                                <select id="select_pegawai" class="w-100 ph js-select2 form_focus" onchange="pilih_pegawai(this);">
+                                                    <option selected disabled value="">Pilih Pegawai</option>
+                                                    <?php foreach ($pegawai as $key) : ?>
                                                         <option value="<?= $key->id ?>"><?= $key->nama ?></option>
                                                     <?php endforeach; ?>
                                                 </select>
                                             </div>
                                             <div class="bordd bordd-b select-cust py-1 px-3">
-                                                <select name="metode" class="w-100 ph js-select2 form_focus">
-                                                    <option selected value="tunai">Tunai</option>
-                                                    <option value="transfer">Transfer</option>
+                                                <select id="select_jenis_pembayaran" class="w-100 ph js-select2 form_focus">
+                                                    <option selected disabled value="">Jenis Pembayaran</option>
+                                                    <?php foreach ($ref_jenis_pembayaran as $key) : ?>
+                                                        <option value="<?= $key->id ?>"><?= $key->nama ?> (potongan <?= $key->persen_potongan ?> %)</option>
+                                                    <?php endforeach; ?>
                                                 </select>
                                             </div>
                                             <div class="bordd bordd-b isi-cust py-1 px-3">
-                                                <input name="bayar" autocomplete="off" type="text" class="form-control bord-zero ph input_bayar form_focus" placeholder="Nominal Bayar">
-                                                <input type="hidden" readonly autocomplete="off" value="0" class="form-control kembali" name="kembali" placeholder="kembali">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg1 text-white fw-600" style="width: 80px;">
+                                                            <i class="bx bx-dollar-circle mr-1"></i> Bayar
+                                                        </span>
+                                                    </div>
+                                                    <div class="custom-file">
+                                                        <input onchange="hitung_bayar();" type="text" id="total_bayar" class="form-control rupiah" placeholder="masukkan nominal pembayaran">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="bordd bordd-b isi-cust py-1 px-3">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg1 text-white fw-600" style="width: 80px;">
+                                                            <i class="bx bx-dollar-circle mr-1"></i> DP
+                                                        </span>
+                                                    </div>
+                                                    <div class="custom-file">
+                                                        <input onchange="hitung_bayar();" type="text" id="total_dp" class="form-control rupiah" placeholder="masukkan DP jika ada">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="bordd bordd-b isi-cust py-1 px-3 text-center">
+                                                <small class="text-center d-block text-underline text-danger">Split Pembayaran</small>
+                                                <div class="btn-group btn-group-example" role="group">
+                                                    <button type="button" onclick="set_radio(this,'cek_split');is_split(1);hitung_bayar();" data-value="1" class="btn btn-outline-primary w-sm cek_split">Ya</button>
+                                                    <button type="button" onclick="set_radio(this,'cek_split');is_split(0);hitung_bayar();" data-value="0" class="btn btn-outline-primary w-sm cek_split active">Tidak</button>
+                                                </div>
+                                            </div>
+                                            <div class="bordd bordd-b select-cust py-1 px-3 is_split" style="display: none;">
+                                                <select id="select_jenis_pembayaran_2" class="w-100 ph js-select2 form_focus">
+                                                    <option selected disabled value="">Jenis Pembayaran Kedua</option>
+                                                    <?php foreach ($ref_jenis_pembayaran as $key) : ?>
+                                                        <option value="<?= $key->id ?>"><?= $key->nama ?> (potongan <?= $key->persen_potongan ?> %)</option>
+                                                    <?php endforeach; ?>
+                                                </select>
+                                            </div>
+                                            <div class="bordd bordd-b isi-cust py-1 px-3 is_split" style="display: none;">
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-text bg1 text-white fw-600" style="width: 80px;">
+                                                            <i class="bx bx-dollar-circle mr-1"></i> Split
+                                                        </span>
+                                                    </div>
+                                                    <div class="custom-file">
+                                                        <input type="text" class="form-control rupiah" onchange="hitung_bayar();" id="total_bayar_split" placeholder="masukkan nominal pembayaran">
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div class="mt-md-4 mt-3 p-30c py-3 kembaliann row align-items-center mx-0">
                                                 <div class="px-0 txt-kem col-md-6 col-4">Kembalian</div>
                                                 <div class="px-0 col-md-6 text-right col-8">Rp <span class="input_bayar_banner">0</span></div>
                                             </div>
-                                            <div class="row p-30c mt-bayarr pb-md-3 pb-2 align-items-center">
-                                                <div class="col-6">
-                                                    <!-- <h5 class="font-size-15 m-0"><i class="mdi mdi-cash-multiple text-success align-middle mr-md-2 mr-1"></i>Cash</h5> -->
-                                                </div>
-                                                <div class="col-6">
-                                                    <!-- <ul class="list-inline user-chat-nav custt text-right mb-0">
-                                                        <li class="list-inline-item">
-                                                            <div class="dropdown" data-toggle="tooltip" data-placement="top" title="" data-original-title="Metode Pembayaran">
-                                                                <button class="btn nav-btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                                                    <i class="bx bx-dots-horizontal-rounded"></i>
-                                                                </button>
-                                                                <div class="dropdown-menu dropdown-menu-right">
-                                                                    <a class="dropdown-item" href="#">Ubah Transfer Bank</a>
-                                                                </div>
-                                                            </div>
-                                                        </li>
-                                                    </ul> -->
-                                                </div>
+                                            <div class="row p-30c pb-md-3 pb-2 align-items-center">
                                             </div>
                                             <div class="row p-30c pt-0 align-items-center">
                                                 <div class="col-md-7">
@@ -165,9 +203,9 @@
                                                     <h5 class="font-size-20 m-0 font-weight-bold">Rp <span class="total_harga">0</span></h5>
                                                 </div>
                                                 <div class="col-md-5 mt-md-0 mt-2">
-                                                    <a href="#" id="tombol_bayar" class="btn btn-info rad-10 w-100">
+                                                    <button type="button" onclick="cek_bayar();" class="btn btn-primary rad-10 w-100">
                                                         <i class="mdi mdi-cash-multiple mr-1"></i> Bayar
-                                                    </a>
+                                                    </button>
                                                 </div>
                                             </div>
                                         </div>
@@ -184,7 +222,7 @@
             <!-- End Page-content -->
 
 
-            <footer class="footer l-0">
+            <!-- <footer class="footer l-0">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-sm-6">
@@ -192,12 +230,58 @@
                         </div>
                     </div>
                 </div>
-            </footer>
+            </footer> -->
         </div>
         <!-- end main content-->
 
     </div>
     <!-- END layout-wrapper -->
+
+    <div id="modal_custom" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="background-color: rgba(255, 255, 255, .5);">
+        <div id="modal_custom_size" class="modal-dialog modal-xl">
+            <div style="border: 0;" class="modal-content shadow1">
+                <div class="modal-header bg1">
+                    <h5 class="modal-title mt-0 text1">JUDUL</h5>
+                    <button type="button" class="close" onclick="$('#modal_custom').modal('hide');">
+                        <span class="text-white" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus, saepe esse sit nihil aperiam quae porro eveniet in recusandae consequatur reiciendis voluptatibus blanditiis magni! Aliquid ex minima distinctio at quod.
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <div id="modal_custom_2" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, .5);">
+        <div id="modal_custom_size_2" class="modal-dialog modal-xl">
+            <div style="border: 0;" class="modal-content shadow1">
+                <div class="modal-header bg1">
+                    <h5 class="modal-title mt-0 text1">TRANSAKSI - KASIR IFIXIED</h5>
+                    <button type="button" class="close" onclick="$('#modal_custom_2').modal('hide');">
+                        <span class="text-white" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form onsubmit="event.preventDefault();do_submit(this);" enctype="multipart/form-data">
+                        <div class="form-group">
+                            <label>Nama Pelanggan <small class="text-danger">*) opsional</small></label>
+                            <input type="text" name="nama_pelanggan" autocomplete="off" placeholder="Nama Pelanggan" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>No HP <small class="text-danger">*) opsional</small></label>
+                            <input type="number" name="no_hp" autocomplete="off" placeholder="Nomer HP Pelanggan" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label>Keterangan <small class="text-danger">*) opsional</small></label>
+                            <textarea name="keterangan" rows="2" placeholder="Tulis keterangan jika diperlukan" class="form-control"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-block fw-600 btn-primary"><i class="fas fa-check"></i> PROSES TRANSAKSI</button>
+                    </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
 
     <!-- Right bar overlay-->
     <div class="rightbar-overlay"></div>

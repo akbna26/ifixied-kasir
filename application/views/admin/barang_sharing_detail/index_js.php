@@ -1,4 +1,6 @@
 <script>
+    const ID_SHARING = '<?= encode_id($id) ?>';
+
     $(document).ready(function() {
         load_table();
     });
@@ -15,34 +17,26 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('admin/barang/table') ?>',
+                url: '<?= base_url('admin/barang_sharing_detail/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
-                    id_kategori: $('#id_kategori').val(),
+                    id_sharing:'<?= encode_id($id) ?>'
                 },
-            },
-            initComplete: function() {
-                $('[data-toggle="tooltip"]').tooltip()
             },
             order: [],
             columnDefs: [{
-                    targets: [0, -1],
-                    className: 'text-center',
-                    orderable: false,
-                },
-                {
-                    targets: [2],
-                    className: 'text-center',
-                },
-            ],
+                targets: [0, -1],
+                className: 'text-center',
+                orderable: false,
+            }],
         })
     }
 
     function tambah() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/barang/tambah') ?>",
+            url: "<?= base_url('admin/barang_sharing_detail/tambah') ?>",
             dataType: "JSON",
             data: {},
             beforeSend: function(res) {
@@ -61,7 +55,7 @@
                     show_modal_custom({
                         judul: 'Tambah <?= $title ?>',
                         html: res.html,
-                        size: 'modal-xl',
+                        size: 'modal-lg',
                     });
                 }
             }
@@ -71,7 +65,7 @@
     function ubah(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/barang/ubah') ?>",
+            url: "<?= base_url('admin/barang_sharing_detail/ubah') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -92,7 +86,7 @@
                     show_modal_custom({
                         judul: 'Ubah <?= $title ?>',
                         html: res.html,
-                        size: 'modal-xl',
+                        size: 'modal-lg',
                     });
                 }
             }
@@ -101,7 +95,7 @@
 
     function hapus(id) {
         Swal.fire({
-            title: 'Hapus Data Barang ?',
+            title: 'Hapus Dari List Detail ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -111,7 +105,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/barang/do_submit') ?>",
+                    url: "<?= base_url('admin/barang_sharing_detail/do_submit') ?>",
                     data: {
                         hapus: true,
                         id: id,

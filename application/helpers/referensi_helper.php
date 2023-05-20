@@ -46,3 +46,14 @@ function insert_visitor()
         ]);
     }
 }
+
+function insert_log($pesan, $nilai = null)
+{
+    $CI = &get_instance();
+    $CI->db->insert('log', [
+        'id_akun' => $CI->id_akun,
+        'pesan' => $pesan,
+        'nilai' => $nilai,
+        'created' => date('Y-m-d H:i:s'),
+    ]);
+}

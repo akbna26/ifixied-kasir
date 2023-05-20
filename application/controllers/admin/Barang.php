@@ -62,7 +62,6 @@ class Barang extends MY_controller
         $id = decode_id($this->input->post('id'));
         $hapus = $this->input->post('hapus');
 
-        $id_cabang = $this->input->post('id_cabang');
         $id_kategori = $this->input->post('id_kategori');
         $barcode = $this->input->post('barcode');
         $nama = $this->input->post('nama');
@@ -80,7 +79,7 @@ class Barang extends MY_controller
         } else {
 
             if ($_FILES['gambar']['name']) {
-                $path = 'uploads/foto_produk/' . $id_cabang . '/';
+                $path = 'uploads/foto_produk/';
                 if (!file_exists(FCPATH . $path)) mkdir($path, 0777, TRUE);
                 $config['upload_path'] = $path;
                 $config['allowed_types'] = 'jpg|png|jpeg';
@@ -109,7 +108,6 @@ class Barang extends MY_controller
 
             if (empty($id)) {
                 $this->db->insert('barang', [
-                    'id_cabang' => $id_cabang,
                     'id_kategori' => $id_kategori,
                     'barcode' => $barcode,
                     'nama' => $nama,
@@ -126,14 +124,11 @@ class Barang extends MY_controller
                     'id_barang' => $id_barang,
                     'stock' => $stock,
                     'tanggal_restock' => $tanggal_restock,
-                    'harga_modal' => $harga_modal,
-                    'keterangan' => $keterangan,
                     'created' => date('Y-m-d H:i:s'),
                 ]);
             } else {
                 $this->db->where('id', $id);
                 $this->db->update('barang', [
-                    'id_cabang' => $id_cabang,
                     'id_kategori' => $id_kategori,
                     'barcode' => $barcode,
                     'nama' => $nama,

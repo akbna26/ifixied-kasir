@@ -3,6 +3,16 @@ body[data-sidebar=dark] .navbar-brand-box {
     background: #00293C !important;
 }
 
+
+/* table */
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: #1f656d1c !important;
+}
+
+
+/* end table */
+
 .page-item.active .page-link {
     background-color: #2143eb !important;
     border-color: #2143eb !important;
@@ -18,10 +28,13 @@ body[data-sidebar=dark] .navbar-brand-box {
     border-color: #2143EB !important;
 }
 
-.btn-danger,
-.btn-outline-danger {
+.btn-danger {
     color: #fff;
     background-color: #F62A00 !important;
+    border-color: #F62A00 !important;
+}
+
+.btn-outline-danger {
     border-color: #F62A00 !important;
 }
 
@@ -30,7 +43,8 @@ body[data-sidebar=dark] .navbar-brand-box {
 }
 
 .bg2 {
-    background-color: #F1FECE !important;
+    /* background-color: #F1FECE !important; */
+    background: linear-gradient(-180deg, #F1FECE, #dbe98a);
 }
 
 .text1 {
@@ -90,3 +104,9 @@ body[data-sidebar=dark] .navbar-brand-box {
 
 
 /* end placeholder */
+
+.bg_image1 {
+    background-image: url(http://localhost/ifixied/uploads/file/pattern.png) !important;
+    background-size: contain !important;
+    background-repeat: repeat-y !important;
+}

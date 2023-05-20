@@ -248,13 +248,19 @@
                 dataType: 'JSON',
                 processData: false,
                 contentType: false,
-                beforeSend: function() {
-                    // console.log('sedang menghapus');
+                beforeSend: function(res) {
+                    Swal.fire({
+                        title: 'Loading ...',
+                        html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                        allowOutsideClick: false,
+                        showConfirmButton: false,
+                    });
                 },
                 complete: function() {
-                    // console.log('Berhasil');
+                    Swal.close();
                 },
                 error: function(e) {
+                    Swal.close();
                     console.log(e);
                     toastr.error('gagal, terjadi kesalahan', {
                         timeOut: 1000,
