@@ -65,6 +65,7 @@
                                 })
                                 .then(() => {
                                     $('#table_data').DataTable().ajax.reload();
+                                    $('[data-toggle="tooltip"]').tooltip();
                                 })
                         }
                     }
