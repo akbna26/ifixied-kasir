@@ -156,7 +156,7 @@
     </div>
     <!-- END layout-wrapper -->
 
-    <div id="modal_custom" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="background-color: rgba(255, 255, 255, .5);">
+    <div id="modal_custom" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="backdrop-filter: blur(5px);">
         <div id="modal_custom_size" class="modal-dialog modal-xl">
             <div style="border: 0;" class="modal-content shadow1">
                 <div class="modal-header bg1">
