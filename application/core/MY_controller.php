@@ -12,8 +12,14 @@ class MY_controller extends CI_Controller
         $url = $this->uri->segment(1);
         if (!session('is_login')) {
             redirect('login/logout');
-        } elseif (session('type') != $url && $url !='global' ) {
-            redirect('login/logout');
+        } elseif (session('type') != $url && $url != 'global') {
+            if (!session('is_super')) {
+                redirect('login/logout');
+            }else{
+                if ($url != 'super_admin') {
+                    redirect('login/logout');
+                }
+            }
         }
 
         $this->id_akun = session('id_akun');
