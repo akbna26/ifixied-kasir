@@ -28,14 +28,24 @@ body[data-sidebar=dark] .navbar-brand-box {
     border-color: #2143EB !important;
 }
 
-.btn-danger {
+.btn-outline-danger:not(:disabled):not(.disabled).active,
+.btn-outline-danger:not(:disabled):not(.disabled):active,
+.show>.btn-outline-danger.dropdown-toggle,
+.btn-danger,
+.btn-outline-danger:hover {
     color: #fff;
     background-color: #F62A00 !important;
     border-color: #F62A00 !important;
 }
 
-.btn-outline-danger {
-    border-color: #F62A00 !important;
+.btn-outline-success:not(:disabled):not(.disabled).active,
+.btn-outline-success:not(:disabled):not(.disabled):active,
+.show>.btn-outline-success.dropdown-toggle,
+.btn-success,
+.btn-outline-success:hover {
+    color: #fff;
+    background-color: #089c11;
+    border-color: #089c11;
 }
 
 .bg1 {

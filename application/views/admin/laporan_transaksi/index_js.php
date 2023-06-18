@@ -22,6 +22,7 @@
                     id_cabang: $('#id_cabang').val(),
                     select_tahun: $('#select_tahun').val(),
                     select_bulan: $('#select_bulan').val(),
+                    select_dp: $('#select_dp').val(),
                 },
             },
             order: [],
@@ -31,5 +32,36 @@
                 orderable: false,
             }],
         })
+    }
+
+    function detail(id) {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('admin/laporan_transaksi/detail') ?>",
+            dataType: "JSON",
+            data: {
+                id: id,
+            },
+            beforeSend: function(res) {
+                Swal.fire({
+                    title: 'Loading ...',
+                    html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            },
+            complete: function(res) {
+                Swal.close();
+            },
+            success: function(res) {
+                if (res.status == 'success') {
+                    show_modal_custom({
+                        judul: 'Detail <?= $title ?>',
+                        html: res.html,
+                        size: 'modal-xl',
+                    });
+                }
+            }
+        });
     }
 </script>

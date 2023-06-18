@@ -53,3 +53,18 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'login';
 $route['404_override'] = 'not_found';
 $route['translate_uri_dashes'] = FALSE;
+
+$route['admin/laporan_transaksi/detail'] = 'cabang/laporan_transaksi/detail';
+$route['admin/laporan_dp'] = 'cabang/kasir_dp';
+$route['admin/kasir_dp/table'] = 'cabang/kasir_dp/table';
+$route['admin/laporan_dp/(:any)'] = 'cabang/kasir_dp/$1';
+
+$route['admin/laporan_refund'] = 'cabang/laporan_refund';
+$route['admin/laporan_refund/(:any)'] = 'cabang/laporan_refund/$1';
+
+$route['gudang/dashboard'] = 'cabang/dashboard';
+$route['gudang/retur_barang'] = 'cabang/retur_barang';
+$route['gudang/retur_barang/(:any)'] = 'cabang/retur_barang/$1';
+
+$route['admin/retur_barang'] = 'cabang/retur_barang';
+$route['admin/retur_barang/(:any)'] = 'cabang/retur_barang/$1';

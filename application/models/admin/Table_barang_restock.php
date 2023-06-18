@@ -13,7 +13,7 @@ class Table_barang_restock extends CI_Model
 
     private function _get_datatables_query()
     {
-        $this->db->select('a.*, b.nama as barang, b.barcode, c.nama as kategori');
+        $this->db->select('a.*, (a.stock * b.harga_modal) as modal, b.nama as barang, b.barcode, c.nama as kategori');
         $this->db->from('barang_stock a');
         $this->db->join('barang b', 'b.id = a.id_barang and b.deleted is null', 'left');        
         $this->db->join('ref_kategori c', 'c.id = b.id_kategori', 'left');        
@@ -83,6 +83,7 @@ class Table_barang_restock extends CI_Model
             $row[] = $field->barang
             . '<span class="d-block text-primary fw-600">' . $field->barcode . '</span>';
             $row[] = rupiah($field->stock);
+            $row[] = rupiah($field->modal);
             $row[] = tgl_indo($field->tanggal_restock);
             $row[] = '
                 <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>

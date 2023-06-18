@@ -97,3 +97,13 @@ function clear_koma($dt)
     $data = str_replace(',', '.', $data);
     return $data;
 }
+
+function generateAlphabetArray($arr)
+{
+    $alphabet = [];
+    for ($i = 0; $i < count($arr); $i++) {
+        $letter = chr(ord('A') + $i);  // Mengonversi kode ASCII ke huruf
+        array_push($alphabet, $letter);
+    }
+    return $alphabet;
+}

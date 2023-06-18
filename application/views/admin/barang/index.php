@@ -3,14 +3,19 @@
         <div class="card">
             <div class="card-body bg1 br-atas p-3 mb-0 d-flex justify-content-between">
                 <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
-                <button onclick="tambah();" class="btn btn-primary btn-rounded fw-600 glow">
-                    <i class="fa fa-plus mr-1"></i> Tambah Data
-                </button>
+                <div>
+                    <a href="<?= base_url('admin/barang/stock_cabang') ?>" class="btn btn-light fw-600 btn-sm mr-1">
+                        <i class="fa fa-list mr-1"></i> Lihat Stock Cabang
+                    </a>
+                    <button onclick="tambah();" class="btn btn-light fw-600 btn-sm">
+                        <i class="fa fa-plus mr-1"></i> Tambah Data
+                    </button>
+                </div>
             </div>
 
             <div class="card-body">
 
-                <div class="row bg2 border1 rounded p-3 mb-3">        
+                <div class="row bg2 border1 rounded p-3 mb-3">
                     <div class="offset-4 col-md-4">
                         <div class="form-group text-center">
                             <label>Filter Kategori</label>
@@ -26,7 +31,7 @@
 
                 <div class="table-responsive">
                     <table class="mt-3 table" id="table_data">
-                        <thead>
+                        <thead class="bg1 text-white">
                             <tr>
                                 <th class="fw-600">NO</th>
                                 <th class="fw-600">NAMA BARANG</th>

@@ -470,7 +470,7 @@
                     var nilai = $(this).data('nilai');
                     produk_id.push(nilai);
                 });
-                
+
                 var produk_qty = [];
                 $('.tr_qty').each(function(i, obj) {
                     var nilai = $(this).data('nilai');

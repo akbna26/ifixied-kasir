@@ -8,7 +8,7 @@
             <div class="card-body">
 
                 <div class="row bg2 border1 rounded p-3 mb-3">
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Filter Cabang</label>
                             <select id="id_cabang" class="form-control js_select2" data-placeholder="pilih cabang" onchange="load_table();">
@@ -20,7 +20,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Tahun</label>
                             <select id="select_tahun" class="form-control js_select2" data-placeholder="pilih tahun" onchange="load_table();">
@@ -32,7 +32,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-3">
                         <div class="form-group">
                             <label>Bulan</label>
                             <select id="select_bulan" class="form-control js_select2" data-placeholder="pilih bulan" onchange="load_table();">
@@ -45,24 +45,9 @@
                     </div>
                 </div>
 
-                <div class="d-flex justify-content-center">
-                    <div class="alert alert-danger mx-1 fw-600" style="width: 200px;">
-                        <h4 class="text-underline text-center">Total Profit</h4>
-                        <div class="text-center">0</div>
-                    </div>
-                    <div class="alert alert-success mx-1 fw-600" style="width: 200px;">
-                        <h4 class="text-underline text-center">Total Modal</h4>
-                        <div class="text-center">0</div>
-                    </div>
-                    <div class="alert alert-danger mx-1 fw-600" style="width: 200px;">
-                        <h4 class="text-underline text-center">Total Potongan</h4>
-                        <div class="text-center">0</div>
-                    </div>
-                </div>
-
                 <div class="table-responsive">
                     <table class="mt-3 table table-striped" id="table_data">
-                        <thead>
+                        <thead class="bg1 text-white">
                             <tr>
                                 <th class="fw-600">NO</th>
                                 <th class="fw-600">TANGGAL</th>

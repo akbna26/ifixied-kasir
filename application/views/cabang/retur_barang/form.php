@@ -1,27 +1,39 @@
+<div class="alert alert-primary">
+    <i class="fa fa-note"></i> Catatan
+    <ul class="mb-0 fw-600">
+        <li>Barang yang diretur oleh teknisi harus sudah melalui tahap pengecekan</li>
+    </ul>
+</div>
+
 <form onsubmit="event.preventDefault();do_submit(this);">
     <div class="form-group">
-        <label>Nama Pegawai</label>
-        <input type="text" required name="nama" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->nama ?>">
-    </div>
-
-    <div class="form-group">
-        <label>Cabang</label>
-        <select required name="id_cabang" class="form-control js_select2" data-placeholder="pilih cabang">
+        <label>Barang yang di retur</label>
+        <select required name="id_barang" class="form-control js_select2" onchange="select_harga_modal(this);" data-placeholder="pilih barang">
             <option value=""></option>
-            <?php foreach ($ref_cabang as $dt) : ?>
-                <option <?= $dt->id == @$data->id_cabang ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?> - <?= $dt->lokasi ?></option>
+            <?php foreach ($barang as $dt) : ?>
+                <option data-hargamodal="<?= rupiah($dt->harga_modal) ?>" <?= $dt->id == @$data->id_barang ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->barcode . ' - ' . $dt->nm_barang ?></option>
             <?php endforeach; ?>
         </select>
     </div>
 
     <div class="form-group">
-        <label>Jabatan</label>
-        <select required name="id_jabatan" class="form-control js_select2" data-placeholder="pilih jabatan">
-            <option value=""></option>
-            <?php foreach ($ref_jabatan as $dt) : ?>
-                <option <?= $dt->id == @$data->id_jabatan ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
-            <?php endforeach; ?>
-        </select>
+        <label>Alasan barang retur <small class="fw-600 text-danger">*</small></label>
+        <textarea required name="keterangan" rows="3" placeholder="Tulis keterangan produk" class="form-control"><?= @$data->alasan_refund ?></textarea>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Harga Modal <small class="fw-600 text-danger">*otomatis</small></label>
+                <input type="int" id="potong_profit" required readonly name="harga_modal" placeholder="Pilih barang terlebih dahulu" class="form-control" value="<?= !empty(@$data->harga_modal) ? rupiah($data->harga_modal) : '' ?>">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Qty <small class="fw-600 text-danger">*</small></label>
+                <input autocomplete="off" type="int" required name="total" placeholder="Masukkan isian" class="form-control rupiah" value="<?= @$data->qty ?>">
+            </div>
+        </div>
     </div>
 
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
@@ -35,10 +47,15 @@
         });
     });
 
+    function select_harga_modal(dt){
+        var harga = $('option:selected', dt).data('hargamodal');
+        $('#potong_profit').val(harga);
+    }
+
     function do_submit(dt) {
 
         Swal.fire({
-            title: 'Simpan Data Pegawai ?',
+            title: 'Simpan Retur Barang ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -49,7 +66,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/pegawai/do_submit') ?>",
+                    url: "<?= base_url('cabang/retur_barang/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

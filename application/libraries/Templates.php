@@ -16,6 +16,7 @@ class Templates
         if ($_SESSION['id_otoritas'] == 1) $inc = 'template/sidebar_super_admin';
         if ($_SESSION['id_otoritas'] == 2) $inc = 'template/sidebar_admin';
         if ($_SESSION['id_otoritas'] == 3) $inc = 'template/sidebar_cabang';
+        if ($_SESSION['id_otoritas'] == 7) $inc = 'template/sidebar_gudang';
 
         $data['include_sidebar'] = $inc;
 

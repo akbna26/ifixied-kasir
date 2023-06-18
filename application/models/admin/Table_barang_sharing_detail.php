@@ -15,7 +15,7 @@ class Table_barang_sharing_detail extends CI_Model
     {
         $id_sharing = decode_id($this->input->get('id_sharing'));
 
-        $this->db->select('a.*, b.nama as barang, b.barcode, c.nama as kategori, d.is_konfirmasi');
+        $this->db->select('a.*, b.nama as barang, b.barcode, c.nama as kategori, d.is_konfirmasi, (a.stock * b.harga_modal) as modal');
         $this->db->from('sharing_detail a');
         $this->db->join('barang b', 'b.id = a.id_barang and b.deleted is null', 'left');
         $this->db->join('ref_kategori c', 'c.id = b.id_kategori', 'left');
@@ -87,6 +87,7 @@ class Table_barang_sharing_detail extends CI_Model
             $row[] = $field->barang
                 . '<span class="d-block text-primary fw-600">' . $field->barcode . '</span>';
             $row[] = rupiah($field->stock);
+            $row[] = rupiah($field->modal);
 
             if ($field->is_konfirmasi == 0) {
                 $row[] = '

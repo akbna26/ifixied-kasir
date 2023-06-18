@@ -17,6 +17,7 @@ class Table_laporan_transaksi extends CI_Model
         $id_cabang = $this->input->get('id_cabang');
         $select_tahun = $this->input->get('select_tahun');
         $select_bulan = $this->input->get('select_bulan');
+        $select_dp = $this->input->get('select_dp');
 
         $this->db->select('a.*, b.nama as cabang, c.nama as pegawai');
         $this->db->from('transaksi a');
@@ -93,7 +94,6 @@ class Table_laporan_transaksi extends CI_Model
             $row[] = $field->cabang;
             $row[] = $field->pegawai;
             $row[] = rupiah($field->total);
-
             $row[] = '
                 <button onclick="detail(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-eye"></i> Detail</button>
             ';

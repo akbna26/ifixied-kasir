@@ -13,10 +13,10 @@ class Table_kasir_cari_produk extends CI_Model
 
     private function _get_datatables_query()
     {
-        $this->db->select('a.*, b.nama as nm_kategori');
+        $this->db->select('a.*, b.nama as nm_kategori, c.stock');
         $this->db->from('barang a');
         $this->db->join('ref_kategori b', 'b.id = a.id_kategori', 'left');
-        $this->db->where('a.id_cabang', $this->id_cabang);
+        $this->db->join('barang_cabang c', "c.id_barang = a.id and c.id_cabang='$this->id_cabang' and c.deleted is null ");
         $this->db->where('a.deleted', null);
 
         $i = 0;

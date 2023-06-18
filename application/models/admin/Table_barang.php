@@ -15,9 +15,10 @@ class Table_barang extends CI_Model
     {
         $id_kategori = $this->input->get('id_kategori');
 
-        $this->db->select('a.*, c.nama as kategori');
+        $this->db->select('a.*, c.nama as kategori, d.nama as supplier');
         $this->db->from('barang a');
         $this->db->join('ref_kategori c', 'c.id = a.id_kategori', 'left');
+        $this->db->join('ref_supplier d', 'd.id = a.id_supplier', 'left');
         $this->db->where('a.deleted', null);
 
         if ($id_kategori != 'all') $this->db->where('a.id_kategori', $id_kategori);
@@ -114,6 +115,7 @@ class Table_barang extends CI_Model
             $row[] = $field->barcode;
 
             $row[] = '<span class="d-block">Ket. : ' . $field->keterangan . '</span>'
+                .'<span class="d-block text-secondary">Supplier : ' . $field->supplier . '</span>'
                 . $gambar;
 
             $row[] = '

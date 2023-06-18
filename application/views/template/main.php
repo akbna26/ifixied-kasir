@@ -21,7 +21,7 @@
     <link rel="stylesheet" href="<?= base_url('assets/custom/my_font.css') ?>">
 </head>
 
-<body class="<?= empty($no_sidebar) ? '' : 'sidebar-enable vertical-collpsed' ?>" data-sidebar="dark">
+<body class="<?= empty($no_sidebar) ? '' : 'sidebar-enable vertical-collpsed' ?> <?= empty($sidebar_mini) ? '' : 'vertical-collpsed' ?>" data-sidebar="dark">
 
     <!-- Begin page -->
     <div id="layout-wrapper">

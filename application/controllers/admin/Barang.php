@@ -8,6 +8,7 @@ class Barang extends MY_controller
     {
         parent::__construct();
         $this->load->model('admin/table_barang', 'table');
+        $this->load->model('admin/table_stock_cabang', 'table_stock_cabang');
     }
 
     public function index()
@@ -16,6 +17,19 @@ class Barang extends MY_controller
             'index' => 'admin/barang/index',
             'index_js' => 'admin/barang/index_js',
             'title' => 'Daftar Barang',
+        ];
+
+        $data['ref_kategori'] = $this->db->query("SELECT * from ref_kategori where deleted is null")->result();
+
+        $this->templates->load($data);
+    }
+
+    public function stock_cabang()
+    {
+        $data = [
+            'index' => 'admin/barang/stock_cabang',
+            'index_js' => 'admin/barang/stock_cabang_js',
+            'title' => 'Stock Cabang',
         ];
 
         $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null")->result();
@@ -29,10 +43,16 @@ class Barang extends MY_controller
         echo $this->table->generate_table();
     }
 
+    public function table_stock_cabang()
+    {
+        echo $this->table_stock_cabang->generate_table();
+    }
+
     public function tambah()
     {
         $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null")->result();
         $data['ref_kategori'] = $this->db->query("SELECT * from ref_kategori where deleted is null")->result();
+        $data['ref_supplier'] = $this->db->query("SELECT * from ref_supplier where deleted is null")->result();
         $html = $this->load->view('admin/barang/form', $data, true);
 
         echo json_encode([
@@ -48,6 +68,7 @@ class Barang extends MY_controller
         $data['data'] = $this->db->query("SELECT * from barang where id='$id' and deleted is null ")->row();
         $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null")->result();
         $data['ref_kategori'] = $this->db->query("SELECT * from ref_kategori where deleted is null")->result();
+        $data['ref_supplier'] = $this->db->query("SELECT * from ref_supplier where deleted is null")->result();
         $html = $this->load->view('admin/barang/form', $data, true);
 
         echo json_encode([
@@ -63,6 +84,7 @@ class Barang extends MY_controller
         $hapus = $this->input->post('hapus');
 
         $id_kategori = $this->input->post('id_kategori');
+        $id_supplier = $this->input->post('id_supplier');
         $barcode = $this->input->post('barcode');
         $nama = $this->input->post('nama');
         $harga_modal = clear_koma($this->input->post('harga_modal'));
@@ -109,6 +131,7 @@ class Barang extends MY_controller
             if (empty($id)) {
                 $this->db->insert('barang', [
                     'id_kategori' => $id_kategori,
+                    'id_supplier' => $id_supplier,
                     'barcode' => $barcode,
                     'nama' => $nama,
                     'harga_modal' => $harga_modal,
@@ -130,6 +153,7 @@ class Barang extends MY_controller
                 $this->db->where('id', $id);
                 $this->db->update('barang', [
                     'id_kategori' => $id_kategori,
+                    'id_supplier' => $id_supplier,
                     'barcode' => $barcode,
                     'nama' => $nama,
                     'harga_modal' => $harga_modal,

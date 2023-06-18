@@ -27,16 +27,6 @@
                     </ul>
                 </li>
 
-                <!-- <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-cart"></i>
-                        <span>Transaksi</span>
-                    </a>
-                    <ul class="sub-menu <?= $this->uri->segment(2) == 'transaksi' ? 'mm-collapse mm-show' : '' ?>">
-                        <li><a href="<?= base_url('admin/restock_barang') ?>">Restock Barang</a></li>
-                    </ul>
-                </li> -->
-
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bxs-user-check"></i>
@@ -55,6 +45,9 @@
                     </a>
                     <ul class="sub-menu <?= $this->uri->segment(2) == 'laporan' ? 'mm-collapse mm-show' : '' ?>">
                         <li><a href="<?= base_url('admin/laporan_transaksi') ?>">Transaksi Kasir</a></li>
+                        <li><a href="<?= base_url('admin/laporan_dp') ?>">Transaksi DP</a></li>
+                        <li><a href="<?= base_url('admin/laporan_refund') ?>">Refund Barang</a></li>
+                        <li><a href="<?= base_url('admin/retur_barang') ?>">Retur Barang</a></li>
                     </ul>
                 </li>
 
@@ -71,6 +64,7 @@
                         <li><a href="<?= base_url('admin/ref_tindakan') ?>">Tindakan Service</a></li>
                         <li><a href="<?= base_url('admin/ref_jabatan') ?>">Jabatan / Posisi</a></li>
                         <li><a href="<?= base_url('admin/ref_jenis_pembayaran') ?>">Jenis Pembayaran</a></li>
+                        <li><a href="<?= base_url('admin/ref_supplier') ?>">Data Supplier</a></li>
                     </ul>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'data_user' ? 'mm-active' : '' ?> single-link">

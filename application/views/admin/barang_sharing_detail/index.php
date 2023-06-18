@@ -7,14 +7,17 @@
                     <span class="text-white fw-600 text-underline">Sharing Cabang : <?= $row->nama ?>, <?= tgl_indo($row->tanggal) ?></span>
                 </div>
                 <div>
-                    <button onclick="history.go(-1);" class="btn btn-warning btn-rounded fw-600 mr-2">
+                    <button onclick="history.go(-1);" class="btn btn-light btn-sm fw-600 mr-2">
                         <i class="fa fa-arrow-left"></i> Kembali
                     </button>
                     <?php if ($row->is_konfirmasi == 0) : ?>
-                        <button onclick="tambah();" class="btn btn-primary btn-rounded fw-600 glow">
+                        <button onclick="tambah();" class="btn btn-light btn-sm fw-600">
                             <i class="fa fa-plus mr-1"></i> Tambah Data
                         </button>
                     <?php endif; ?>
+                    <a target="_blank" href="<?= base_url('admin/cetak/detail_sharing/' . encode_id($row->id)) ?>" class="btn btn-light btn-sm fw-600">
+                        <i class="fa fa-print mr-1"></i> Export Data
+                    </a>
                 </div>
             </div>
 
@@ -27,6 +30,7 @@
                                 <th class="fw-600">KATEGORI</th>
                                 <th class="fw-600">BARANG</th>
                                 <th class="fw-600">STOCK</th>
+                                <th class="fw-600">MODAL</th>
                                 <th class="fw-600" style="width: 250px;">AKSI</th>
                             </tr>
                         </thead>

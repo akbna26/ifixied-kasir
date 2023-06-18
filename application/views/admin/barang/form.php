@@ -1,11 +1,17 @@
 <form onsubmit="event.preventDefault();do_submit(this);" enctype="multipart/form-data">
-    <div class="form-group">
-        <label>Nama Barang</label>
-        <input type="text" required name="nama" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->nama ?>">
-    </div>
-
     <div class="row">
-        <div class="col-md-12">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Supplier</label>
+                <select required name="id_supplier" class="form-control js_select2" data-placeholder="pilih supplier">
+                    <option value=""></option>
+                    <?php foreach ($ref_supplier as $dt) : ?>
+                        <option <?= $dt->id == @$data->id_supplier ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label>Kategori Produk</label>
                 <select required name="id_kategori" class="form-control js_select2" data-placeholder="pilih kategori">
@@ -16,6 +22,11 @@
                 </select>
             </div>
         </div>
+    </div>
+
+    <div class="form-group">
+        <label>Nama Barang</label>
+        <input type="text" required name="nama" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->nama ?>">
     </div>
 
     <div class="row">

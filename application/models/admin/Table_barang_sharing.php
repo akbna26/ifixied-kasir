@@ -13,10 +13,13 @@ class Table_barang_sharing extends CI_Model
 
     private function _get_datatables_query()
     {
-        $this->db->select('a.*, b.nama as cabang, b.lokasi, c.total');
+        $this->db->select('a.*, b.nama as cabang, b.lokasi, c.total, c.modal');
         $this->db->from('sharing a');
         $this->db->join('ref_cabang b', 'b.id = a.id_cabang', 'left');
-        $this->db->join('(select id_sharing, count(1) as total from sharing_detail where deleted is null group by id_sharing) c', 'c.id_sharing = a.id', 'left');
+        $this->db->join('(select a.id_sharing, count(1) as total, sum(a.stock * b.harga_modal) as modal
+            from sharing_detail a
+            left join barang b on b.id=a.id_barang and b.deleted is null
+        where a.deleted is null group by a.id_sharing) c', 'c.id_sharing = a.id', 'left');
         $this->db->where('a.deleted', null);
 
         $i = 0;
@@ -84,7 +87,8 @@ class Table_barang_sharing extends CI_Model
 
             $row[] = tgl_indo($field->tanggal);
             $row[] = $field->total ?? 0;
-
+            $row[] = rupiah($field->modal) ?? 0;
+            
             if ($field->is_konfirmasi == '1') {
                 $row[] = '<span class="badge badge-success">Sudah dikonfirmasi</span>';
                 $row[] = '

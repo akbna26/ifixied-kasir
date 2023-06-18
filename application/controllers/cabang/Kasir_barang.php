@@ -55,7 +55,7 @@ class Kasir_barang extends MY_controller
     {
         $tahun = date('Y');
         $bulan = date('m');
-        $total_transaksi = $this->db->query("SELECT count(1)+1 as total from transaksi where month(created)='$bulan' and year(created)='$tahun' ")->row();
+        $total_transaksi = $this->db->query("SELECT count(1)+1 as total from transaksi where id_cabang='$this->id_cabang' and month(created)='$bulan' and year(created)='$tahun' ")->row();
         $no_invoice = 'INV' . $this->id_cabang . '-' . date('Ym') . '-' . sprintf("%04d", $total_transaksi->total);
 
         $cek_split = $this->input->post('cek_split');
@@ -81,7 +81,9 @@ class Kasir_barang extends MY_controller
         $get_prosen_bayar_2 = $this->db->query("SELECT * from ref_jenis_pembayaran where id='$jenis_bayar_2' and deleted is null ")->row();
 
         $potongan = $nominal_bayar * ($get_prosen_bayar_1->persen_potongan / 100);
-        $potongan_split = $total_bayar_split * ($get_prosen_bayar_2->persen_potongan / 100);
+
+        if ($cek_split == 1) $potongan_split = $total_bayar_split * ($get_prosen_bayar_2->persen_potongan / 100);
+        else $potongan_split = 0;
 
         $this->db->insert('transaksi', [
             'id_cabang' => $this->id_cabang,
@@ -123,7 +125,7 @@ class Kasir_barang extends MY_controller
 
         echo json_encode([
             'status' => 'success',
-            'data' => $_POST,
+            // 'data' => $_POST,
         ]);
     }
 }
