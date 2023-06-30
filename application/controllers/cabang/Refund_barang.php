@@ -30,6 +30,8 @@ class Refund_barang extends MY_controller
         WHERE
             a.deleted IS NULL 
         ")->result();
+
+        $data['ref_pegawai'] = $this->db->query("SELECT * from pegawai where id_cabang='$this->id_cabang' and deleted is null ")->result();
         $this->templates->load($data);
     }
 
@@ -54,6 +56,7 @@ class Refund_barang extends MY_controller
     {
         cek_post();
         $invoice = $this->input->post('invoice');
+        $id_pegawai = $this->input->post('id_pegawai');
 
         $transaksi = $this->db->query("SELECT * from transaksi where no_invoice='$invoice' and id_cabang='$this->id_cabang' and deleted is null ")->row();
 
@@ -68,6 +71,7 @@ class Refund_barang extends MY_controller
         $this->db->insert('refund', [
             'id_cabang' => $this->id_cabang,
             'id_transaksi' => $transaksi->id,
+            'id_pegawai' => $id_pegawai,
             'tanggal' => date('Y-m-d'),
             'created' => date('Y-m-d H:i:s'),
         ]);

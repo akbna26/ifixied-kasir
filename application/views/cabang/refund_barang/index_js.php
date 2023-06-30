@@ -216,6 +216,15 @@
                     id_barang.push(nilai);
                 });
 
+                if (id_barang.length < 1) {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Belum ada data',
+                        showConfirmButton: true,
+                    });
+                    throw false;
+                }
+
                 var harga_modal = [];
                 $('.td_hargamodal').each(function(i, obj) {
                     var nilai = $(this).data('nilai');
@@ -251,6 +260,7 @@
                 });
 
                 var invoice = $('#invoice').val();
+                var select_pegawai = $('#select_pegawai').val();
 
                 var form = new FormData(dt);
                 form.append('invoice', invoice);
@@ -261,6 +271,7 @@
                 form.append('nilai_refund', id_refund);
                 form.append('id_pengganti', id_pengganti);
                 form.append('pembayaran', pembayaran);
+                form.append('id_pegawai', select_pegawai);
 
                 $.ajax({
                     type: "POST",

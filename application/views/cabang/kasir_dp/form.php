@@ -10,10 +10,35 @@
     <div class="form-group">
         <label>Pembayaran</label>
         <select required name="pembayaran" class="form-control js_select2" data-placeholder="pilih jenis pembayaran">
-            <option value=""></option>
             <option <?= @$data->pembayaran == 'cash' ? 'selected' : '' ?> value="cash">Cash</option>
             <option <?= @$data->pembayaran == 'debit' ? 'selected' : '' ?> value="debit">Debit</option>
         </select>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Pegawai Yang Bertugas</label>
+                <select name="id_pegawai" required class="w-100 ph js_select2" data-placeholder="pilih pegawai">
+                    <option value=""></option>
+                    <?php foreach ($pegawai as $key) : ?>
+                        <option <?= @$data->id_pegawai == $key->id ? 'selected' : '' ?> value="<?= $key->id ?>"><?= $key->nama ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Nama Pelanggan</label>
+                <input type="text" required name="nama" placeholder="Masukkan isian" class="form-control" value="<?= @$data->nama ?>">
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Nomer HP (<small class="text-danger fw-600">diutamakan WA</small>)</label>
+                <input type="int" required name="no_hp" placeholder="Masukkan isian" class="form-control" value="<?= @$data->no_hp ?>">
+            </div>
+        </div>
     </div>
 
     <div class="form-group">
@@ -21,9 +46,19 @@
         <textarea required name="keterangan" rows="5" placeholder="Tulis keterangan produk" class="form-control"><?= @$data->keterangan ?></textarea>
     </div>
 
-    <div class="form-group">
-        <label>Total DP</label>
-        <input type="text" required name="total" placeholder="Masukkan isian" class="form-control rupiah" value="<?= empty($data->total) ? '' : rupiah($data->total) ?>">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Estimasi Biaya</label>
+                <input type="text" required name="estimasi_biaya" placeholder="Masukkan isian" class="form-control rupiah" value="<?= empty($data->estimasi_biaya) ? '' : rupiah($data->estimasi_biaya) ?>">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Total DP</label>
+                <input type="text" required name="total" placeholder="Masukkan isian" class="form-control rupiah" value="<?= empty($data->total) ? '' : rupiah($data->total) ?>">
+            </div>
+        </div>
     </div>
 
     <div class="form-group">

@@ -24,14 +24,29 @@
 
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="form-group">
-                            <input type="text" autocomplete="off" class="form-control" id="invoice" placeholder="invoice, contoh : INV1-202301-XXXX" value="">
-                            <small class="text-danger fw-600">*) masukkan invoice</small>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div class="form-group">
+                                    <input type="text" autocomplete="off" class="form-control" id="invoice" placeholder="invoice, contoh : INV1-202301-XXXX" value="">
+                                    <small class="text-danger fw-600">*) masukkan invoice</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <button id="cari_invoice" onclick="cari_invoice();" class="btn btn-block btn-primary fw-600"><i class="bx bx-search-alt-2 mr-1"></i> Cari Invoice</button>
+                                <button id="ganti_invoice" style="display: none;" onclick="reload_halaman();" class="btn btn-block mt-0 btn-danger fw-600"><i class="fa fa-times mr-1"></i> Ganti Invoice</button>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-4">
-                        <button id="cari_invoice" onclick="cari_invoice();" class="btn btn-block btn-primary fw-600"><i class="bx bx-search-alt-2 mr-1"></i> Cari Invoice</button>
-                        <button id="ganti_invoice" style="display: none;" onclick="reload_halaman();" class="btn btn-block mt-0 btn-danger fw-600"><i class="fa fa-times mr-1"></i> Ganti Invoice</button>
+                        <div class="form-group">
+                            <select required name="id_pegawai" id="select_pegawai" class="form-control js_select2" data-placeholder="pilih pegawai">
+                                <option value=""></option>
+                                <?php foreach ($ref_pegawai as $dt) : ?>
+                                    <option value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                            <small class="text-danger fw-600">*) Pegawai yang bertugas</small>
+                        </div>
                     </div>
                 </div>
 

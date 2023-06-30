@@ -28,7 +28,7 @@ class Kasir_dp extends MY_controller
 
     public function tambah()
     {
-        $data = [];
+        $data['pegawai'] = $this->db->query("SELECT * from pegawai where id_cabang='$this->id_cabang' and deleted is null ")->result();
         $html = $this->load->view('cabang/kasir_dp/form', $data, true);
 
         echo json_encode([
@@ -42,6 +42,7 @@ class Kasir_dp extends MY_controller
         $id = decode_id($this->input->post('id'));
         $data['id'] = $id;
         $data['data'] = $this->db->query("SELECT * from dp where id='$id' and deleted is null ")->row();
+        $data['pegawai'] = $this->db->query("SELECT * from pegawai where id_cabang='$this->id_cabang' and deleted is null ")->result();
         $html = $this->load->view('cabang/kasir_dp/form', $data, true);
 
         echo json_encode([
@@ -63,8 +64,12 @@ class Kasir_dp extends MY_controller
 
         $pembayaran = $this->input->post('pembayaran');
         $total = clear_koma($this->input->post('total'));
+        $estimasi_biaya = clear_koma($this->input->post('estimasi_biaya'));
         $tanggal = date('Y-m-d', strtotime($this->input->post('tanggal')));
         $keterangan = $this->input->post('keterangan');
+        $id_pegawai = $this->input->post('id_pegawai');
+        $nama = $this->input->post('nama');
+        $no_hp = $this->input->post('no_hp');
 
         if (!empty($hapus)) {
             $this->db->where('id', $id);
@@ -80,6 +85,10 @@ class Kasir_dp extends MY_controller
                     'keterangan' => $keterangan,
                     'kode' => $no_invoice,
                     'id_cabang' => $this->id_cabang,
+                    'nama' => $nama,
+                    'id_pegawai' => $id_pegawai,
+                    'estimasi_biaya' => $estimasi_biaya,
+                    'no_hp' => $no_hp,
                     'created' => date('Y-m-d H:i:s'),
                 ]);
             } else {
@@ -89,6 +98,10 @@ class Kasir_dp extends MY_controller
                     'total' => $total,
                     'tanggal' => $tanggal,
                     'keterangan' => $keterangan,
+                    'nama' => $nama,
+                    'id_pegawai' => $id_pegawai,
+                    'estimasi_biaya' => $estimasi_biaya,
+                    'no_hp' => $no_hp,
                     'updated' => date('Y-m-d H:i:s'),
                 ]);
             }
