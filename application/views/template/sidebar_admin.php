@@ -15,7 +15,7 @@
                     </a>
                 </li>
 
-                 <li>
+                <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-cube-alt"></i>
                         <span>Master Barang</span>
@@ -49,6 +49,13 @@
                         <li><a href="<?= base_url('admin/laporan_refund') ?>">Refund Barang</a></li>
                         <li><a href="<?= base_url('admin/retur_barang') ?>">Retur Barang</a></li>
                     </ul>
+                </li>
+
+                <li class="<?= $this->uri->segment(2) == 'servis_berat' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('admin/servis_berat') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-wrench"></i>
+                        <span>Servis Berat</span>
+                    </a>
                 </li>
 
                 <li class="menu-title" key="t-apps">Setting</li>

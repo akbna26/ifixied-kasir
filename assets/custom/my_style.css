@@ -120,3 +120,74 @@ body[data-sidebar=dark] .navbar-brand-box {
     background-size: contain !important;
     background-repeat: repeat-y !important;
 }
+
+input:focus,
+textarea:focus {
+    outline: none !important;
+    box-shadow: 0 0 0 #00aaff, 0 0 0 #00aaff, 0 0 5px #00aaff !important;
+}
+
+.container-fluid .card {
+    border: 1px solid #1c1c58 !important;
+    border-style: dotted;
+}
+
+
+/* flash */
+
+.flash1 {
+    animation-name: flash1;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: running;
+}
+
+.flash2 {
+    animation-name: flash2;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: running;
+}
+
+.flash3 {
+    animation-name: flash3;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-play-state: running;
+}
+
+@keyframes flash1 {
+    from {
+        color: red;
+    }
+    to {
+        color: white;
+    }
+}
+
+@keyframes flash2 {
+    from {
+        color: blue;
+    }
+    to {
+        color: white;
+    }
+}
+
+@keyframes flash3 {
+    from {
+        color: green;
+    }
+    to {
+        color: white;
+    }
+}
+
+
+/* end flash */

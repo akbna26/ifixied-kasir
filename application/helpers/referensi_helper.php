@@ -57,3 +57,14 @@ function insert_log($pesan, $nilai = null)
         'created' => date('Y-m-d H:i:s'),
     ]);
 }
+
+function insert_log_servis($id_servis, $status, $keterangan)
+{
+    $CI = &get_instance();
+    $CI->db->insert('log_servis', [
+        'id_servis' => $id_servis,
+        'status' => $status,
+        'keterangan' => empty($keterangan) ? null : $keterangan,
+        'created' => date('Y-m-d H:i:s'),
+    ]);
+}

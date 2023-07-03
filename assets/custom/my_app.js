@@ -106,3 +106,16 @@ function detail_gambar(dt) {
         size: 'modal-lg',
     });
 }
+
+function angka(x) {
+    if (!Number.isInteger(x)) {
+        let data = x.replaceAll('.', '');
+        data = parseInt(data);
+        if (isNaN(data)) {
+            return data = 0;
+        }
+        return data;
+    } else {
+        return angka;
+    }
+}

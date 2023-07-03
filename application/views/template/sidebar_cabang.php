@@ -25,6 +25,7 @@
                         <li><a href="<?= base_url('cabang/kasir_barang') ?>">Penjualan Barang</a></li>
                         <li><a href="<?= base_url('cabang/refund_barang') ?>">Refund Barang</a></li>
                         <li><a href="<?= base_url('cabang/retur_barang') ?>">Retur Barang</a></li>
+                        <li><a href="<?= base_url('cabang/servis_berat') ?>">Servis Berat</a></li>
                     </ul>
                 </li>
 

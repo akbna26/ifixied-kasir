@@ -1,5 +1,5 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 /*
 | -------------------------------------------------------------------------
@@ -68,3 +68,6 @@ $route['gudang/retur_barang/(:any)'] = 'cabang/retur_barang/$1';
 
 $route['admin/retur_barang'] = 'cabang/retur_barang';
 $route['admin/retur_barang/(:any)'] = 'cabang/retur_barang/$1';
+
+$route['admin/servis_berat'] = 'cabang/servis_berat';
+$route['admin/servis_berat/(:any)'] = 'cabang/servis_berat/$1';
