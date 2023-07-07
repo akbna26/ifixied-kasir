@@ -130,7 +130,7 @@ class Table_servis_berat extends CI_Model
 
             $aksi .= '<button onclick="detail(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-success fw-600 mt-1"><i class="fas fa-eye mr-1"></i> Detail</button>';
 
-            if ($field->status == 9 && $field->id_pengambilan == 3 && session('type') == 'cabang') {
+            if (in_array($field->status, [7, 8, 9]) && $field->id_pengambilan == 3 && session('type') == 'cabang') {
                 $aksi .= '<button onclick="bayar(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary fw-600 mt-1"><i class="fas fa-money-check-alt mr-1"></i> Payment</button>';
             }
 

@@ -55,6 +55,50 @@ class Servis_berat extends MY_controller
         echo $this->table->generate_table();
     }
 
+    public function detail()
+    {
+        $id = decode_id($this->input->post('id'));
+        $data['id'] = $id;
+        $data['row'] = $this->db->query("SELECT
+            a.*,
+            b.nama AS nm_status,
+            ifnull( c.nama, '-' ) AS nm_tindakan,
+            ifnull( f.nama, '-' ) AS nm_teknisi,
+            e.nama AS nm_cabang,
+            g.nama AS nm_pengambilan 
+        FROM servis_berat a
+            LEFT JOIN ref_status_servis b ON b.id = a.
+            STATUS LEFT JOIN ref_tindakan c ON c.id = a.id_tindakan
+            LEFT JOIN setting_pegawai d ON d.id = a.id_teknisi_setting
+            LEFT JOIN pegawai f ON f.id = d.id_pegawai
+            LEFT JOIN ref_cabang e ON e.id = a.id_cabang
+            LEFT JOIN ref_pengambilan g ON g.id = a.id_pengambilan 
+        WHERE
+            a.deleted IS NULL and a.id='$id'
+        ")->row();
+
+        $html = $this->load->view('cabang/servis_berat/detail', $data, true);
+
+        echo json_encode([
+            'status' => 'success',
+            'html' => $html,
+        ]);
+    }
+
+    public function bayar()
+    {
+        $id = decode_id($this->input->post('id'));
+        $data['id'] = $id;
+        $data['data'] = $this->db->query("SELECT * from servis_berat where id='$id' and deleted is null ")->row();
+
+        $html = $this->load->view('cabang/servis_berat/bayar', $data, true);
+
+        echo json_encode([
+            'status' => 'success',
+            'html' => $html,
+        ]);
+    }
+
     public function tambah()
     {
         $data = [];
@@ -150,6 +194,29 @@ class Servis_berat extends MY_controller
         ]);
     }
 
+    public function do_bayar()
+    {
+        cek_post();
+        $id = decode_id($this->input->post('id'));
+
+        $tgl_keluar = date('Y-m-d', strtotime($this->input->post('tgl_keluar')));
+        $bayar = clear_koma($this->input->post('bayar'));
+        $user_pengambil = $this->input->post('user_pengambil');
+
+        $this->db->where('id', $id);
+        $this->db->update('servis_berat', [
+            'id_pengambilan' => 4,
+            'tgl_keluar' => $tgl_keluar,
+            'bayar' => $bayar,
+            'user_pengambil' => $user_pengambil,
+            'updated' => date('Y-m-d H:i:s'),
+        ]);
+
+        echo json_encode([
+            'status' => 'success',
+        ]);
+    }
+
     public function konfirmasi()
     {
         cek_post();
@@ -212,7 +279,7 @@ class Servis_berat extends MY_controller
             $this->db->set('invoice', $no_invoice);
         }
 
-        if ($status == 9) $this->db->set('id_pengambilan', 3);
+        if (in_array($status, [7, 8, 9])) $this->db->set('id_pengambilan', 3);
 
         if ($status == 5) {
             $this->db->where('id', $id);
