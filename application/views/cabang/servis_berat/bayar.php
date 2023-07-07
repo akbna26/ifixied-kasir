@@ -6,9 +6,24 @@
     </ul>
 </div>
 <form onsubmit="event.preventDefault();do_submit(this);">
-    <div class="form-group">
-        <label>User Pengambil <small class="text-danger fw-600">*</small></label>
-        <input type="text" required name="user_pengambil" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->user_pengambil) ? $data->pelanggan : $data->user_pengambil ?>">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Pegawai <small class="text-danger fw-600">*</small></label>
+                <select required name="id_pegawai" class="form-control js_select2" data-placeholder="pilih pegawai">
+                    <option value=""></option>
+                    <?php foreach ($pegawai as $dt) : ?>
+                        <option value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>User Pengambil <small class="text-danger fw-600">*</small></label>
+                <input type="text" required name="user_pengambil" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->user_pengambil) ? $data->pelanggan : $data->user_pengambil ?>">
+            </div>
+        </div>
     </div>
 
     <table class="table table-bordered table-primary">
@@ -34,6 +49,12 @@
 </form>
 
 <script>
+    $(document).ready(function() {
+        $('.js_select2').select2({
+            width: '100%'
+        });
+    });
+
     function do_submit(dt) {
 
         Swal.fire({
@@ -74,6 +95,7 @@
                                     showConfirmButton: true,
                                 })
                                 .then(() => {
+                                    window.open(res.link);
                                     $('#table_data').DataTable().ajax.reload();
                                 })
                         }

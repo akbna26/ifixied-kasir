@@ -51,7 +51,7 @@
             <td style="width: 70%;">
                 <h3>NOTA REFUND</h3>
             </td>
-            <td style="text-align: right;">Waktu : <?= tgl_indo($row->tanggal, true) ?></td>
+            <td style="text-align: right;">Waktu : <?= tgl_indo($row->tanggal) ?></td>
         </tr>
     </table>
     <hr>

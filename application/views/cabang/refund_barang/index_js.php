@@ -300,7 +300,8 @@
                                     showConfirmButton: true,
                                 })
                                 .then(() => {
-                                    location.reload();
+                                    window.open(res.link);
+                                    location.href="<?= base_url('cabang/refund_barang') ?>";
                                 })
                         }
                     }

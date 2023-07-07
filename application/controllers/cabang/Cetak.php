@@ -106,6 +106,41 @@ class Cetak extends MY_controller
         $cetak = 'Laporan.pdf';
         $mpdf->Output($cetak, 'I'); // opens in browser 
     }
-}
 
-/* End of file Dashboard.php */
+    public function nota_servis_berat($id = null)
+    {
+        if (!$id) {
+            dd('not allowed');
+        }
+        error_reporting(0);
+        $id = decode_id($id);
+
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4']); //lebar x tinggi kertas // jika custom [120,75]
+        $mpdf->AddPage('P', '', '', '', '', 10, 10, 10, 10, 25, 25); // L, R, T, B
+        $mpdf->SetDisplayMode('fullpage');
+        $mpdf->SetDisplayPreferences('FullScreen');
+
+        $data['row'] = $this->db->query("SELECT
+            a.*,
+            b.nama AS nm_status,
+            ifnull( c.nama, '-' ) AS nm_tindakan,
+            ifnull( f.nama, '-' ) AS nm_teknisi, f.nama as nm_pegawai,
+            e.nama AS nm_cabang, e.lokasi, e.kontak,
+            g.nama AS nm_pengambilan 
+        FROM servis_berat a
+            LEFT JOIN ref_status_servis b ON b.id = a.
+            STATUS LEFT JOIN ref_tindakan c ON c.id = a.id_tindakan
+            LEFT JOIN setting_pegawai d ON d.id = a.id_teknisi_setting
+            LEFT JOIN pegawai f ON f.id = d.id_pegawai
+            LEFT JOIN ref_cabang e ON e.id = a.id_cabang
+            LEFT JOIN ref_pengambilan g ON g.id = a.id_pengambilan 
+        WHERE
+            a.deleted IS NULL and a.id='$id'
+        ")->row();
+
+        $html = $this->load->view('cabang/cetak/nota_servis_berat', $data, true);
+        $mpdf->WriteHTML($html);
+        $cetak = 'Laporan.pdf';
+        $mpdf->Output($cetak, 'I'); // opens in browser 
+    }
+}

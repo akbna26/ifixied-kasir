@@ -116,6 +116,7 @@
                                     showConfirmButton: true,
                                 })
                                 .then(() => {
+                                    window.open(res.link);
                                     $('#table_data').DataTable().ajax.reload();
                                 })
                         }

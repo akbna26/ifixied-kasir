@@ -553,6 +553,7 @@
                                     showConfirmButton: true,
                                 })
                                 .then(() => {
+                                    window.open(res.link)
                                     location.reload();
                                 })
                         }

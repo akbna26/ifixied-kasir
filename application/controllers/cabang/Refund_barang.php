@@ -98,6 +98,7 @@ class Refund_barang extends MY_controller
 
         echo json_encode([
             'status' => 'success',
+            'link' => base_url('cabang/cetak/nota_refund/') . encode_id($id_insert),
         ]);
     }
 }

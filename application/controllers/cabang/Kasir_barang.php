@@ -117,6 +117,14 @@ class Kasir_barang extends MY_controller
                 'sub_total' => $produk_sub_total[$i],
                 'created' => date('Y-m-d H:i:s'),
             ];
+
+            $pengurang = $produk_qty[$i];
+            $id_pengurang = $produk_id[$i];
+            $this->db->query("UPDATE barang_cabang set stock=(
+                case when stock is not null and stock !=0 then stock-$pengurang
+                else stock end
+                ) where id='$id_pengurang' and id_cabang='$this->id_cabang'
+            ");
         }
 
         if (!empty($arr_insert)) {
@@ -125,7 +133,7 @@ class Kasir_barang extends MY_controller
 
         echo json_encode([
             'status' => 'success',
-            // 'data' => $_POST,
+            'link' => base_url('cabang/cetak/nota_transaksi/') . encode_id($id_transaksi),
         ]);
     }
 }

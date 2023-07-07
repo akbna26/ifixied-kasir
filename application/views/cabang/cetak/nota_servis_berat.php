@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nota Transaksi</title>
+    <title>Nota Servis</title>
     <style>
         table.list thead tr th,
         table.list tbody tr td {
@@ -54,7 +54,7 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 70%;">
-                <h3>FAKTUR PENJUALAN</h3>
+                <h3>NOTA SERVIS</h3>
             </td>
             <td style="text-align: right;">Waktu : <?= tgl_indo($row->created, true) ?></td>
         </tr>
@@ -64,9 +64,9 @@
     <table style="width: 100%;">
         <tr>
             <td style="width: 130px;">NO. INVOICE</td>
-            <td style="width: 150px;">: <?= $row->no_invoice ?></td>
-            <td style="width: 100px;"></td>
-            <td style="width: 150px;">KETERANGAN</td>
+            <td style="width: 170px;">: <?= $row->invoice ?></td>
+            <td style="width: 50px;"></td>
+            <td style="width: 120px;">KETERANGAN</td>
             <td>: <?= nl2br($row->keterangan) ?></td>
         </tr>
         <tr>
@@ -89,67 +89,49 @@
         </tr>
     </table>
 
+    <br>
+
     <table style="width: 100%;" class="list">
         <thead>
             <tr>
-                <th>Barcode</th>
-                <th style="width: 200px;">Produk</th>
-                <th>Qty/@Harga</th>
-                <th>Deskripsi</th>
-                <th>Subtotal</th>
+                <th style="width: 120px;">Unit</th>
+                <th style="width: 120px;">Serial Number</th>
+                <th>Kerusakan</th>
+                <th>Tindakan</th>
             </tr>
         </thead>
-        <?php foreach ($detail as $dt) : ?>
-            <tbody>
-                <tr>
-                    <td><?= $dt->barcode ?></td>
-                    <td><?= $dt->nm_barang ?></td>
-                    <td><?= $dt->qty ?> @<?= rupiah($dt->harga) ?></td>
-                    <td><?= $dt->keterangan ?? '-' ?></td>
-                    <td style="text-align: right;"><?= rupiah($dt->sub_total) ?></td>
-                </tr>
-            </tbody>
-        <?php endforeach; ?>
+        <tbody>
+            <tr>
+                <td><?= $row->tipe_unit ?></td>
+                <td><?= $row->serial_number ?></td>
+                <td><?= $row->kerusakan ?></td>
+                <td><?= $row->nm_tindakan ?></td>
+            </tr>
+        </tbody>
         <tfoot>
             <tr>
-                <td colspan="5">
+                <td colspan="3"></td>
+                <td>
                     <br>
+                    <table border="0">
+                        <tr>
+                            <td class="border" style="text-align: right;">Total :</td>
+                            <td class="border" style="text-align: right;"><?= rupiah($row->biaya) ?></td>
+                        </tr>
+                        <tr>
+                            <td class="border" style="text-align: right;">Bayar :</td>
+                            <td class="border" style="text-align: right;"><?= rupiah($row->bayar) ?></td>
+                        </tr>
+                        <tr>
+                            <td class="border" style="text-align: right;">Kembalian :</td>
+                            <td class="border" style="text-align: right;"><?= ($row->bayar - $row->biaya) == 0 ? 0 : rupiah($row->bayar - $row->biaya) ?></td>
+                        </tr>
+                    </table>
                 </td>
-            </tr>
-            <tr>
-                <td colspan="3"></td>
-                <td class="border" style="text-align: right;">Total :</td>
-                <td class="border" style="text-align: right;"><?= rupiah($row->total) ?></td>
-            </tr>
-            <tr>
-                <td colspan="3"></td>
-                <td class="border" style="text-align: right;">Payment :</td>
-                <td class="border" style="text-align: right;"><?= $row->nm_pembayaran ?></td>
-            </tr>
-            <tr>
-                <td colspan="3"></td>
-                <td class="border" style="text-align: right;">Bayar :</td>
-                <td class="border" style="text-align: right;"><?= rupiah($row->bayar) ?></td>
-            </tr>
-            <tr>
-                <td colspan="3"></td>
-                <td class="border" style="text-align: right;">Split :</td>
-                <td class="border" style="text-align: right;"><?= $row->is_split == 1 ? rupiah($row->total_split) : 0 ?></td>
-            </tr>
-            <tr>
-                <td colspan="3"></td>
-                <td class="border" style="text-align: right;">DP :</td>
-                <td class="border" style="text-align: right;"><?= rupiah($row->dp) ?></td>
-            </tr>
-            <tr>
-                <td colspan="3"></td>
-                <td class="border" style="text-align: right;">Kembalian :</td>
-                <td class="border" style="text-align: right;"><?= rupiah($row->kembalian) ?></td>
             </tr>
         </tfoot>
     </table>
 
-    <br>
     <br>
 
     <table style="width: 100%;">
@@ -161,7 +143,7 @@
                 <br>
                 <br>
                 <br>
-                <u>( <?= $row->pelanggan ?> )</u>
+                <u>( <?= $row->user_pengambil ?> )</u>
             </td>
             <td style="text-align: center;">
                 <b>PEGAWAI</b>
@@ -175,7 +157,6 @@
         </tr>
     </table>
 
-    <br>
     <br>
 
     <table>

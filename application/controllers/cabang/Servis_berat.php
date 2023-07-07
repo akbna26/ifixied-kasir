@@ -90,6 +90,7 @@ class Servis_berat extends MY_controller
         $id = decode_id($this->input->post('id'));
         $data['id'] = $id;
         $data['data'] = $this->db->query("SELECT * from servis_berat where id='$id' and deleted is null ")->row();
+        $data['pegawai'] = $this->db->query("SELECT * from pegawai where id_cabang='$this->id_cabang' and deleted is null ")->result();
 
         $html = $this->load->view('cabang/servis_berat/bayar', $data, true);
 
@@ -202,9 +203,11 @@ class Servis_berat extends MY_controller
         $tgl_keluar = date('Y-m-d', strtotime($this->input->post('tgl_keluar')));
         $bayar = clear_koma($this->input->post('bayar'));
         $user_pengambil = $this->input->post('user_pengambil');
+        $id_pegawai = $this->input->post('id_pegawai');
 
         $this->db->where('id', $id);
         $this->db->update('servis_berat', [
+            'id_pegawai' => $id_pegawai,
             'id_pengambilan' => 4,
             'tgl_keluar' => $tgl_keluar,
             'bayar' => $bayar,
@@ -214,6 +217,7 @@ class Servis_berat extends MY_controller
 
         echo json_encode([
             'status' => 'success',
+            'link' => base_url('cabang/cetak/nota_servis_berat/') . encode_id($id),
         ]);
     }
 

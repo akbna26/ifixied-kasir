@@ -91,6 +91,7 @@ class Kasir_dp extends MY_controller
                     'no_hp' => $no_hp,
                     'created' => date('Y-m-d H:i:s'),
                 ]);
+                $id = $this->db->insert_id();
             } else {
                 $this->db->where('id', $id);
                 $this->db->update('dp', [
@@ -108,7 +109,8 @@ class Kasir_dp extends MY_controller
         }
 
         echo json_encode([
-            'status' => 'success'
+            'status' => 'success',
+            'link' => base_url('cabang/cetak/nota_dp/') . encode_id($id),
         ]);
     }
 }

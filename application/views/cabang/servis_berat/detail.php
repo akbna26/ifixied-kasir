@@ -1,4 +1,4 @@
-<a href="#" target="_blank" class="btn btn-success btn-lg float-right fw-600"><i class="fa fa-print mr-1"></i> PRINT NOTA</a>
+<a href="<?= base_url('cabang/cetak/nota_servis_berat/') . encode_id($row->id) ?>" target="_blank" class="btn btn-success btn-lg float-right fw-600"><i class="fa fa-print mr-1"></i> PRINT NOTA</a>
 <div style="clear: both;"></div>
 
 <div class="row mt-2">
