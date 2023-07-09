@@ -24,26 +24,32 @@ class Servis_berat extends MY_controller
             [
                 'nama' => 'Belum Cek',
                 'id' => '1',
+                'nick' => 'belum',
             ],
             [
                 'nama' => 'Sedang Cek',
                 'id' => '2',
+                'nick' => 'sedang',
             ],
             [
                 'nama' => 'Menunggu',
                 'id' => '3,4',
+                'nick' => 'menunggu',
             ],
             [
                 'nama' => 'Proses',
                 'id' => '5,6',
+                'nick' => 'proses',
             ],
             [
                 'nama' => 'Cancel',
                 'id' => '7,8',
+                'nick' => 'cancel',
             ],
             [
                 'nama' => 'Sudah Jadi',
                 'id' => '9',
+                'nick' => 'selesai',
             ],
         ];
 
@@ -324,6 +330,47 @@ class Servis_berat extends MY_controller
         echo json_encode([
             'status' => 'success',
             'data' => $list,
+        ]);
+    }
+
+    public function get_total()
+    {
+        $where = '';
+        if (session('type') == 'cabang') $where = "and a.id_cabang='$this->id_cabang'";
+        $data = $this->db->query("SELECT 
+            count(1) as 'all'
+            ,count(case when status in(1) then 1 end) as 'belum'
+            ,count(case when status in(2) then 1 end) as 'sedang'
+            ,count(case when status in(3,4) then 1 end) as 'menunggu'
+            ,count(case when status in(5,6) then 1 end) as 'proses'
+            ,count(case when status in(7,8) then 1 end) as 'cancel'
+            ,count(case when status in(9) then 1 end) as 'selesai'
+            from servis_berat a 
+            where a.deleted is null $where
+        ")->row();
+
+        echo json_encode([
+            'status' => 'success',
+            'data' => $data,
+        ]);
+    }
+
+    public function log()
+    {
+        $id = decode_id($this->input->post('id'));
+        $data['id'] = $id;
+        $data['data'] = $this->db->query("SELECT a.*, b.nama as nm_status
+            from log_servis a 
+            left join ref_status_servis b on b.id=a.status
+            where a.id_servis='$id' and a.deleted is null 
+            order by a.id
+        ")->result();
+
+        $html = $this->load->view('cabang/servis_berat/log', $data, true);
+
+        echo json_encode([
+            'status' => 'success',
+            'html' => $html,
         ]);
     }
 }

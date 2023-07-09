@@ -26,7 +26,7 @@ class Table_servis_berat extends CI_Model
         $this->db->join('ref_pengambilan g', 'g.id = a.id_pengambilan', 'left');
 
         $this->db->where('a.deleted', null);
-        $this->db->where('a.status in (' . $id_status . ') ');
+        if ($id_status != 'all') $this->db->where('a.status in (' . $id_status . ') ');
 
         if (session('type') == 'cabang') $this->db->where('a.id_cabang', $this->id_cabang);
 
@@ -137,6 +137,8 @@ class Table_servis_berat extends CI_Model
             if (session('type') == 'admin' && !in_array($field->status, [7, 8, 9])) {
                 $aksi .= '<button onclick="konfirmasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary fw-600 mt-1"><i class="fas fa-gavel mr-1"></i> Konfirmasi</button>';
             }
+
+            $aksi .= '<button onclick="log(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-dark fw-600 ml-1 mt-1"><i class="far fa-list-alt mr-1"></i> Log</button>';
 
             $row[] = $aksi;
 

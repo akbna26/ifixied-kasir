@@ -349,7 +349,7 @@
 
     <div class="error" id="error">
         <div class="container">
-            <div class="content centered"><img style="width:500px;" src="https://breedingin.com/htdocs_error/something-lost.png">
+            <div class="content centered"><img style="width:500px;" src="<?= base_url('uploads/img/something-lost.png') ?>">
                 <h1>Oops, halaman tidak ditemukan.</h1>
                 <p style="font-size:22px;" class="sub-header text-block-narrow">kembali ke halaman utama <a href="<?= base_url() ?>">klik disini</a></p>
             </div>

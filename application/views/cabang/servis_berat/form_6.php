@@ -196,6 +196,7 @@
                                 })
                                 .then(() => {
                                     $('#table_data').DataTable().ajax.reload();
+                                    get_total();
                                 })
                         }
                     }

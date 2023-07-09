@@ -47,14 +47,14 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label>Keterangan</label>
-                <textarea required name="keterangan" rows="3" placeholder="Masukkan isian" class="form-control"><?= @$data->keterangan ?></textarea>
+                <label>Kerusakan</label>
+                <textarea required name="kerusakan" rows="3" placeholder="Masukkan isian" class="form-control"><?= @$data->kerusakan ?></textarea>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label>Kerusakan</label>
-                <textarea required name="kerusakan" rows="3" placeholder="Masukkan isian" class="form-control"><?= @$data->kerusakan ?></textarea>
+                <label>Keterangan</label>
+                <textarea required name="keterangan" rows="3" placeholder="Masukkan isian" class="form-control"><?= @$data->keterangan ?></textarea>
             </div>
         </div>
     </div>
@@ -131,6 +131,7 @@
                                 })
                                 .then(() => {
                                     $('#table_data').DataTable().ajax.reload();
+                                    get_total();
                                 })
                         }
                     }

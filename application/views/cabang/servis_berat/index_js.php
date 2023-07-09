@@ -1,11 +1,13 @@
 <script>
     $(document).ready(function() {
         load_table();
+        get_total();
     });
 
     function refresh_table() {
         setTimeout(() => {
             load_table();
+            get_total();
         }, 500);
     }
 
@@ -35,6 +37,22 @@
                 orderable: false,
             }],
         })
+    }
+
+    function get_total() {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url(session('type') . '/servis_berat/get_total') ?>",
+            data: {},
+            dataType: "JSON",
+            success: function(res) {
+                if (res.status == 'success') {
+                    $.map(res.data, function (e, i) {
+                        $(`#total_${i}`).html(e)
+                    });
+                }
+            }
+        });
     }
 
     function tambah() {
@@ -91,6 +109,37 @@
                         judul: 'Ubah <?= $title ?>',
                         html: res.html,
                         size: 'modal-xl',
+                    });
+                }
+            }
+        });
+    }
+
+    function log(id) {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url(session('type') . '/servis_berat/log') ?>",
+            dataType: "JSON",
+            data: {
+                id: id,
+            },
+            beforeSend: function(res) {
+                Swal.fire({
+                    title: 'Loading ...',
+                    html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            },
+            complete: function(res) {
+                Swal.close();
+            },
+            success: function(res) {
+                if (res.status == 'success') {
+                    show_modal_custom({
+                        judul: 'Log Status',
+                        html: res.html,
+                        size: 'modal-lg',
                     });
                 }
             }

@@ -16,10 +16,15 @@
                     <?php foreach ($all_status as $i => $dt) : $dt = (object)$dt; ?>
                         <li class="nav-item" style="cursor: pointer;">
                             <a data-val="<?= $dt->id ?>" class="nav-link select_status <?= $i == 0 ? 'active' : '' ?>" data-toggle="tab" role="tab" onclick="refresh_table();">
-                                <?= $dt->nama ?>
+                                <?= $dt->nama ?> (<span id="total_<?= $dt->nick ?>">0</span>)
                             </a>
                         </li>
                     <?php endforeach; ?>
+                    <li class="nav-item" style="cursor: pointer;">
+                        <a data-val="all" class="nav-link select_status" data-toggle="tab" role="tab" onclick="refresh_table();">
+                            Semua (<span id="total_all">0</span>)
+                        </a>
+                    </li>
                 </ul>
 
                 <div class="table-responsive">
