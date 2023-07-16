@@ -96,17 +96,17 @@ class Table_servis_berat extends CI_Model
             $row[] =
                 '<div class="fw-600 text-primary"><i class="fas fa-map-marker-alt mr-1"></i> ' . $field->nm_cabang . '</div>'
                 . '<div><i class="fa fa-calendar mr-1"></i> Tgl Masuk : ' . tgl_indo($field->tgl_masuk) . '</div>'
-                . '<div><i class="fa fa-calendar mr-1"></i> Tgl Keluar : ' . (!empty($field->tgl_keluar) ? tgl_indo($field->tgl_keluar) : '-') . '</div>'
-                . '<div class="text-danger fw-600">Biaya : ' . (!empty($field->biaya) ? rupiah($field->biaya) : '-') . '</div>';
+                . '<div><i class="fa fa-calendar mr-1"></i> Tgl Keluar : ' . (!empty($field->tgl_keluar) ? tgl_indo($field->tgl_keluar) : '-') . '</div>';
 
             $row[] = 'Tipe : ' . $field->tipe_unit
                 . '<div>Diagnosa : ' . $field->diagnosa . '</div>'
-                . '<div class="text-danger fw-600">Estimasi Biaya : ' . rupiah($field->estimasi_biaya) . '</div>'
-                . '<div class="text-danger fw-600">Harga Part : ' . (!empty($field->harga_part) ? rupiah($field->harga_part) : '-') . '</div>'
-                . '<div class="text-danger fw-600">Modal : ' . (!empty($field->modal) ? rupiah($field->modal) : '') . '</div>';
+                . '<div class="text-danger fw-600">Biaya : ' . (!empty($field->biaya) ? rupiah($field->biaya) : '-') . '</div>';
 
-            $row[] = '<i class="fa fa-user mr-1"></i> Teknisi : ' . $field->nm_teknisi
-                . '<div><i class="fa fa-wrench mr-1"></i> Tindakan : ' . $field->nm_tindakan . '</div>';
+            $informasi = '<div><i class="fa fa-wrench mr-1"></i> Tindakan : ' . $field->nm_tindakan . '</div>';
+
+            if (session('type') == 'admin') $informasi .= '<i class="fa fa-user mr-1"></i> Teknisi : ' . $field->nm_teknisi;
+
+            $row[] = $informasi;
 
             if (in_array($field->status, [9])) {
                 $warna = 'success';

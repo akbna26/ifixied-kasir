@@ -69,21 +69,37 @@
                 <td><?= rupiah(@$row->estimasi_biaya) ?></th>
             </tr>
             <tr>
-                <th>Harga PART/IC Nand</th>
-                <td><?= rupiah(@$row->harga_part) ?></td>
+                <th>Total Biaya</th>
+                <td><?= empty($row->biaya) ? '-' : rupiah($row->biaya) ?></th>
             </tr>
-            <tr>
-                <th>Modal</th>
-                <td><?= rupiah(@$row->modal) ?></td>
-            </tr>
-            <tr>
-                <th>Teknisi</th>
-                <td><?= @$row->nm_teknisi ?></td>
-            </tr>
+            <?php if (session('type') == 'admin') : ?>
+                <tr>
+                    <th>Teknisi</th>
+                    <td><?= @$row->nm_teknisi ?></td>
+                </tr>
+                <tr>
+                    <th>Harga PART/IC Nand</th>
+                    <td><?= rupiah(@$row->harga_part) ?></td>
+                </tr>
+                <tr>
+                    <th>Modal</th>
+                    <td><?= rupiah(@$row->modal) ?></td>
+                </tr>
+            <?php endif; ?>
             <tr>
                 <th>Tindakan</th>
                 <td><?= @$row->nm_tindakan ?></td>
             </tr>
+            <?php if ($row->id_pengambilan == 4) : ?>
+                <tr>
+                    <th>Total Bayar</th>
+                    <td><?= rupiah($row->bayar) ?> ( <span class="text-primary"><?= $row->nm_pembayaran_1 ?></span> )</td>
+                </tr>
+                <tr>
+                    <th>Total Bayar Split</th>
+                    <td><?= rupiah($row->bayar_split) ?> ( <span class="text-primary"><?= $row->nm_pembayaran_2 ?></span> )</td>
+                </tr>
+            <?php endif; ?>
         </table>
     </div>
 </div>

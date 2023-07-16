@@ -31,6 +31,28 @@ class Dashboard extends MY_controller
             where a.id='$this->id_akun'
         ")->row();
 
+        // $today = date('Y-m-d');
+        $today = '2023-07-07';
+        $total = $this->db->query("SELECT count( 1 ) AS banyak, IFNULL(sum( total ),0) AS total, 'dp' AS jenis FROM dp WHERE id_cabang='$this->id_cabang' AND deleted IS NULL and tanggal='$today' UNION ALL
+        SELECT count( 1 ) AS banyak, IFNULL(sum( total ),0) AS total, 'barang' AS jenis FROM transaksi WHERE id_cabang='$this->id_cabang' AND deleted IS NULL and DATE(created)='$today' UNION ALL
+        (
+            SELECT
+                count( 1 ) AS banyak,
+                IFNULL(sum( b.harga_modal),0) AS total,
+                'refund' AS jenis 
+            FROM
+                refund a
+                LEFT JOIN refund_detail b ON b.id_refund = a.id 
+                AND b.deleted IS NULL 
+            WHERE
+                a.id_cabang='$this->id_cabang' 
+            AND a.deleted IS NULL and tanggal='$today'
+        ) union all SELECT count( 1 ) AS banyak, IFNULL(sum( biaya ),0) AS total, 'servis_berat' AS jenis FROM servis_berat WHERE id_cabang='$this->id_cabang' AND deleted IS NULL and tgl_masuk='$today' ")->result();
+
+        $total_all = [];
+        foreach ($total as $dt) $total_all[$dt->jenis] = $dt;
+        $data['total'] = $total_all;
+
         $this->templates->load($data);
     }
 

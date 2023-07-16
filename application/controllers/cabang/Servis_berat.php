@@ -71,7 +71,9 @@ class Servis_berat extends MY_controller
             ifnull( c.nama, '-' ) AS nm_tindakan,
             ifnull( f.nama, '-' ) AS nm_teknisi,
             e.nama AS nm_cabang,
-            g.nama AS nm_pengambilan 
+            g.nama AS nm_pengambilan,
+            h.nama as nm_pembayaran_1,
+            case when is_split=1 then i.nama else '-' end as nm_pembayaran_2
         FROM servis_berat a
             LEFT JOIN ref_status_servis b ON b.id = a.
             STATUS LEFT JOIN ref_tindakan c ON c.id = a.id_tindakan
@@ -79,6 +81,8 @@ class Servis_berat extends MY_controller
             LEFT JOIN pegawai f ON f.id = d.id_pegawai
             LEFT JOIN ref_cabang e ON e.id = a.id_cabang
             LEFT JOIN ref_pengambilan g ON g.id = a.id_pengambilan 
+            LEFT JOIN ref_jenis_pembayaran h ON h.id = a.id_jenis_pembayaran 
+            LEFT JOIN ref_jenis_pembayaran i ON i.id = a.id_jenis_pembayaran_2 
         WHERE
             a.deleted IS NULL and a.id='$id'
         ")->row();
@@ -97,6 +101,7 @@ class Servis_berat extends MY_controller
         $data['id'] = $id;
         $data['data'] = $this->db->query("SELECT * from servis_berat where id='$id' and deleted is null ")->row();
         $data['pegawai'] = $this->db->query("SELECT * from pegawai where id_cabang='$this->id_cabang' and deleted is null ")->result();
+        $data['ref_jenis_pembayaran'] = $this->db->query("SELECT * from ref_jenis_pembayaran where deleted is null ")->result();
 
         $html = $this->load->view('cabang/servis_berat/bayar', $data, true);
 
@@ -208,8 +213,23 @@ class Servis_berat extends MY_controller
 
         $tgl_keluar = date('Y-m-d', strtotime($this->input->post('tgl_keluar')));
         $bayar = clear_koma($this->input->post('bayar'));
+        $bayar_split = clear_koma($this->input->post('bayar_split'));
         $user_pengambil = $this->input->post('user_pengambil');
         $id_pegawai = $this->input->post('id_pegawai');
+
+        $jenis_bayar_1 = $this->input->post('jenis_bayar_1');
+        $jenis_bayar_2 = $this->input->post('jenis_bayar_2');
+        $cek_split = $this->input->post('cek_split');
+
+        $get_prosen_bayar_1 = $this->db->query("SELECT * from ref_jenis_pembayaran where id='$jenis_bayar_1' and deleted is null ")->row();
+        $get_prosen_bayar_2 = $this->db->query("SELECT * from ref_jenis_pembayaran where id='$jenis_bayar_2' and deleted is null ")->row();
+
+        $potongan = $bayar * ($get_prosen_bayar_1->persen_potongan / 100);
+        if ($cek_split == 1) $potongan_split = $bayar_split * ($get_prosen_bayar_2->persen_potongan / 100);
+        else{
+            $potongan_split = 0;
+            $bayar_split = 0;
+        } 
 
         $this->db->where('id', $id);
         $this->db->update('servis_berat', [
@@ -218,6 +238,14 @@ class Servis_berat extends MY_controller
             'tgl_keluar' => $tgl_keluar,
             'bayar' => $bayar,
             'user_pengambil' => $user_pengambil,
+            
+            'potongan' => $potongan,
+            'is_split' => $cek_split,
+            'id_jenis_pembayaran' => $jenis_bayar_1,
+
+            'id_jenis_pembayaran_2' => $jenis_bayar_2,
+            'bayar_split' => $bayar_split,
+            'potongan_split' => $potongan_split,
             'updated' => date('Y-m-d H:i:s'),
         ]);
 

@@ -123,8 +123,12 @@
                             <td class="border" style="text-align: right;"><?= rupiah($row->bayar) ?></td>
                         </tr>
                         <tr>
+                            <td class="border" style="text-align: right;">Split Pembayaran :</td>
+                            <td class="border" style="text-align: right;"><?= rupiah($row->bayar_split) ?></td>
+                        </tr>
+                        <tr>
                             <td class="border" style="text-align: right;">Kembalian :</td>
-                            <td class="border" style="text-align: right;"><?= ($row->bayar - $row->biaya) == 0 ? 0 : rupiah($row->bayar - $row->biaya) ?></td>
+                            <td class="border" style="text-align: right;"><?= (($row->bayar + $row->bayar_split) - $row->biaya) == 0 ? 0 : rupiah(($row->bayar + $row->bayar_split) - $row->biaya) ?></td>
                         </tr>
                     </table>
                 </td>
