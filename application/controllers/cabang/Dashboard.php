@@ -31,8 +31,7 @@ class Dashboard extends MY_controller
             where a.id='$this->id_akun'
         ")->row();
 
-        // $today = date('Y-m-d');
-        $today = '2023-07-07';
+        $today = date('Y-m-d');
         $total = $this->db->query("SELECT count( 1 ) AS banyak, IFNULL(sum( total ),0) AS total, 'dp' AS jenis FROM dp WHERE id_cabang='$this->id_cabang' AND deleted IS NULL and tanggal='$today' UNION ALL
         SELECT count( 1 ) AS banyak, IFNULL(sum( total ),0) AS total, 'barang' AS jenis FROM transaksi WHERE id_cabang='$this->id_cabang' AND deleted IS NULL and DATE(created)='$today' UNION ALL
         (
