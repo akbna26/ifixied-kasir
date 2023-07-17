@@ -19,9 +19,11 @@
                     <div class="fw-600">
                         <?= $dt->nm_status ?>
                     </div>
-                    <div class="text-danger">
-                        <i class="bx bx-notepad mr-1"></i> <?= !empty($dt->keterangan) ? nl2br($dt->keterangan) : '-' ?>
-                    </div>
+                    <?php if (!empty($dt->keterangan)) : ?>
+                        <div class="text-danger">
+                            <i class="bx bx-notepad mr-1"></i> <?= !empty($dt->keterangan) ? nl2br($dt->keterangan) : '-' ?>
+                        </div>
+                    <?php endif; ?>
                 </div>
             </div>
         </li>

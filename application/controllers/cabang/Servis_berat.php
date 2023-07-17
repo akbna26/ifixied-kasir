@@ -95,6 +95,19 @@ class Servis_berat extends MY_controller
         ]);
     }
 
+    public function klaim_garansi()
+    {
+        $id = decode_id($this->input->post('id'));
+        $data['id'] = $id;
+
+        $html = $this->load->view('cabang/servis_berat/klaim_garansi', $data, true);
+
+        echo json_encode([
+            'status' => 'success',
+            'html' => $html,
+        ]);
+    }
+
     public function bayar()
     {
         $id = decode_id($this->input->post('id'));
@@ -226,10 +239,10 @@ class Servis_berat extends MY_controller
 
         $potongan = $bayar * ($get_prosen_bayar_1->persen_potongan / 100);
         if ($cek_split == 1) $potongan_split = $bayar_split * ($get_prosen_bayar_2->persen_potongan / 100);
-        else{
+        else {
             $potongan_split = 0;
             $bayar_split = 0;
-        } 
+        }
 
         $this->db->where('id', $id);
         $this->db->update('servis_berat', [
@@ -238,7 +251,7 @@ class Servis_berat extends MY_controller
             'tgl_keluar' => $tgl_keluar,
             'bayar' => $bayar,
             'user_pengambil' => $user_pengambil,
-            
+
             'potongan' => $potongan,
             'is_split' => $cek_split,
             'id_jenis_pembayaran' => $jenis_bayar_1,
@@ -304,11 +317,11 @@ class Servis_berat extends MY_controller
         $modal = clear_koma($this->input->post('modal'));
         $id_teknisi = $this->input->post('id_teknisi');
         $id_tindakan = $this->input->post('id_tindakan');
+        $row_cabang = $this->db->query("SELECT * from servis_berat where id='$id' ")->row();
 
         if ($form == 1) {
             $tahun = date('Y');
             $bulan = date('m');
-            $row_cabang = $this->db->query("SELECT * from servis_berat where id='$id' ")->row();
             $total_transaksi = $this->db->query("SELECT count(1)+1 as total from servis_berat where id !='$id' and id_cabang='$row_cabang->id_cabang' and month(created)='$bulan' and year(created)='$tahun' ")->row();
             $no_invoice = 'SRV' . $row_cabang->id_cabang . '-' . date('Ym') . '-' . sprintf("%04d", $total_transaksi->total);
 
@@ -318,6 +331,13 @@ class Servis_berat extends MY_controller
         }
 
         if (in_array($status, [7, 8, 9])) $this->db->set('id_pengambilan', 3);
+
+        if (in_array($status, [9])) {
+            if ($row_cabang->is_klaim_garansi == '1') {
+                $this->db->set('is_klaim_garansi', '2');
+                $this->db->set('id_pengambilan', 3);
+            }
+        }
 
         if ($status == 5) {
             $this->db->where('id', $id);
@@ -337,6 +357,33 @@ class Servis_berat extends MY_controller
                 'updated' => date('Y-m-d H:i:s'),
             ]);
         }
+        insert_log_servis($id, $status, $keterangan);
+
+        echo json_encode([
+            'status' => 'success',
+        ]);
+    }
+
+    public function do_klaim_garansi()
+    {
+        cek_post();
+
+        $id = decode_id($this->input->post('id'));
+        $alasan_klaim = $this->input->post('alasan_klaim', true);
+        $status = 5; //proses pengerjaan
+        $keterangan = 'Klaim garansi - ' . $alasan_klaim;
+
+        $this->db->where('id', $id);
+        $this->db->update('servis_berat', [
+            'is_klaim_garansi' => '1',
+            'alasan_klaim' => $alasan_klaim,
+            'tgl_klaim' => date('Y-m-d H:i:s'),
+            'updated' => date('Y-m-d H:i:s'),
+            'is_klaim_garansi' => '1',
+            'status' => $status,
+            'id_pengambilan' => 2,
+        ]);
+
         insert_log_servis($id, $status, $keterangan);
 
         echo json_encode([

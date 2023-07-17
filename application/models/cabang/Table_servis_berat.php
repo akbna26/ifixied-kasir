@@ -118,8 +118,13 @@ class Table_servis_berat extends CI_Model
                 $warna = 'warning';
             }
 
+            $is_klaim_garansi = '';
+            if ($field->is_klaim_garansi == 1) $is_klaim_garansi = '<br><span class="badge badge-primary fw-600 font-size-12">Proses Klaim Garansi</span>';
+            elseif ($field->is_klaim_garansi == 2) $is_klaim_garansi = '<br><span class="badge badge-primary fw-600 font-size-12">Klaim Garansi Selesai</span>';
+
             $row[] = '<span class="badge badge-' . $warna . ' fw-600 font-size-12">' . $field->nm_status . '</span>'
-                . '<br><span class="badge badge-dark fw-600 font-size-12">' . $field->nm_pengambilan . '</span>';
+                . '<br><span class="badge badge-dark fw-600 font-size-12">' . $field->nm_pengambilan . '</span>'
+                . $is_klaim_garansi;
 
             $aksi = '
                 <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit mr-1"></i> Ubah</button>
@@ -136,6 +141,10 @@ class Table_servis_berat extends CI_Model
 
             if (session('type') == 'admin' && !in_array($field->status, [7, 8, 9])) {
                 $aksi .= '<button onclick="konfirmasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary fw-600 mt-1"><i class="fas fa-gavel mr-1"></i> Konfirmasi</button>';
+            }
+
+            if (session('type') == 'cabang' && in_array($field->status, [9]) && $field->is_klaim_garansi == 0 && $field->id_pengambilan == 4) {
+                $aksi .= '<button onclick="klaim_garansi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600 mt-1"><i class="fas fa-sync-alt mr-1"></i> Klaim Garansi</button>';
             }
 
             $aksi .= '<button onclick="log(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-dark fw-600 ml-1 mt-1"><i class="far fa-list-alt mr-1"></i> Log</button>';

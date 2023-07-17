@@ -203,3 +203,8 @@ textarea:focus {
 .select2-selection__arrow {
     height: 34px !important;
 }
+
+.badge-primary {
+    color: #fff;
+    background-color: #2143EB !important;
+}

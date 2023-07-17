@@ -225,6 +225,37 @@
         });
     }
 
+    function klaim_garansi(id) {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url(session('type') . '/servis_berat/klaim_garansi') ?>",
+            dataType: "JSON",
+            data: {
+                id: id,
+            },
+            beforeSend: function(res) {
+                Swal.fire({
+                    title: 'Loading ...',
+                    html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            },
+            complete: function(res) {
+                Swal.close();
+            },
+            success: function(res) {
+                if (res.status == 'success') {
+                    show_modal_custom({
+                        judul: 'Klaim Garansi',
+                        html: res.html,
+                        size: 'modal-xl',
+                    });
+                }
+            }
+        });
+    }
+
     function bayar(id) {
         $.ajax({
             type: "POST",
