@@ -26,6 +26,10 @@
         table.list {
             border-collapse: collapse;
         }
+
+        body {
+            font-family: Calibri;
+        }
     </style>
 </head>
 
@@ -61,7 +65,7 @@
             <td style="width: 150px;">NO. INVOICE</td>
             <td style="width: 200px;">: <?= $row->no_invoice ?></td>
             <td style="width: 150px;">TELP.</td>
-            <td>: <?= $row->no_hp ?></td>            
+            <td>: <?= $row->no_hp ?></td>
         </tr>
         <tr>
             <td>NAMA</td>
@@ -80,7 +84,7 @@
     </table>
 
     <br>
-    
+
 
     <table style="width: 100%;" class="list">
         <thead>
@@ -107,7 +111,7 @@
 
     <br>
     <br>
-    
+
     <table style="width: 100%;">
         <tr>
             <td style="width: 50%;"></td>

@@ -31,6 +31,10 @@
         table.list tr td {
             text-align: center;
         }
+
+        body {
+            font-family: Calibri;
+        }
     </style>
 </head>
 

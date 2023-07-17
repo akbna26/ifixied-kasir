@@ -8,7 +8,7 @@
             <div class="card-body">
 
                 <div class="row bg2 border1 rounded p-3 mb-3">             
-                    <div class="col-md-4 offset-4">
+                    <div class="col-md-4">
                         <div class="form-group text-center">
                             <label>Filter Kategori</label>
                             <select id="id_kategori" class="form-control js_select2" data-placeholder="pilih kategori" onchange="load_table();">

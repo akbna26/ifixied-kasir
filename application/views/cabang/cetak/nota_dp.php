@@ -5,6 +5,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nota DP</title>
+    <style>
+        body {
+            font-family: Calibri;
+        }
+    </style>
 </head>
 
 <body>
