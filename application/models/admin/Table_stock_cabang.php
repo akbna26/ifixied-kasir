@@ -16,7 +16,7 @@ class Table_stock_cabang extends CI_Model
         $id_kategori = $this->input->get('id_kategori');
         $id_cabang = $this->input->get('id_cabang');
 
-        $this->db->select('a.*, c.nama as kategori');
+        $this->db->select('a.*, c.nama as kategori, d.stock');
         $this->db->from('barang a');
         $this->db->join('ref_kategori c', 'c.id = a.id_kategori', 'left');
         $this->db->join('barang_cabang d', 'd.id_barang = a.id and d.deleted is null', 'left');        

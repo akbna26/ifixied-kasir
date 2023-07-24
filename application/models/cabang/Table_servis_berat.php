@@ -16,7 +16,7 @@ class Table_servis_berat extends CI_Model
         $id_status = $this->input->get('id_status');
 
         $this->db->select('a.*, b.nama as nm_status, ifnull(c.nama,"-") as nm_tindakan, ifnull(f.nama,"-") as nm_teknisi, 
-        e.nama as nm_cabang, g.nama as nm_pengambilan');
+        e.nama as nm_cabang, g.nama as nm_pengambilan, DATEDIFF(NOW(),tgl_keluar) AS jarak_hari');
         $this->db->from('servis_berat a');
         $this->db->join('ref_status_servis b', 'b.id = a.status', 'left');
         $this->db->join('ref_tindakan c', 'c.id = a.id_tindakan', 'left');
@@ -103,8 +103,17 @@ class Table_servis_berat extends CI_Model
                 . '<div class="text-danger fw-600">Biaya : ' . (!empty($field->biaya) ? rupiah($field->biaya) : '-') . '</div>';
 
             $informasi = '<div><i class="fa fa-wrench mr-1"></i> Tindakan : ' . $field->nm_tindakan . '</div>';
+            if (session('type') == 'admin') $informasi .= '<div><i class="fa fa-user mr-1"></i> Teknisi : ' . $field->nm_teknisi . '</div>';
 
-            if (session('type') == 'admin') $informasi .= '<i class="fa fa-user mr-1"></i> Teknisi : ' . $field->nm_teknisi;
+            if ($field->status == 9 && $field->id_pengambilan == 4) {
+                if ($field->jarak_hari > 30) {
+                    $informasi .= '<span class="badge badge-pill badge-soft-danger font-size-12">Garansi Habis (' . ($field->jarak_hari) . ' Hari)</span>';
+                    $is_garansi = false;
+                } else {
+                    $informasi .= '<span class="badge badge-pill badge-soft-success font-size-12">Sisa Garansi ' . (30 - $field->jarak_hari) . ' Hari</span>';
+                    $is_garansi = true;
+                }
+            }
 
             $row[] = $informasi;
 
@@ -135,7 +144,7 @@ class Table_servis_berat extends CI_Model
 
             $aksi .= '<button onclick="detail(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-success fw-600 mt-1"><i class="fas fa-eye mr-1"></i> Detail</button>';
 
-            if (in_array($field->status, [7, 8, 9]) && $field->id_pengambilan == 3 && session('type') == 'cabang') {
+            if (in_array($field->status, [7, 8, 9]) && $field->id_pengambilan == 3 && $field->is_klaim_garansi == 0 && session('type') == 'cabang') {
                 $aksi .= '<button onclick="bayar(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary fw-600 mt-1"><i class="fas fa-money-check-alt mr-1"></i> Payment</button>';
             }
 
@@ -143,7 +152,7 @@ class Table_servis_berat extends CI_Model
                 $aksi .= '<button onclick="konfirmasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary fw-600 mt-1"><i class="fas fa-gavel mr-1"></i> Konfirmasi</button>';
             }
 
-            if (session('type') == 'cabang' && in_array($field->status, [9]) && $field->is_klaim_garansi == 0 && $field->id_pengambilan == 4) {
+            if (session('type') == 'cabang' && in_array($field->status, [9]) && $field->id_pengambilan == 4 && $is_garansi) {
                 $aksi .= '<button onclick="klaim_garansi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600 mt-1"><i class="fas fa-sync-alt mr-1"></i> Klaim Garansi</button>';
             }
 

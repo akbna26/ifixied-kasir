@@ -335,7 +335,7 @@ class Servis_berat extends MY_controller
         if (in_array($status, [9])) {
             if ($row_cabang->is_klaim_garansi == '1') {
                 $this->db->set('is_klaim_garansi', '2');
-                $this->db->set('id_pengambilan', 3);
+                $this->db->set('id_pengambilan', 4);
             }
         }
 
@@ -370,7 +370,7 @@ class Servis_berat extends MY_controller
 
         $id = decode_id($this->input->post('id'));
         $alasan_klaim = $this->input->post('alasan_klaim', true);
-        $status = 5; //proses pengerjaan
+        $status = 2; // Sedang dicek
         $keterangan = 'Klaim garansi - ' . $alasan_klaim;
 
         $this->db->where('id', $id);

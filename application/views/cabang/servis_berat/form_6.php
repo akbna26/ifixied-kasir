@@ -80,6 +80,15 @@
                     </div>
                 </div>
 
+                <!-- <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Biaya Tambahan<small class="text-danger fw-600">(Jika klaim garansi)</small></label>
+                            <input type="text" name="biaya_klaim_garansi" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= !empty($data->biaya_klaim_garansi) ? rupiah($data->biaya_klaim_garansi) : '' ?>">
+                        </div>
+                    </div>
+                </div> -->
+
             </div>
         </div>
     </div>

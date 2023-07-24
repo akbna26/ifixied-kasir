@@ -11,14 +11,8 @@
             border: 1px solid #34495e;
         }
 
-        .border {
-            font-size: 11px;
-            font-weight: bold;
-        }
-
         table.info tr th,
         table.info tr td {
-            font-size: 11px;
             border: 1px solid #34495e;
         }
 
@@ -33,50 +27,49 @@
         }
 
         body {
-            font-family: Calibri;
+            font-size: 8px !important;
+            letter-spacing: 2 !important;
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #34495e;
+        }
+
+        .font-9 {
+            font-size: 9px;
         }
     </style>
 </head>
 
 <body>
 
-    <table style="width: 100%;">
+    <table style="width: 100%;" class="font-9">
         <tr>
-            <td style="width: 60px;">
-                <img src="<?= base_url('uploads/img/logo.png') ?>" alt="img" style="width: 50px;">
-            </td>
             <td>
-                <b><?= $row->nm_cabang ?></b>
+                <b style="font-size: 10px;">IFIXIED | <?= $row->nm_cabang ?></b>
                 <div><?= $row->lokasi ?></div>
                 <div><?= $row->kontak ?></div>
+            </td>
+            <td style="text-align: right;">
+                <b>NOTA SERVIS</b>
+                <div style="text-align: right;">NO. INVOICE : <b style="font-size: 10px;"><?= $row->invoice ?></b></div>
+                <div style="text-align: right;"><?= tgl_indo($row->created, true) ?></div>
             </td>
         </tr>>
     </table>
 
-    <br>
+    <hr style="margin-top: 2px;margin-bottom: 2px;">
 
-    <table style="width: 100%;">
+    <table style="width: 100%;" class="font-9">
         <tr>
-            <td style="width: 70%;">
-                <h3>NOTA SERVIS</h3>
-            </td>
-            <td style="text-align: right;">Waktu : <?= tgl_indo($row->created, true) ?></td>
-        </tr>
-    </table>
-    <hr>
-
-    <table style="width: 100%;">
-        <tr>
-            <td style="width: 130px;">NO. INVOICE</td>
-            <td style="width: 170px;">: <?= $row->invoice ?></td>
-            <td style="width: 50px;"></td>
-            <td style="width: 120px;">KETERANGAN</td>
+            <td style="width: 50px;">NAMA</td>
+            <td style="width: 150px;">: <?= $row->pelanggan ?></td>
+            <td style="width: 50px;">KETERANGAN</td>
             <td>: <?= nl2br($row->keterangan) ?></td>
         </tr>
         <tr>
-            <td>NAMA</td>
-            <td>: <?= $row->pelanggan ?></td>
-            <td></td>
+            <td>TELP.</td>
+            <td>: <?= $row->no_hp ?? '-' ?></td>
             <td>
                 <b>
                     <u>NOTE</u>
@@ -84,16 +77,7 @@
             </td>
             <td>: </td>
         </tr>
-        <tr>
-            <td>TELP.</td>
-            <td>: <?= $row->no_hp ?? '-' ?></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
     </table>
-
-    <br>
 
     <table style="width: 100%;" class="list">
         <thead>
@@ -102,6 +86,7 @@
                 <th style="width: 120px;">Serial Number</th>
                 <th>Kerusakan</th>
                 <th>Tindakan</th>
+                <th>Estimasi Biaya</th>
             </tr>
         </thead>
         <tbody>
@@ -110,67 +95,64 @@
                 <td><?= $row->serial_number ?></td>
                 <td><?= $row->kerusakan ?></td>
                 <td><?= $row->nm_tindakan ?></td>
+                <td><?= rupiah($row->estimasi_biaya) ?></td>
             </tr>
         </tbody>
-        <tfoot>
+    </table>
+
+    <br>
+
+    <table style="width: 100%;" class="font-9">
+        <tbody>
             <tr>
-                <td colspan="3"></td>
-                <td>
-                    <br>
-                    <table border="0">
-                        <tr>
-                            <td class="border" style="text-align: right;">Total :</td>
-                            <td class="border" style="text-align: right;"><?= rupiah($row->biaya) ?></td>
-                        </tr>
-                        <tr>
-                            <td class="border" style="text-align: right;">Bayar :</td>
-                            <td class="border" style="text-align: right;"><?= rupiah($row->bayar) ?></td>
-                        </tr>
-                        <tr>
-                            <td class="border" style="text-align: right;">Split Pembayaran :</td>
-                            <td class="border" style="text-align: right;"><?= rupiah($row->bayar_split) ?></td>
-                        </tr>
-                        <tr>
-                            <td class="border" style="text-align: right;">Kembalian :</td>
-                            <td class="border" style="text-align: right;"><?= (($row->bayar + $row->bayar_split) - $row->biaya) == 0 ? 0 : rupiah(($row->bayar + $row->bayar_split) - $row->biaya) ?></td>
-                        </tr>
+                <td rowspan="4">
+                    <table style="width: 100%;" class="list">
+                        <tbody>
+                            <tr>
+                                <td style="text-align: center;width: 150px;">
+                                    <b>PELANGGAN</b>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <u>( <?= $row->pelanggan ?> )</u>
+                                </td>
+                                <td style="text-align: center;width: 150px;">
+                                    <b>ADMIN</b>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <br>
+                                    <u>( <?= $this->nama ?> )</u>
+                                </td>
+                                <td style="border: 0;"></td>
+                            </tr>
+                        </tbody>
                     </table>
                 </td>
+                <td style="text-align: right;width: 100px;">Total :</td>
+                <td style="text-align: right;width: 100px;" class="border-bottom"><?= rupiah($row->biaya) ?></td>
             </tr>
-        </tfoot>
+            <tr>
+                <td colspan="1" style="text-align: right;">Bayar :</td>
+                <td style="text-align: right;" class="border-bottom"><?= rupiah($row->bayar) ?></td>
+            </tr>
+            <tr>
+                <td colspan="1" style="text-align: right;">Split :</td>
+                <td style="text-align: right;" class="border-bottom"><?= empty($row->bayar_split) ? 0 : rupiah($row->bayar_split) ?></td>
+            </tr>
+            <tr>
+                <td colspan="1" style="text-align: right;">Kembalian :</td>
+                <td style="text-align: right;" class="border-bottom"><?= (($row->bayar + $row->bayar_split) - $row->biaya) == 0 ? 0 : rupiah(($row->bayar + $row->bayar_split) - $row->biaya) ?></td>
+            </tr>
     </table>
 
-    <br>
-
-    <table style="width: 100%;">
-        <tr>
-            <td style="width: 25%;"></td>
-            <td style="text-align: center;">
-                <b>PELANGGAN</b>
-                <br>
-                <br>
-                <br>
-                <br>
-                <u>( <?= $row->user_pengambil ?> )</u>
-            </td>
-            <td style="text-align: center;">
-                <b>PEGAWAI</b>
-                <br>
-                <br>
-                <br>
-                <br>
-                <u>( <?= $row->nm_pegawai ?> )</u>
-            </td>
-            <td style="width: 25%;"></td>
-        </tr>
-    </table>
-
-    <br>
+    <hr>
 
     <table>
         <tr>
-            <td style="vertical-align: top;">
-                <table cellspacing="0" class="info">
+            <td style="vertical-align: top;width: 60%;">
+                <table cellspacing="0">
                     <tr>
                         <th>No.</th>
                         <th>Ketentuan Garansi</th>
@@ -226,61 +208,40 @@
                 </table>
             </td>
             <td style="vertical-align: top;">
-                <table cellspacing="0" class="info">
+                <table cellspacing="0">
                     <tr>
                         <th>No.</th>
-                        <th>Persyaratan Khusus</th>
-                        <th>Masa Garansi</th>
+                        <th>Persyaratan Khusus & Masa Garansi</th>
                     </tr>
                     <tr>
                         <td>1.</td>
-                        <td>Garansi IC/Mesin (Berlaku 1 Bulan)</td>
-                        <td>Garansi service mesin hanya berlaku sesuai dengan kendala awal kerusakan dan berada pada jalur ic yang sama.</td>
+                        <td>Garansi IC/Mesin (Berlaku 1 Bulan) : Garansi service mesin hanya berlaku sesuai dengan kendala awal kerusakan dan berada pada jalur ic yang sama.</td>
                     </tr>
                     <tr>
                         <td>2.</td>
-                        <td>Garansi LCD (Berlaku 1 Tahun)</td>
-                        <td>
-                            <ul>
-                                <li>Garansi LCD/Touchscreen berlaku jika kondisi fisik LCD seperti baru, hanya pada kendala LCD blank hitam, touchscreen error, dan white spot (factor pemasangan).</li>
-                                <li>Garansi LCD tidak berlaku apabila terjadi kerusakan pada fisik (LCD baret atau gores, retak, pecah luar, pecah dalam, Flexible Robek, Korosi).</li>
-                                <li>Garansi LCD tidak berlaku apabila tampilan LCD bergaris atau black spot.</li>
-                            </ul>
-                        </td>
+                        <td>Garansi LCD (Berlaku 1 Tahun) : Garansi LCD/Touchscreen berlaku jika kondisi fisik LCD seperti baru, hanya pada kendala LCD blank hitam, touchscreen error, dan white spot (factor pemasangan). Garansi LCD tidak berlaku apabila terjadi kerusakan pada fisik (LCD baret atau gores, retak, pecah luar, pecah dalam, Flexible Robek, Korosi). Garansi LCD tidak berlaku apabila tampilan LCD bergaris atau black spot.</td>
                     </tr>
                     <tr>
                         <td>3.</td>
-                        <td>Garansi Battery (Berlaku 1 Tahun)</td>
-                        <td>
-                            <ul>
-                                <li>Garansi battery tidak berlaku apabila terjadi indikasi over charging, battery menggelembung, Flexible tidak robek, tidak terbakar/korsleting.</li>
-                            </ul>
-                        </td>
+                        <td>Garansi Battery (Berlaku 1 Tahun) : Garansi battery tidak berlaku apabila terjadi indikasi over charging, battery menggelembung, Flexible tidak robek, tidak terbakar/korsleting.</td>
                     </tr>
                     <tr>
                         <td>4.</td>
-                        <td>Garansi Kamera, Home Button, Connector, Volume (Berlaku 3 bulan)</td>
-                        <td>
-                            <ul>
-                                <li>Garansi kamera tidak berlaku apabila kamera berjamur, Flexible Robek.</li>
-                                <li>Home button, Connector, Volume tidak berlaku apabila flexible robek, tidak terbakar/korsleting.</li>
-                            </ul>
-                        </td>
+                        <td>Garansi Kamera, Home Button, Connector, Volume (Berlaku 3 bulan) : Garansi kamera tidak berlaku apabila kamera berjamur, Flexible Robek. Home button, Connector, Volume tidak berlaku apabila flexible robek, tidak terbakar/korsleting.</td>
                     </tr>
                     <tr>
                         <td>5.</td>
-                        <td>Garansi Aksesoris</td>
-                        <td>Aksesoris berlaku selama 1 minggu, aksesoris tidak terkena air, tidak terjatuh, fisik seperti pertama beli (Garansi MagSafe 1 Bulan).</td>
+                        <td>Garansi Aksesoris : Aksesoris berlaku selama 1 minggu, aksesoris tidak terkena air, tidak terjatuh, fisik seperti pertama beli (Garansi MagSafe 1 Bulan).</td>
                     </tr>
                     <tr>
                         <td>6.</td>
                         <td>Barang yang tidak diambil selama 1 bulan, hilang/rusak bukan tanggung jawab dari iFixied.</td>
-                        <td>N/A</td>
                     </tr>
                 </table>
             </td>
         </tr>
     </table>
+
 </body>
 
 </html>

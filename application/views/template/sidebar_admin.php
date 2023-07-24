@@ -48,11 +48,13 @@
                         <li><a href="<?= base_url('admin/laporan_dp') ?>">Transaksi DP</a></li>
                         <li><a href="<?= base_url('admin/laporan_refund') ?>">Refund Barang</a></li>
                         <li><a href="<?= base_url('admin/retur_barang') ?>">Retur Barang</a></li>
+                        <li><a href="<?= base_url('admin/operasional') ?>">Operasional</a></li>
+                        <li><a href="<?= base_url('admin/paylater') ?>">PayLater</a></li>
                     </ul>
                 </li>
 
                 <li class="<?= $this->uri->segment(2) == 'servis_berat' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('admin/servis_berat') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('admin/servis_berat') ?>" class="waves-effect">
                         <i class="bx bx-wrench"></i>
                         <span>Servis Berat</span>
                     </a>
@@ -72,6 +74,7 @@
                         <li><a href="<?= base_url('admin/ref_jabatan') ?>">Jabatan / Posisi</a></li>
                         <li><a href="<?= base_url('admin/ref_jenis_pembayaran') ?>">Jenis Pembayaran</a></li>
                         <li><a href="<?= base_url('admin/ref_supplier') ?>">Data Supplier</a></li>
+                        <li><a href="<?= base_url('admin/ref_operasional') ?>">Jenis Operasional</a></li>
                     </ul>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'data_user' ? 'mm-active' : '' ?> single-link">
@@ -86,12 +89,6 @@
                         <span>Informasi</span>
                     </a>
                 </li>
-                <!-- <li class="<?= $this->uri->segment(2) == 'note' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('admin/note') ?>" class="waves-effect fw-600">
-                        <i class="fas fa-sticky-note"></i>
-                        <span>Sticky Note</span>
-                    </a>
-                </li> -->
             </ul>
         </div>
         <!-- Sidebar -->

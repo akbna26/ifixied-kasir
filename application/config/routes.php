@@ -71,3 +71,8 @@ $route['admin/retur_barang/(:any)'] = 'cabang/retur_barang/$1';
 
 $route['admin/servis_berat'] = 'cabang/servis_berat';
 $route['admin/servis_berat/(:any)'] = 'cabang/servis_berat/$1';
+
+$route['admin/operasional'] = 'cabang/operasional';
+$route['admin/operasional/(:any)'] = 'cabang/operasional/$1';
+
+$route['admin/cetak/nota_servis_berat/(:any)'] = 'cabang/cetak/nota_servis_berat/$1';

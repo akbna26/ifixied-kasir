@@ -61,7 +61,7 @@
 
     <div class="form-group">
         <label>Tanggal Masuk</label>
-        <input type="date" required name="tgl_masuk" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tgl_masuk) ? '' : date('Y-m-d', strtotime($data->tgl_masuk)) ?>">
+        <input type="date" required name="tgl_masuk" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tgl_masuk) ? date('Y-m-d') : date('Y-m-d', strtotime($data->tgl_masuk)) ?>">
     </div>
 
     <div class="row">

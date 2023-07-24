@@ -11,14 +11,8 @@
             border: 1px solid #34495e;
         }
 
-        .border {
-            font-size: 11px;
-            font-weight: bold;
-        }
-
         table.info tr th,
         table.info tr td {
-            font-size: 11px;
             border: 1px solid #34495e;
         }
 
@@ -27,64 +21,69 @@
             border-collapse: collapse;
         }
 
+        table.list tr th,
+        table.list tr td {
+            text-align: center;
+        }
+
         body {
-            font-family: Calibri;
+            font-size: 8px !important;
+            letter-spacing: 2 !important;
+        }
+
+        .border-bottom {
+            border-bottom: 1px solid #34495e;
+        }
+
+        .font-9 {
+            font-size: 9px;
         }
     </style>
 </head>
 
 <body>
 
-    <table style="width: 100%;">
+    <table style="width: 100%;" class="font-9">
         <tr>
-            <td style="width: 60px;">
-                <img src="<?= base_url('uploads/img/logo.png') ?>" alt="img" style="width: 50px;">
-            </td>
             <td>
-                <b><?= $row->nm_cabang ?></b>
+                <b style="font-size: 10px;">IFIXIED | <?= $row->nm_cabang ?></b>
                 <div><?= $row->lokasi ?></div>
                 <div><?= $row->kontak ?></div>
+            </td>
+            <td style="text-align: right;">
+                <b>NOTA REFUND</b>
+                <div style="text-align: right;">NO. INVOICE : <b style="font-size: 10px;"><?= $row->no_invoice ?></b></div>
+                <div style="text-align: right;"><?= tgl_indo($row->created, true) ?></div>
             </td>
         </tr>>
     </table>
 
-    <br>
+    <hr style="margin-top: 2px;margin-bottom: 2px;">
 
-    <table style="width: 100%;">
+    <table style="width: 100%;" class="font-9">
         <tr>
-            <td style="width: 70%;">
-                <h3>NOTA REFUND</h3>
-            </td>
-            <td style="text-align: right;">Waktu : <?= tgl_indo($row->tanggal) ?></td>
-        </tr>
-    </table>
-    <hr>
-
-    <table style="width: 100%;" class="list">
-        <tr>
-            <td style="width: 150px;">NO. INVOICE</td>
-            <td style="width: 200px;">: <?= $row->no_invoice ?></td>
-            <td style="width: 150px;">TELP.</td>
-            <td>: <?= $row->no_hp ?></td>
-        </tr>
-        <tr>
-            <td>NAMA</td>
-            <td>: <?= $row->pelanggan ?></td>
-            <td>KETERANGAN DP</td>
+            <td style="width: 50px;">NAMA</td>
+            <td style="width: 150px;">: <?= $row->pelanggan ?></td>
+            <td style="width: 50px;">KETERANGAN</td>
             <td>: <?= nl2br($row->keterangan) ?></td>
         </tr>
         <tr>
+            <td>TELP.</td>
+            <td>: <?= $row->no_hp ?? '-' ?></td>
             <td>
                 <b>
                     <u>NOTE</u>
                 </b>
             </td>
-            <td colspan="3">:</td>
+            <td>: </td>
+        </tr>
+        <tr>
+            <td>PIC</td>
+            <td>: <?= $row->nm_pegawai ?></td>
+            <td></td>
+            <td></td>
         </tr>
     </table>
-
-    <br>
-
 
     <table style="width: 100%;" class="list">
         <thead>
@@ -124,12 +123,12 @@
                 <u>( <?= $row->pelanggan ?> )</u>
             </td>
             <td style="text-align: center;">
-                <b>PEGAWAI</b>
+                <b>ADMIN</b>
                 <br>
                 <br>
                 <br>
                 <br>
-                <u>( <?= $row->nm_pegawai ?> )</u>
+                <u>( <?= $this->nama ?> )</u>
             </td>
         </tr>
     </table>

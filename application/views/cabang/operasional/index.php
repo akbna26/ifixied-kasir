@@ -3,9 +3,11 @@
         <div class="card">
             <div class="card-body bg1 br-atas p-3 mb-0 d-flex justify-content-between">
                 <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
-                <button onclick="tambah();" class="btn btn-light btn-sm fw-600">
-                    <i class="fa fa-plus mr-1"></i> Tambah Data
-                </button>
+                <?php if (session('type')=='cabang') : ?>
+                    <button onclick="tambah();" class="btn btn-light btn-sm fw-600">
+                        <i class="fa fa-plus mr-1"></i> Tambah Data
+                    </button>
+                <?php endif; ?>
             </div>
 
             <div class="card-body">
@@ -14,10 +16,12 @@
                         <thead>
                             <tr>
                                 <th class="fw-600">NO</th>
-                                <th class="fw-600">JUDUL</th>
+                                <th class="fw-600">CABANG</th>
+                                <th class="fw-600">JENIS OPERASIONAL</th>
                                 <th class="fw-600">TANGGAL</th>
+                                <th class="fw-600">JUMLAH</th>
                                 <th class="fw-600">KETERANGAN</th>
-                                <th class="fw-600" style="width: 250px;">AKSI</th>
+                                <th class="fw-600" style="width: 150px;">AKSI</th>
                             </tr>
                         </thead>
                         <tbody>
