@@ -35,7 +35,7 @@
             border-bottom: 1px solid #34495e;
         }
 
-        .font-9 {
+        .font-12 {
             font-size: 12px;
         }
     </style>
@@ -43,7 +43,7 @@
 
 <body>
 
-    <table style="width: 100%;" class="font-9">
+    <table style="width: 100%;" class="font-12">
         <tr>
             <td>
                 <b style="font-size: 10px;">IFIXIED | <?= $row->nm_cabang ?></b>
@@ -60,7 +60,7 @@
 
     <hr style="margin-top: 2px;margin-bottom: 2px;">
 
-    <table style="width: 100%;" class="font-9">
+    <table style="width: 100%;" class="font-12">
         <tr>
             <td style="width: 50px;">NAMA</td>
             <td style="width: 150px;">: <?= $row->pelanggan ?></td>
@@ -85,7 +85,7 @@
         </tr>
     </table>
 
-    <table style="width: 100%;" class="list font-9">
+    <table style="width: 100%;" class="list font-12">
         <thead>
             <tr>
                 <th>Barcode</th>
@@ -110,7 +110,7 @@
 
     <br>
 
-    <table style="width: 100%;" class="font-9">
+    <table style="width: 100%;" class="font-12">
         <tbody>
             <tr>
                 <td rowspan="4">
@@ -154,10 +154,6 @@
                 <td style="text-align: right;" class="border-bottom"><?= rupiah($row->kembalian) ?></td>
             </tr>
     </table>
-
-    <hr>
-
-    
 </body>
 
 </html>

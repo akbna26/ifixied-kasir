@@ -27,7 +27,7 @@
         }
 
         body {
-            font-size: 8px !important;
+            font-size: 12px !important;
             letter-spacing: 2 !important;
         }
 
@@ -35,15 +35,15 @@
             border-bottom: 1px solid #34495e;
         }
 
-        .font-9 {
-            font-size: 9px;
+        .font-12 {
+            font-size: 12px;
         }
     </style>
 </head>
 
 <body>
 
-    <table style="width: 100%;" class="font-9">
+    <table style="width: 100%;" class="font-12">
         <tr>
             <td>
                 <b style="font-size: 10px;">IFIXIED | <?= $row->nm_cabang ?></b>
@@ -60,7 +60,7 @@
 
     <hr style="margin-top: 2px;margin-bottom: 2px;">
 
-    <table style="width: 100%;" class="font-9">
+    <table style="width: 100%;" class="font-12">
         <tr>
             <td style="width: 50px;">NAMA</td>
             <td style="width: 150px;">: <?= $row->pelanggan ?></td>
@@ -111,26 +111,28 @@
     <br>
     <br>
 
-    <table style="width: 100%;">
-        <tr>
-            <td style="width: 50%;"></td>
-            <td style="text-align: center;">
-                <b>PELANGGAN</b>
-                <br>
-                <br>
-                <br>
-                <br>
-                <u>( <?= $row->pelanggan ?> )</u>
-            </td>
-            <td style="text-align: center;">
-                <b>ADMIN</b>
-                <br>
-                <br>
-                <br>
-                <br>
-                <u>( <?= $this->nama ?> )</u>
-            </td>
-        </tr>
+    <table style="width: 100%;" class="list">
+        <tbody>
+            <tr>
+                <td style="text-align: center;width: 150px;">
+                    <b>PELANGGAN</b>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <u>( <?= $row->pelanggan ?> )</u>
+                </td>
+                <td style="text-align: center;width: 150px;">
+                    <b>ADMIN</b>
+                    <br>
+                    <br>
+                    <br>
+                    <br>
+                    <u>( <?= $this->nama ?> )</u>
+                </td>
+                <td style="border: 0;"></td>
+            </tr>
+        </tbody>
     </table>
 </body>
 

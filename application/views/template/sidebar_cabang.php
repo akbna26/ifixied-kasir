@@ -14,30 +14,50 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
-
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                <li class="<?= $this->uri->segment(2) == 'kasir_barang' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('cabang/kasir_barang') ?>" class="waves-effect fw-600">
                         <i class="bx bx-cart"></i>
-                        <span>Transaksi</span>
+                        <span>Transaksi Penjualan</span>
                     </a>
-                    <ul class="sub-menu <?= $this->uri->segment(2) == 'transaksi' ? 'mm-collapse mm-show' : '' ?>">
-                        <li><a href="<?= base_url('cabang/kasir_dp') ?>">DP Barang</a></li>
-                        <li><a href="<?= base_url('cabang/kasir_barang') ?>">Penjualan Barang</a></li>
-                        <li><a href="<?= base_url('cabang/refund_barang') ?>">Refund Barang</a></li>
-                        <li><a href="<?= base_url('cabang/retur_barang') ?>">Retur Barang</a></li>
-                        <li><a href="<?= base_url('cabang/servis_berat') ?>">Servis Berat</a></li>
-                        <li><a href="<?= base_url('cabang/operasional') ?>">Operasional</a></li>
-                    </ul>
                 </li>
-
+                <li class="<?= $this->uri->segment(2) == 'servis_berat' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('cabang/servis_berat') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-wrench"></i>
+                        <span>Service Berat</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'operasional' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('cabang/operasional') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-notepad"></i>
+                        <span>Operasional</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'retur_barang' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('cabang/retur_barang') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-sync"></i>
+                        <span>Retur Barang</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'refund_barang' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('cabang/refund_barang') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-money"></i>
+                        <span>Refund Barang</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'kasir_dp' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('cabang/kasir_dp') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-file"></i>
+                        <span>DP Barang</span>
+                    </a>
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-cube-alt"></i>
                         <span>Barang</span>
                     </a>
                     <ul class="sub-menu <?= in_array($this->uri->segment(2), ['barang', 'barang_sharing', 'barang_sharing_detail']) ? 'mm-collapse mm-show' : '' ?>">
-                        <li><a href="<?= base_url('cabang/barang') ?>">List Barang</a></li>
-                        <li><a href="<?= base_url('cabang/barang_sharing') ?>">Riwayat Restock</a></li>
+                        <li><a href="<?= base_url('cabang/barang') ?>">Data Barang</a></li>
+                        <li><a href="<?= base_url('cabang/barang_sharing') ?>">Riwayat ReStock</a></li>
                     </ul>
                 </li>
 
@@ -47,7 +67,8 @@
                         <span>Laporan</span>
                     </a>
                     <ul class="sub-menu <?= $this->uri->segment(2) == 'laporan' ? 'mm-collapse mm-show' : '' ?>">
-                        <li><a href="<?= base_url('cabang/laporan_transaksi') ?>">Transaksi Kasir</a></li>
+                        <li><a href="<?= base_url('cabang/laporan_mutasi') ?>">Mutasi Transaksi</a></li>
+                        <li><a href="<?= base_url('cabang/laporan_transaksi') ?>">Rekap Transaksi</a></li>
                         <li><a href="<?= base_url('cabang/laporan_refund') ?>">Refund Barang</a></li>
                     </ul>
                 </li>

@@ -18,8 +18,8 @@ class Cetak extends MY_controller
 
         $id = decode_id($id);
 
-        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4']); //lebar x tinggi kertas // jika custom [120,75]
-        $mpdf->AddPage('P', '', '', '', '', 10, 10, 10, 10, 25, 25); // L, R, T, B
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => [140, 210]]); //lebar x tinggi kertas // jika custom [120,75]
+        $mpdf->AddPage('L', '', '', '', '', 3, 10, 10, 3); // L, R, T, B
         $mpdf->SetDisplayMode('fullpage');
         $mpdf->SetDisplayPreferences('FullScreen');
 
