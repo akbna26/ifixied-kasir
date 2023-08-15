@@ -53,6 +53,7 @@ class Paylater extends MY_controller
         $this->db->update('transaksi', [
             'potongan' => $potongan,
             'verif_paylater' => '1',
+            'verif_waktu' => date('Y-m-d H:i:s'),
             'updated' => date('Y-m-d H:i:s'),
         ]);
 

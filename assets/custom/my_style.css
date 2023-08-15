@@ -208,3 +208,12 @@ textarea:focus {
     color: #fff;
     background-color: #2143EB !important;
 }
+
+@media screen and (max-width: 450px) {
+    .page-content {
+        padding: 80px 0px !important;
+    }
+    .gambar_icon {
+        display: none !important;
+    }
+}

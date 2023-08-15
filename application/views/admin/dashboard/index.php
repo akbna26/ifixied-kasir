@@ -43,7 +43,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-3 col-sm-4 align-self-center">
+                    <div class="col-lg-3 col-sm-4 align-self-center gambar_icon">
                         <div>
                             <img src="<?= base_url('assets/skote/dist/') ?>assets/images/crypto/features-img/img-1.png" alt="" class="img-fluid d-block">
                         </div>

@@ -97,10 +97,12 @@ class Kasir_barang extends MY_controller
             'dp' => $total_dp,
             'total' => $total_nilai,
             'potongan' => $potongan,
+            'prosen_split_1' => $get_prosen_bayar_1->persen_potongan,
             'is_split' => $cek_split,
             'id_jenis_pembayaran_2' => $jenis_bayar_2,
             'total_split' => $total_bayar_split,
             'potongan_split' => $potongan_split,
+            'prosen_split_2' => @$get_prosen_bayar_2->persen_potongan ?? 0,
             'kembalian' => $kembalian,
             'created' => date('Y-m-d H:i:s'),
         ]);
@@ -123,7 +125,7 @@ class Kasir_barang extends MY_controller
             $this->db->query("UPDATE barang_cabang set stock=(
                 case when stock is not null and stock !=0 then stock-$pengurang
                 else stock end
-                ) where id='$id_pengurang' and id_cabang='$this->id_cabang'
+                ) where id_barang='$id_pengurang' and id_cabang='$this->id_cabang'
             ");
         }
 

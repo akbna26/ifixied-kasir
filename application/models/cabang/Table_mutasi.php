@@ -4,7 +4,7 @@ class Table_mutasi extends CI_Model
 {
     var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
     var $column_search = array('jenis', 'keterangan'); //field yang diizin untuk pencarian
-    var $order = array('waktu' => 'desc'); // default order
+    var $order = array('id' => 'desc'); // default order
 
     public function __construct()
     {
@@ -16,9 +16,21 @@ class Table_mutasi extends CI_Model
         $tanggal = $this->input->get('tanggal');
 
         $where = '';
-        if (!empty($tanggal)) $where .= "AND waktu='$tanggal' ";
+        if (!empty($tanggal)) $where .= "AND DATE(case when a.id_jenis_pembayaran=10 then a.verif_waktu else a.created end)='$tanggal' ";
 
-        $query = "SELECT * from mutasi where id_cabang='$this->id_cabang' $where ";
+        $query = "SELECT b.id,
+        (case when a.id_jenis_pembayaran=10 then a.verif_waktu else a.created end) as created, 
+        c.nama as nm_barang, b.harga, b.harga_modal, b.qty, 
+        (b.harga*b.qty - case when a.id_jenis_pembayaran=10 then a.potongan else (a.bayar*(a.prosen_split_1/100) + a.total_split*(a.prosen_split_2/100)) end ) as sub_total, 
+        (b.harga*b.qty - case when a.id_jenis_pembayaran=10 then a.potongan else (a.bayar*(a.prosen_split_1/100) + a.total_split*(a.prosen_split_2/100)) end ) - (b.harga_modal*b.qty) as total_profit,
+        a.prosen_split_1, a.prosen_split_2, d.nama as nm_jenis_bayar_1, e.nama as nm_jenis_bayar_2
+        from transaksi a 
+        left join transaksi_detail b on b.id_transaksi=a.id
+        left join barang c on c.id=b.id_barang
+        left join ref_jenis_pembayaran d on d.id=a.id_jenis_pembayaran
+        left join ref_jenis_pembayaran e on e.id=a.id_jenis_pembayaran_2
+        where a.id_cabang='$this->id_cabang' and (case when a.id_jenis_pembayaran=10 and a.verif_paylater='0' then false else true end)
+        $where ";
         $this->db->from("($query) as tabel");
 
         $i = 0;
@@ -80,11 +92,18 @@ class Table_mutasi extends CI_Model
             $no++;
             $row = [];
 
+            $metode = '<div>' . $field->nm_jenis_bayar_1 . '(' . $field->prosen_split_1 . '%)</div>';
+            if (!empty($field->nm_jenis_bayar_2)) $metode .= '<div class="text-primary">Split ' . $field->nm_jenis_bayar_2 . '(' . $field->prosen_split_2 . '%)</div>';
+
             $row[] = $no;
-            $row[] = $field->jenis;
-            $row[] = tgl_indo($field->waktu);
-            $row[] = rupiah($field->total);
-            $row[] = $field->keterangan;
+            $row[] = tgl_indo($field->created, true);
+            $row[] = $field->nm_barang;
+            $row[] = rupiah($field->harga_modal);
+            $row[] = rupiah($field->harga);
+            $row[] = $field->qty;
+            $row[] = rupiah($field->sub_total);
+            $row[] = rupiah($field->total_profit);
+            $row[] = $metode;
 
             $data[] = $row;
         }
