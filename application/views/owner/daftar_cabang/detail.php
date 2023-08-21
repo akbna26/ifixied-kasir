@@ -32,7 +32,7 @@
         <div class="card bg2">
             <div class="card-body">
                 <h3 class="fw-600">Rp. <span id="total_profit_penjualan">0</span></h3>
-                <div>Profit Penjualan</div>
+                <div>Profit Penjualan Hari ini</div>
             </div>
         </div>
     </div>
@@ -40,7 +40,7 @@
         <div class="card bg2">
             <div class="card-body">
                 <h3 class="fw-600">Rp. <span id="total_profit_servis">0</span></h3>
-                <div>Profit Service Berat</div>
+                <div>Profit Service Berat Hari ini</div>
             </div>
         </div>
     </div>
