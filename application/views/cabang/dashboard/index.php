@@ -55,7 +55,7 @@
                         <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['dp']->total) ?> <small class="text-muted">(<?= rupiah($total['dp']->banyak) ?> transaksi)</small></h5>
                     </div>
                     <div class="avatar-sm ml-auto">
-                        <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
+                        <div class="avatar-title bg-light rounded-circle text-white font-size-20">
                             <i class="bx bx-dollar-circle"></i>
                         </div>
                     </div>
@@ -72,7 +72,7 @@
                         <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['barang']->total) ?> <small class="text-muted">(<?= rupiah($total['barang']->banyak) ?> transaksi)</small></h5>
                     </div>
                     <div class="avatar-sm ml-auto">
-                        <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
+                        <div class="avatar-title bg-light rounded-circle text-white font-size-20">
                             <i class="bx bx-dollar-circle"></i>
                         </div>
                     </div>
@@ -89,7 +89,7 @@
                         <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['refund']->total) ?> <small class="text-muted">(<?= rupiah($total['refund']->banyak) ?> transaksi)</small></h5>
                     </div>
                     <div class="avatar-sm ml-auto">
-                        <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
+                        <div class="avatar-title bg-light rounded-circle text-white font-size-20">
                             <i class="bx bx-dollar-circle"></i>
                         </div>
                     </div>
@@ -107,7 +107,7 @@
                         <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['servis_berat']->total) ?> <small class="text-muted">(<?= rupiah($total['servis_berat']->banyak) ?> transaksi)</small></h5>
                     </div>
                     <div class="avatar-sm ml-auto">
-                        <div class="avatar-title bg-light rounded-circle text-primary font-size-20">
+                        <div class="avatar-title bg-light rounded-circle text-white font-size-20">
                             <i class="bx bx-dollar-circle"></i>
                         </div>
                     </div>

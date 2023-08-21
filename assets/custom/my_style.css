@@ -22,6 +22,7 @@ body[data-sidebar=dark] .navbar-brand-box {
 .btn-outline-primary:not(:disabled):not(.disabled):active,
 .show>.btn-outline-primary.dropdown-toggle,
 .btn-primary,
+.avatar-title,
 .btn-outline-primary:hover {
     color: #fff !important;
     background-color: #2143EB !important;
@@ -53,8 +54,13 @@ body[data-sidebar=dark] .navbar-brand-box {
 }
 
 .bg2 {
-    /* background-color: #F1FECE !important; */
     background: linear-gradient(-180deg, #F1FECE, #dbe98a);
+}
+
+.bg3 {
+    background: #0F2027;
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
 }
 
 .text1 {

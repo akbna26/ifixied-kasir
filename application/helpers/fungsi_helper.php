@@ -107,3 +107,59 @@ function generateAlphabetArray($arr)
     }
     return $alphabet;
 }
+
+function angkaKeNamaBulan($angkaBulan)
+{
+    $namaBulan = "";
+    switch ($angkaBulan) {
+        case "1":
+        case "01":
+            $namaBulan = "Januari";
+            break;
+        case "2":
+        case "02":
+            $namaBulan = "Februari";
+            break;
+        case "3":
+        case "03":
+            $namaBulan = "Maret";
+            break;
+        case "4":
+        case "04":
+            $namaBulan = "April";
+            break;
+        case "5":
+        case "05":
+            $namaBulan = "Mei";
+            break;
+        case "6":
+        case "06":
+            $namaBulan = "Juni";
+            break;
+        case "7":
+        case "07":
+            $namaBulan = "Juli";
+            break;
+        case "8":
+        case "08":
+            $namaBulan = "Agustus";
+            break;
+        case "9":
+        case "09":
+            $namaBulan = "September";
+            break;
+        case "10":
+            $namaBulan = "Oktober";
+            break;
+        case "11":
+            $namaBulan = "November";
+            break;
+        case "12":
+            $namaBulan = "Desember";
+            break;
+        default:
+            $namaBulan = "Bulan tidak valid";
+            break;
+    }
+    return $namaBulan;
+}

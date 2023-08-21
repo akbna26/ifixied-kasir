@@ -259,6 +259,9 @@ class Servis_berat extends MY_controller
             'id_jenis_pembayaran_2' => $jenis_bayar_2,
             'bayar_split' => $bayar_split,
             'potongan_split' => $potongan_split,
+
+            'prosen_split_1' => $get_prosen_bayar_1->persen_potongan,
+            'prosen_split_2' => @$get_prosen_bayar_2->persen_potongan ?? 0,
             'updated' => date('Y-m-d H:i:s'),
         ]);
 

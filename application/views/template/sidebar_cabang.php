@@ -50,6 +50,12 @@
                         <span>DP Barang</span>
                     </a>
                 </li>
+                <li class="<?= $this->uri->segment(2) == 'kasbon' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('cabang/kasbon') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-bitcoin"></i>
+                        <span>Kasbon</span>
+                    </a>
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-cube-alt"></i>

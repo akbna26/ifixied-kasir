@@ -1,6 +1,6 @@
 <?php
 
-class Table_mutasi extends CI_Model
+class Table_kasbon extends CI_Model
 {
     var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
     var $column_search = array('jenis', 'keterangan'); //field yang diizin untuk pencarian
@@ -13,12 +13,13 @@ class Table_mutasi extends CI_Model
 
     private function _get_datatables_query()
     {
-        $tanggal = $this->input->get('tanggal');
-
         $where = '';
-        if (!empty($tanggal)) $where .= "AND DATE(created)='$tanggal' ";
 
-        $query = "SELECT * from profit a where a.id_cabang='$this->id_cabang' $where ";
+        $query = "SELECT a.*, b.nama as nm_pegawai, c.nama as nm_pembayaran, d.nama as nm_cabang from kasbon a 
+        left join pegawai b on b.id=a.id_pegawai
+        left join ref_jenis_pembayaran c on c.id=a.id_pembayaran
+        left join ref_cabang d on d.id=a.id_cabang
+        where a.id_cabang='$this->id_cabang' $where ";
         $this->db->from("($query) as tabel");
 
         $i = 0;
@@ -80,18 +81,25 @@ class Table_mutasi extends CI_Model
             $no++;
             $row = [];
 
-            $metode = '<div>' . $field->nm_jenis_bayar_1 . '(' . $field->prosen_split_1 . '%)</div>';
-            if (!empty($field->nm_jenis_bayar_2)) $metode .= '<div class="text-primary">Split ' . $field->nm_jenis_bayar_2 . '(' . $field->prosen_split_2 . '%)</div>';
+            $kasbon = $field->nm_pegawai
+                . '<div class="text-danger fw-600">Sumber Dana : ' . $field->nm_pembayaran . '</div>';
 
             $row[] = $no;
-            $row[] = tgl_indo($field->created, true);
-            $row[] = $field->nm_barang;
-            $row[] = rupiah($field->harga_modal);
-            $row[] = rupiah($field->harga);
-            $row[] = $field->qty;
-            $row[] = rupiah($field->sub_total);
-            $row[] = rupiah($field->total_profit);
-            $row[] = $metode;
+            $row[] = $field->nm_cabang;
+            $row[] = $field->nm_pegawai;
+            $row[] = $kasbon;
+            $row[] = tgl_indo($field->tanggal);
+            $row[] = rupiah($field->jumlah);
+            $row[] = $field->keterangan;
+
+            if (session('type') == 'cabang') {
+                $row[] = '
+                <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
+                <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>
+            ';
+            } else {
+                $row[] = '-';
+            }
 
             $data[] = $row;
         }
