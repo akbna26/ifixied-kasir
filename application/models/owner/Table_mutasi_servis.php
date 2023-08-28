@@ -1,9 +1,9 @@
 <?php
 
-class Table_mutasi extends CI_Model
+class Table_mutasi_servis extends CI_Model
 {
     var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
-    var $column_search = array('jenis', 'keterangan'); //field yang diizin untuk pencarian
+    var $column_search = array('nm_teknisi', 'tipe_unit'); //field yang diizin untuk pencarian
     var $order = array('id' => 'desc'); // default order
 
     public function __construct()
@@ -13,12 +13,20 @@ class Table_mutasi extends CI_Model
 
     private function _get_datatables_query()
     {
+        $id_cabang = decode_id($this->input->get('id_cabang'));
         $tanggal = $this->input->get('tanggal');
 
         $where = '';
-        if (!empty($tanggal)) $where .= "AND DATE(created)='$tanggal' ";
+        if (!empty($tanggal)) $where .= "AND DATE(a.tgl_keluar)='$tanggal' ";
 
-        $query = "SELECT * from profit a where a.id_cabang='$this->id_cabang' $where ";
+        $query = "SELECT a.*, b.pelanggan, b.tipe_unit, b.kerusakan, d.nama as nm_teknisi, e.nama as nm_tindakan
+        from profit_servis a 
+        left join servis_berat b on b.id=a.id
+        left join setting_pegawai c on c.id=b.id_teknisi_setting
+        left join pegawai d on d.id=c.id_pegawai
+        left join ref_tindakan e on e.id=b.id_tindakan
+        where a.id_cabang='$id_cabang' $where ";
+
         $this->db->from("($query) as tabel");
 
         $i = 0;
@@ -80,18 +88,15 @@ class Table_mutasi extends CI_Model
             $no++;
             $row = [];
 
-            $metode = '<div>' . $field->nm_jenis_bayar_1 . '(' . $field->prosen_split_1 . '%)</div>';
-            if (!empty($field->nm_jenis_bayar_2)) $metode .= '<div class="text-primary">Split ' . $field->nm_jenis_bayar_2 . '(' . $field->prosen_split_2 . '%)</div>';
-
             $row[] = $no;
-            $row[] = tgl_indo($field->created, true);
-            $row[] = $field->nm_barang;
-            // $row[] = rupiah($field->harga_modal);
-            $row[] = rupiah($field->harga);
-            $row[] = $field->qty;
-            $row[] = rupiah($field->sub_total);
-            // $row[] = rupiah($field->total_profit);
-            $row[] = $metode;
+            $row[] = tgl_indo($field->tgl_keluar);
+            $row[] = 'Pelanggan : ' . $field->pelanggan
+                . '<div class="text-primary">Tipe Unit : ' . $field->tipe_unit .'<span class="text-danger"> (' . $field->kerusakan . ')</span></div>';
+            $row[] = rupiah($field->biaya);
+            $row[] = rupiah($field->modal);
+            $row[] = rupiah($field->profit);
+            $row[] = $field->nm_teknisi;
+            $row[] = $field->nm_tindakan;
 
             $data[] = $row;
         }

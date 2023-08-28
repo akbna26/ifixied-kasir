@@ -145,11 +145,16 @@
             </tr>
             <tr>
                 <td colspan="1" style="text-align: right;">Bayar :</td>
-                <td style="text-align: right;" class="border-bottom"><?= rupiah($row->bayar) ?></td>
+                <td style="text-align: right;" class="border-bottom"><?= rupiah($row->bayar) ?> <div style="font-size: 10px;">(<?= $row->pembayaran_1  ?>)</div>
+                </td>
             </tr>
             <tr>
                 <td colspan="1" style="text-align: right;">Split :</td>
-                <td style="text-align: right;" class="border-bottom"><?= empty($row->bayar_split) ? 0 : rupiah($row->bayar_split) ?></td>
+                <td style="text-align: right;" class="border-bottom"><?= empty($row->bayar_split) ? 0 : rupiah($row->bayar_split) ?>
+                    <?php if ($row->pembayaran_2) : ?>
+                        <div style="font-size: 10px;">(<?= $row->pembayaran_2  ?>)</div>
+                    <?php endif ?>
+                </td>
             </tr>
             <tr>
                 <td colspan="1" style="text-align: right;">Kembalian :</td>

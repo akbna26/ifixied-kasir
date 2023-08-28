@@ -13,12 +13,13 @@ class Table_mutasi extends CI_Model
 
     private function _get_datatables_query()
     {
+        $id_cabang = decode_id($this->input->get('id_cabang'));
         $tanggal = $this->input->get('tanggal');
 
         $where = '';
         if (!empty($tanggal)) $where .= "AND DATE(created)='$tanggal' ";
 
-        $query = "SELECT * from profit a where a.id_cabang='$this->id_cabang' $where ";
+        $query = "SELECT * from profit a where a.id_cabang='$id_cabang' $where ";
         $this->db->from("($query) as tabel");
 
         $i = 0;
@@ -86,11 +87,11 @@ class Table_mutasi extends CI_Model
             $row[] = $no;
             $row[] = tgl_indo($field->created, true);
             $row[] = $field->nm_barang;
-            // $row[] = rupiah($field->harga_modal);
+            $row[] = rupiah($field->harga_modal);
             $row[] = rupiah($field->harga);
             $row[] = $field->qty;
             $row[] = rupiah($field->sub_total);
-            // $row[] = rupiah($field->total_profit);
+            $row[] = rupiah($field->total_profit);
             $row[] = $metode;
 
             $data[] = $row;

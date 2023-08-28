@@ -23,10 +23,11 @@ class Cetak extends MY_controller
         $mpdf->SetDisplayMode('fullpage');
         $mpdf->SetDisplayPreferences('FullScreen');
 
-        $data['row'] = $this->db->query("SELECT a.*, b.nama as nm_cabang, b.lokasi, b.kontak, c.nama as nm_pegawai
+        $data['row'] = $this->db->query("SELECT a.*, b.nama as nm_cabang, b.lokasi, b.kontak, c.nama as nm_pegawai, d.nama as pembayaran
             from dp a 
             left join ref_cabang b on b.id=a.id_cabang
             left join pegawai c on c.id=a.id_pegawai
+            left join ref_jenis_pembayaran d on d.id=a.pembayaran
             where a.id='$id' 
         ")->row();
 
@@ -126,7 +127,8 @@ class Cetak extends MY_controller
             ifnull( c.nama, '-' ) AS nm_tindakan,
             ifnull( f.nama, '-' ) AS nm_teknisi, f.nama as nm_pegawai,
             e.nama AS nm_cabang, e.lokasi, e.kontak,
-            g.nama AS nm_pengambilan 
+            g.nama AS nm_pengambilan,
+            h.nama as pembayaran_1, i.nama as pembayaran_2
         FROM servis_berat a
             LEFT JOIN ref_status_servis b ON b.id = a.
             STATUS LEFT JOIN ref_tindakan c ON c.id = a.id_tindakan
@@ -134,6 +136,8 @@ class Cetak extends MY_controller
             LEFT JOIN pegawai f ON f.id = d.id_pegawai
             LEFT JOIN ref_cabang e ON e.id = a.id_cabang
             LEFT JOIN ref_pengambilan g ON g.id = a.id_pengambilan 
+            left join ref_jenis_pembayaran h on h.id = a.id_jenis_pembayaran
+            left join ref_jenis_pembayaran i on i.id = a.id_jenis_pembayaran_2
         WHERE
             a.deleted IS NULL and a.id='$id'
         ")->row();

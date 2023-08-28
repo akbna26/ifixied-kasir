@@ -29,6 +29,8 @@ class Kasir_dp extends MY_controller
     public function tambah()
     {
         $data['pegawai'] = $this->db->query("SELECT * from pegawai where id_cabang='$this->id_cabang' and deleted is null ")->result();
+        $data['ref_jenis_pembayaran'] = $this->db->query("SELECT * from ref_jenis_pembayaran where deleted is null ")->result();
+
         $html = $this->load->view('cabang/kasir_dp/form', $data, true);
 
         echo json_encode([
@@ -43,6 +45,8 @@ class Kasir_dp extends MY_controller
         $data['id'] = $id;
         $data['data'] = $this->db->query("SELECT * from dp where id='$id' and deleted is null ")->row();
         $data['pegawai'] = $this->db->query("SELECT * from pegawai where id_cabang='$this->id_cabang' and deleted is null ")->result();
+        $data['ref_jenis_pembayaran'] = $this->db->query("SELECT * from ref_jenis_pembayaran where deleted is null ")->result();
+
         $html = $this->load->view('cabang/kasir_dp/form', $data, true);
 
         echo json_encode([
@@ -61,7 +65,7 @@ class Kasir_dp extends MY_controller
         $bulan = date('m');
         $total_transaksi = $this->db->query("SELECT count(1)+1 as total from dp where id_cabang='$this->id_cabang' and month(created)='$bulan' and year(created)='$tahun' ")->row();
         $no_invoice = 'INVDP' . $this->id_cabang . '-' . date('Ym') . '-' . sprintf("%04d", $total_transaksi->total);
-
+        
         $pembayaran = $this->input->post('pembayaran');
         $total = clear_koma($this->input->post('total'));
         $estimasi_biaya = clear_koma($this->input->post('estimasi_biaya'));
@@ -70,6 +74,9 @@ class Kasir_dp extends MY_controller
         $id_pegawai = $this->input->post('id_pegawai');
         $nama = $this->input->post('nama');
         $no_hp = $this->input->post('no_hp');
+
+        $get_prosen_bayar_1 = $this->db->query("SELECT * from ref_jenis_pembayaran where id='$pembayaran' and deleted is null ")->row();
+        $potongan = $get_prosen_bayar_1->persen_potongan;
 
         if (!empty($hapus)) {
             $this->db->where('id', $id);
@@ -89,6 +96,7 @@ class Kasir_dp extends MY_controller
                     'id_pegawai' => $id_pegawai,
                     'estimasi_biaya' => $estimasi_biaya,
                     'no_hp' => $no_hp,
+                    'potongan' => $potongan,
                     'created' => date('Y-m-d H:i:s'),
                 ]);
                 $id = $this->db->insert_id();
@@ -103,6 +111,7 @@ class Kasir_dp extends MY_controller
                     'id_pegawai' => $id_pegawai,
                     'estimasi_biaya' => $estimasi_biaya,
                     'no_hp' => $no_hp,
+                    'potongan' => $potongan,
                     'updated' => date('Y-m-d H:i:s'),
                 ]);
             }

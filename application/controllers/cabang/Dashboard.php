@@ -32,8 +32,8 @@ class Dashboard extends MY_controller
         ")->row();
 
         $today = date('Y-m-d');
-        $total = $this->db->query("SELECT count( 1 ) AS banyak, IFNULL(sum( total ),0) AS total, 'dp' AS jenis FROM dp WHERE id_cabang='$this->id_cabang' AND deleted IS NULL and tanggal='$today' UNION ALL
-        SELECT count( 1 ) AS banyak, IFNULL(sum( total ),0) AS total, 'barang' AS jenis FROM transaksi WHERE id_cabang='$this->id_cabang' AND deleted IS NULL and DATE(created)='$today' UNION ALL
+        $total = $this->db->query("SELECT count( 1 ) AS banyak, IFNULL(sum( total - (total*(potongan/100)) ),0) AS total, 'dp' AS jenis FROM dp WHERE id_cabang='$this->id_cabang' AND deleted IS NULL and tanggal='$today' UNION ALL
+        SELECT count( 1 ) AS banyak, IFNULL(sum( sub_total ),0) AS total, 'barang' AS jenis FROM profit WHERE id_cabang='$this->id_cabang' AND DATE(created)='$today' UNION ALL
         (
             SELECT
                 count( 1 ) AS banyak,
@@ -46,10 +46,11 @@ class Dashboard extends MY_controller
             WHERE
                 a.id_cabang='$this->id_cabang' 
             AND a.deleted IS NULL and tanggal='$today'
-        ) union all SELECT count( 1 ) AS banyak, IFNULL(sum( biaya ),0) AS total, 'servis_berat' AS jenis FROM servis_berat WHERE id_cabang='$this->id_cabang' AND deleted IS NULL and tgl_masuk='$today' ")->result();
+        ) union all SELECT count( 1 ) AS banyak, IFNULL(sum( sub_total ),0) AS total, 'servis_berat' AS jenis FROM profit_servis WHERE id_cabang='$this->id_cabang' and tgl_keluar='$today' ")->result();
 
         $total_all = [];
         foreach ($total as $dt) $total_all[$dt->jenis] = $dt;
+        
         $data['total'] = $total_all;
 
         $this->templates->load($data);

@@ -13,8 +13,10 @@ class Table_kasir_dp extends CI_Model
 
     private function _get_datatables_query()
     {
-        $this->db->select('a.*');
+        $this->db->select('a.*, b.nama as nm_pembayaran');
         $this->db->from('dp a');
+        $this->db->join('ref_jenis_pembayaran b', 'b.id = a.pembayaran', 'left');
+        
         $this->db->where('a.deleted', null);
         if (session('type') == 'cabang') $this->db->where('a.id_cabang', $this->id_cabang);
 
@@ -79,7 +81,7 @@ class Table_kasir_dp extends CI_Model
 
             $row[] = $no;
             $row[] = nl2br($field->keterangan);
-            $row[] = $field->pembayaran;
+            $row[] = $field->nm_pembayaran .' ('. $field->potongan .'%)';
             $row[] = rupiah($field->total);
             $row[] = tgl_indo($field->tanggal);
             $row[] = $field->kode;

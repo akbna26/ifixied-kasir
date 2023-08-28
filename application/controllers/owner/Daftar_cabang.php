@@ -4,10 +4,12 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Daftar_cabang extends MY_controller
 {
-
+    
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('owner/table_mutasi', 'table');
+        $this->load->model('owner/table_mutasi_servis', 'table_servis');
     }
 
     public function index()
@@ -21,6 +23,16 @@ class Daftar_cabang extends MY_controller
         $data['cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null ")->result();
 
         $this->templates->load($data);
+    }
+
+    public function table()
+    {
+        echo $this->table->generate_table();
+    }
+
+    public function table_servis()
+    {
+        echo $this->table_servis->generate_table();
     }
 
     public function detail($id)

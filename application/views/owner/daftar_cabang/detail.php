@@ -23,7 +23,7 @@
 <div class="card-body bg1 rounded p-3 mb-3 d-flex align-items-center justify-content-between">
     <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
     <div style="width: 150px;">
-        <input onchange="load_data();" value="<?= date('Y-m-d') ?>" type="date" style="width: 140px;" class="form-control form-control-sm" id="select_tanggal">
+        <input onchange="load_data();load_table();load_table_servis();" value="<?= date('Y-m-d') ?>" type="date" style="width: 140px;" class="form-control form-control-sm" id="select_tanggal">
     </div>
 </div>
 
@@ -65,5 +65,56 @@
 <div class="card">
     <div class="card-body">
         <div id="grafik" class="grafik_custom"></div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Laporan Transaksi</h4>
+        <hr>
+        <div class="table-responsive">
+            <table class="mt-3 table table-striped table-bordered" id="table_data">
+                <thead class="bg1">
+                    <tr>
+                        <th class="fw-600 text1">NO</th>
+                        <th class="fw-600 text1">TANGGAL</th>
+                        <th class="fw-600 text1">NAMA BARANG</th>
+                        <th class="fw-600 text1">MODAL</th>
+                        <th class="fw-600 text1">HARGA SATUAN</th>
+                        <th class="fw-600 text1">QTY</th>
+                        <th class="fw-600 text1">SUB TOTAL<br>(dikurangi potongan)</th>
+                        <th class="fw-600 text1">PROFIT</th>
+                        <th class="fw-600 text1">METODE PEMBAYARAN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Laporan Servis</h4>
+        <hr>
+        <div class="table-responsive">
+            <table class="mt-3 table table-striped table-bordered" id="table_servis">
+                <thead class="bg1">
+                    <tr>
+                        <th class="fw-600 text1">NO</th>
+                        <th class="fw-600 text1">TANGGAL</th>
+                        <th class="fw-600 text1">INFORMASI</th>
+                        <th class="fw-600 text1">HARGA JUAL</th>
+                        <th class="fw-600 text1">MODAL</th>
+                        <th class="fw-600 text1">PROFIT</th>
+                        <th class="fw-600 text1">TEKNISI</th>
+                        <th class="fw-600 text1">TINDAKAN</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>

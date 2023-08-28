@@ -10,8 +10,10 @@
     <div class="form-group">
         <label>Pembayaran</label>
         <select required name="pembayaran" class="form-control js_select2" data-placeholder="pilih jenis pembayaran">
-            <option <?= @$data->pembayaran == 'cash' ? 'selected' : '' ?> value="cash">Cash</option>
-            <option <?= @$data->pembayaran == 'debit' ? 'selected' : '' ?> value="debit">Debit</option>
+            <option value="">Pilih jenis pembayaran</option>
+            <?php foreach ($ref_jenis_pembayaran as $key) : ?>
+                <option <?= $key->id == @$data->pembayaran ? 'selected' : '' ?> value="<?= $key->id ?>"><?= $key->nama ?> (potongan <?= $key->persen_potongan ?> %)</option>
+            <?php endforeach; ?>
         </select>
     </div>
 

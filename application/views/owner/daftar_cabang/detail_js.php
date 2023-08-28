@@ -3,6 +3,8 @@
 <script>
     $(document).ready(function() {
         load_data();
+        load_table();
+        load_table_servis();
     });
 
     function load_data() {
@@ -58,5 +60,53 @@
                 data: res.grafik.series,
             }]
         });
+    }
+
+    function load_table() {
+        $('#table_data').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?= base_url('owner/daftar_cabang/table') ?>',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    tanggal: $('#select_tanggal').val(),
+                    id_cabang:'<?= encode_id($id_cabang) ?>',
+                },
+            },
+            order: [],
+        })
+    }
+
+    function load_table_servis() {
+        $('#table_servis').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?= base_url('owner/daftar_cabang/table_servis') ?>',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    tanggal: $('#select_tanggal').val(),
+                    id_cabang:'<?= encode_id($id_cabang) ?>',
+                },
+            },
+            order: [],
+        })
     }
 </script>

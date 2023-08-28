@@ -9,49 +9,49 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-apps">Menu</li>
                 <li class="<?= $this->uri->segment(2) == 'dashboard' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('cabang/dashboard') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('cabang/dashboard') ?>" class="waves-effect">
                         <i class="bx bx-home-alt"></i>
                         <span>Dashboard</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'kasir_barang' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('cabang/kasir_barang') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('cabang/kasir_barang') ?>" class="waves-effect">
                         <i class="bx bx-cart"></i>
                         <span>Transaksi Penjualan</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'servis_berat' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('cabang/servis_berat') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('cabang/servis_berat') ?>" class="waves-effect">
                         <i class="bx bx-wrench"></i>
                         <span>Service Berat</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'operasional' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('cabang/operasional') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('cabang/operasional') ?>" class="waves-effect">
                         <i class="bx bx-notepad"></i>
                         <span>Operasional</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'retur_barang' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('cabang/retur_barang') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('cabang/retur_barang') ?>" class="waves-effect">
                         <i class="bx bx-sync"></i>
                         <span>Retur Barang</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'refund_barang' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('cabang/refund_barang') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('cabang/refund_barang') ?>" class="waves-effect">
                         <i class="bx bx-money"></i>
                         <span>Refund Barang</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'kasir_dp' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('cabang/kasir_dp') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('cabang/kasir_dp') ?>" class="waves-effect">
                         <i class="bx bx-file"></i>
                         <span>DP Barang</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'kasbon' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('cabang/kasbon') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('cabang/kasbon') ?>" class="waves-effect">
                         <i class="bx bx-bitcoin"></i>
                         <span>Kasbon</span>
                     </a>

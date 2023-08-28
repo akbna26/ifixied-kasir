@@ -16,11 +16,11 @@
                                 <th class="fw-600">NO</th>
                                 <th class="fw-600">TANGGAL</th>
                                 <th class="fw-600">NAMA BARANG</th>
-                                <th class="fw-600">MODAL</th>
+                                <!-- <th class="fw-600">MODAL</th> -->
                                 <th class="fw-600">HARGA SATUAN</th>
                                 <th class="fw-600">QTY</th>
                                 <th class="fw-600">SUB TOTAL<br>(dikurangi potongan)</th>
-                                <th class="fw-600">PROFIT</th>
+                                <!-- <th class="fw-600">PROFIT</th> -->
                                 <th class="fw-600">METODE PEMBAYARAN</th>
                             </tr>
                         </thead>
