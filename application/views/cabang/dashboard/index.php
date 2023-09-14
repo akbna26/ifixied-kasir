@@ -43,76 +43,78 @@
     </div>
 </div>
 
-<h4 class="text-right">REKAP HARI INI - <?= tgl_indo(date('Y-m-d')) ?></h4>
+<?php if ($this->type == 'cabang') : ?>
+    <h4 class="text-right">REKAP HARI INI - <?= tgl_indo(date('Y-m-d')) ?></h4>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="card blog-stats-wid fw-600">
-            <div class="card-body">
-                <div class="d-flex flex-wrap">
-                    <div class="mr-3">
-                        <p class="mb-2 text-primary">TOTAL DP</p>
-                        <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['dp']->total) ?> <small class="text-muted">(<?= rupiah($total['dp']->banyak) ?> transaksi)</small></h5>
-                    </div>
-                    <div class="avatar-sm ml-auto">
-                        <div class="avatar-title bg-light rounded-circle text-white font-size-20">
-                            <i class="bx bx-dollar-circle"></i>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card blog-stats-wid fw-600">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                        <div class="mr-3">
+                            <p class="mb-2 text-primary">TOTAL DP</p>
+                            <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['dp']->total) ?> <small class="text-muted">(<?= rupiah($total['dp']->banyak) ?> transaksi)</small></h5>
+                        </div>
+                        <div class="avatar-sm ml-auto">
+                            <div class="avatar-title bg-light rounded-circle text-white font-size-20">
+                                <i class="bx bx-dollar-circle"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card blog-stats-wid fw-600">
-            <div class="card-body">
-                <div class="d-flex flex-wrap">
-                    <div class="mr-3">
-                        <p class="mb-2 text-primary">TOTAL PENJUALAN BARANG</p>
-                        <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['barang']->total) ?> <small class="text-muted">(<?= rupiah($total['barang']->banyak) ?> transaksi)</small></h5>
-                    </div>
-                    <div class="avatar-sm ml-auto">
-                        <div class="avatar-title bg-light rounded-circle text-white font-size-20">
-                            <i class="bx bx-dollar-circle"></i>
+        <div class="col-md-6">
+            <div class="card blog-stats-wid fw-600">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                        <div class="mr-3">
+                            <p class="mb-2 text-primary">TOTAL PENJUALAN BARANG</p>
+                            <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['barang']->total) ?> <small class="text-muted">(<?= rupiah($total['barang']->banyak) ?> transaksi)</small></h5>
+                        </div>
+                        <div class="avatar-sm ml-auto">
+                            <div class="avatar-title bg-light rounded-circle text-white font-size-20">
+                                <i class="bx bx-dollar-circle"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-6">
-        <div class="card blog-stats-wid fw-600">
-            <div class="card-body">
-                <div class="d-flex flex-wrap">
-                    <div class="mr-3">
-                        <p class="mb-2 text-primary">TOTAL REFUND/RETUR</p>
-                        <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['refund']->total) ?> <small class="text-muted">(<?= rupiah($total['refund']->banyak) ?> transaksi)</small></h5>
-                    </div>
-                    <div class="avatar-sm ml-auto">
-                        <div class="avatar-title bg-light rounded-circle text-white font-size-20">
-                            <i class="bx bx-dollar-circle"></i>
+        <div class="col-md-6">
+            <div class="card blog-stats-wid fw-600">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                        <div class="mr-3">
+                            <p class="mb-2 text-primary">TOTAL REFUND/RETUR</p>
+                            <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['refund']->total) ?> <small class="text-muted">(<?= rupiah($total['refund']->banyak) ?> transaksi)</small></h5>
+                        </div>
+                        <div class="avatar-sm ml-auto">
+                            <div class="avatar-title bg-light rounded-circle text-white font-size-20">
+                                <i class="bx bx-dollar-circle"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <div class="col-md-6">
-        <div class="card blog-stats-wid fw-600">
-            <div class="card-body">
-                <div class="d-flex flex-wrap">
-                    <div class="mr-3">
-                        <p class="mb-2 text-primary">TOTAL SERVIS</p>
-                        <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['servis_berat']->total) ?> <small class="text-muted">(<?= rupiah($total['servis_berat']->banyak) ?> transaksi)</small></h5>
-                    </div>
-                    <div class="avatar-sm ml-auto">
-                        <div class="avatar-title bg-light rounded-circle text-white font-size-20">
-                            <i class="bx bx-dollar-circle"></i>
+        <div class="col-md-6">
+            <div class="card blog-stats-wid fw-600">
+                <div class="card-body">
+                    <div class="d-flex flex-wrap">
+                        <div class="mr-3">
+                            <p class="mb-2 text-primary">TOTAL SERVIS</p>
+                            <h5 class="mb-0 fw-600">Rp. <?= rupiah($total['servis_berat']->total) ?> <small class="text-muted">(<?= rupiah($total['servis_berat']->banyak) ?> transaksi)</small></h5>
+                        </div>
+                        <div class="avatar-sm ml-auto">
+                            <div class="avatar-title bg-light rounded-circle text-white font-size-20">
+                                <i class="bx bx-dollar-circle"></i>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+<?php endif; ?>

@@ -29,7 +29,7 @@
 
 <div class="row">
     <div class="col-6">
-        <div class="card bg2">
+        <div class="card">
             <div class="card-body">
                 <h3 class="fw-600">Rp. <span id="total_profit_penjualan">0</span></h3>
                 <div>Profit Penjualan Hari ini</div>
@@ -37,7 +37,7 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="card bg2">
+        <div class="card">
             <div class="card-body">
                 <h3 class="fw-600">Rp. <span id="total_profit_servis">0</span></h3>
                 <div>Profit Service Berat Hari ini</div>
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="card bg2">
+        <div class="card">
             <div class="card-body">
                 <h3 class="fw-600">Rp. <span id="total_profit_harian">0</span></h3>
                 <div>Total Profit Harian</div>
@@ -53,7 +53,7 @@
         </div>
     </div>
     <div class="col-6">
-        <div class="card bg2">
+        <div class="card">
             <div class="card-body">
                 <h3 class="fw-600">Rp. <span id="total_profit_bulanan">0</span></h3>
                 <div>Total Profit Bulanan</div>

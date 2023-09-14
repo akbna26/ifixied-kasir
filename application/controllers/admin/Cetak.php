@@ -25,6 +25,48 @@ class Cetak extends MY_controller
 
         $id = decode_id($id);
 
+        $mpdf = new \Mpdf\Mpdf(['mode' => 'utf-8', 'format' => 'A4']); //lebar x tinggi kertas // jika custom [120,75]
+        $mpdf->AddPage('P', '', '', '', '', 10, 10, 10, 10); // L, R, T, B
+        $mpdf->SetDisplayMode('fullpage');
+        $mpdf->SetDisplayPreferences('FullScreen');
+
+        $data['detail'] = $this->db->query("SELECT a.*, b.nama from sharing a 
+            left join ref_cabang b on b.id=a.id_cabang
+        where a.id='$id' ")->row();
+
+        $data['row'] = $this->db->query("SELECT
+            a.*,
+            b.nama AS barang,
+            b.barcode,
+            c.nama AS kategori,
+            d.is_konfirmasi,
+            ( a.stock * b.harga_modal ) AS modal,
+            e.nama as nm_cabang
+        FROM
+            sharing_detail a
+            LEFT JOIN barang b ON b.id = a.id_barang AND b.deleted
+            IS NULL LEFT JOIN ref_kategori c ON c.id = b.id_kategori
+            LEFT JOIN sharing d ON d.id = a.id_sharing 
+            LEFT JOIN ref_cabang e on e.id=d.id_cabang
+        WHERE
+            a.deleted IS NULL 
+            AND a.id_sharing = '$id'
+        ")->result();
+
+        $html = $this->load->view('admin/cetak/sharing', $data, true);
+        $mpdf->WriteHTML($html);
+        $cetak = 'detail-sharing.pdf';
+        $mpdf->Output($cetak, 'I'); // opens in browser 
+    }
+
+    public function detail_sharing_excel($id = null)
+    {
+        if (!$id) {
+            dd('not allowed');
+        }
+
+        $id = decode_id($id);
+
         $data = $this->db->query("SELECT
             a.*,
             b.nama AS barang,
@@ -67,7 +109,7 @@ class Cetak extends MY_controller
 
         $awal = 4;
         $no = 1;
-        foreach ($data as $row) {           
+        foreach ($data as $row) {
 
             $spreadsheet->setActiveSheetIndex(0)
                 ->setCellValue('A' . $awal, $no++)
@@ -76,8 +118,7 @@ class Cetak extends MY_controller
                 ->setCellValue('D' . $awal, $row->barcode)
                 ->setCellValue('E' . $awal, $row->barang)
                 ->setCellValue('F' . $awal, $row->stock)
-                ->setCellValue('G' . $awal, $row->modal)
-                ;
+                ->setCellValue('G' . $awal, $row->modal);
             $awal++;
         }
         $awal--;

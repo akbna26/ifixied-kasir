@@ -44,7 +44,7 @@
     <table style="width: 100%;" class="font-12">
         <tr>
             <td>
-                <b style="font-size: 10px;">IFIXIED | <?= $row->nm_cabang ?></b>
+                <b>IFIXIED | <?= $row->nm_cabang ?></b>
                 <div><?= $row->lokasi ?></div>
                 <div><?= $row->kontak ?></div>
             </td>

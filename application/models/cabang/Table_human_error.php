@@ -1,10 +1,10 @@
 <?php
 
-class Table_kasbon extends CI_Model
+class Table_human_error extends CI_Model
 {
-    var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
-    var $column_search = array('nm_pegawai', 'keterangan'); //field yang diizin untuk pencarian
-    var $order = array('id' => 'desc'); // default order
+    var $column_order = array(null, 'a.nama', 'b.nama', 'c.nama', null); //field yang ada di table user
+    var $column_search = array('b.nm_barang'); //field yang diizin untuk pencarian
+    var $order = array('a.id' => 'desc'); // default order
 
     public function __construct()
     {
@@ -13,14 +13,12 @@ class Table_kasbon extends CI_Model
 
     private function _get_datatables_query()
     {
-        $where = '';
-
-        $query = "SELECT a.*, b.nama as nm_pegawai, c.nama as nm_pembayaran, d.nama as nm_cabang from kasbon a 
-        left join pegawai b on b.id=a.id_pegawai
-        left join ref_jenis_pembayaran c on c.id=a.id_pembayaran
-        left join ref_cabang d on d.id=a.id_cabang
-        where a.id_cabang='$this->id_cabang' $where ";
-        $this->db->from("($query) as tabel");
+        $this->db->select('a.*, concat(b.barcode," - ",b.nama) as nm_barang, b.harga_modal, c.nama as nm_cabang, d.nama as nm_pegawai');
+        $this->db->from('human_error a');
+        $this->db->join('barang b', 'b.id = a.id_barang', 'left');
+        $this->db->join('ref_cabang c ', 'c.id = a.id_cabang', 'left');
+        $this->db->join('pegawai d ', 'd.id = a.id_pegawai', 'left');
+        if (session('type') == 'cabang') $this->db->where('a.id_cabang', $this->id_cabang);
 
         $i = 0;
 
@@ -30,9 +28,9 @@ class Table_kasbon extends CI_Model
                 if ($i === 0) // looping awal
                 {
                     $this->db->group_start();
-                    $this->db->like('LOWER(' . $item . ')', strtolower($_GET['search']['value']));
+                    $this->db->like($item, $_GET['search']['value']);
                 } else {
-                    $this->db->or_like('LOWER(' . $item . ')', strtolower($_GET['search']['value']));
+                    $this->db->or_like($item, $_GET['search']['value']);
                 }
 
                 if (count($this->column_search) - 1 == $i)
@@ -81,25 +79,23 @@ class Table_kasbon extends CI_Model
             $no++;
             $row = [];
 
-            $kasbon = $field->nm_pegawai
-                . '<div class="text-danger fw-600">Sumber Dana : ' . $field->nm_pembayaran . '</div>';
-
             $row[] = $no;
             $row[] = $field->nm_cabang;
             $row[] = $field->nm_pegawai;
-            $row[] = $kasbon;
+            $row[] = $field->nm_barang;
+            $row[] = rupiah($field->harga_modal);
             $row[] = tgl_indo($field->tanggal);
-            $row[] = rupiah($field->jumlah);
             $row[] = $field->keterangan;
 
             if (session('type') == 'cabang') {
-                $row[] = '
-                <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
-                <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>
-            ';
-            } else {
-                $row[] = '-';
+                $aksi = '
+                    <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
+                    <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger mt-1 fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>
+                ';
             }
+
+            if (session('type') == 'gudang' && empty($field->status_retur)) $aksi .= '<button onclick="verifikasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-success fw-600"><i class="fas fa-check"></i> Verifikasi</button>';
+            $row[] = $aksi;
 
             $data[] = $row;
         }

@@ -16,7 +16,7 @@
             destroy: true,
             processing: true,
             serverSide: true,
-            ordering: true,
+            ordering: false,
             autoWidth: false,
             lengthMenu: [
                 [10, 25, 50, 100, -1],
@@ -248,6 +248,37 @@
                 if (res.status == 'success') {
                     show_modal_custom({
                         judul: 'Klaim Garansi',
+                        html: res.html,
+                        size: 'modal-xl',
+                    });
+                }
+            }
+        });
+    }
+
+    function klaim_refund(id) {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url(session('type') . '/servis_berat/klaim_refund') ?>",
+            dataType: "JSON",
+            data: {
+                id: id,
+            },
+            beforeSend: function(res) {
+                Swal.fire({
+                    title: 'Loading ...',
+                    html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            },
+            complete: function(res) {
+                Swal.close();
+            },
+            success: function(res) {
+                if (res.status == 'success') {
+                    show_modal_custom({
+                        judul: 'Klaim Refund',
                         html: res.html,
                         size: 'modal-xl',
                     });

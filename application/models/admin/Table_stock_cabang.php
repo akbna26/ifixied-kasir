@@ -16,10 +16,10 @@ class Table_stock_cabang extends CI_Model
         $id_kategori = $this->input->get('id_kategori');
         $id_cabang = $this->input->get('id_cabang');
 
-        $this->db->select('a.*, c.nama as kategori, d.stock');
+        $this->db->select('a.*, c.nama as kategori, d.stock, d.id');
         $this->db->from('barang a');
         $this->db->join('ref_kategori c', 'c.id = a.id_kategori', 'left');
-        $this->db->join('barang_cabang d', 'd.id_barang = a.id and d.deleted is null', 'left');        
+        $this->db->join('barang_cabang d', 'd.id_barang = a.id and d.deleted is null', 'left');
         $this->db->where('a.deleted', null);
         $this->db->where('d.id_cabang', $id_cabang);
 
@@ -88,17 +88,24 @@ class Table_stock_cabang extends CI_Model
             $row[] = $field->nama
                 . '<span class="d-block text-primary fw-600">Kategori : ' . $field->kategori . '</span>';
 
+            $modal = '';
+            if (session('type') == 'admin') {
+                $modal .= '
+                    <tr class="bg-white">
+                        <th>Harga Modal</th>
+                        <td>' . rupiah($field->harga_modal) . '</td>
+                    </tr>
+                ';
+            }
+
             $row[] = '
-            <table class="table table-sm table-bordered mb-0">
-                <tr class="bg-white">
-                    <th>Harga Modal</th>
-                    <td>' . rupiah($field->harga_modal) . '</td>
-                </tr>
-                <tr class="bg-white">
-                    <th>Harga Jual</th>
-                    <td>' . rupiah($field->harga_jual) . '</td>
-                </tr>
-            </table>
+                <table class="table table-sm table-bordered mb-0">
+                    ' . $modal . '
+                    <tr class="bg-white">
+                        <th>Harga Jual</th>
+                        <td>' . rupiah($field->harga_jual) . '</td>
+                    </tr>
+                </table>
             ';
 
             $row[] = '<span class="badge badge-warning" style="font-size:15px;color:#000;"><i class="bx bx-task mr-1"></i> Stock : ' . rupiah($field->stock) . '</span>'
@@ -118,6 +125,10 @@ class Table_stock_cabang extends CI_Model
 
             $row[] = '<span class="d-block">Ket. : ' . $field->keterangan . '</span>'
                 . $gambar;
+
+            if (session('type') == 'admin') {
+                $row[] = '<button onclick="sharing(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600">Sharing</button>';
+            }
 
             $data[] = $row;
         }

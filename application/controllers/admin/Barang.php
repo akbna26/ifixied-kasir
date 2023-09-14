@@ -168,4 +168,61 @@ class Barang extends MY_controller
             'status' => 'success'
         ]);
     }
+
+    public function sharing()
+    {
+        $id = decode_id($this->input->post('id'));
+        $data['id'] = $id;
+        $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null")->result();
+        $html = $this->load->view('admin/barang/form_sharing', $data, true);
+
+        echo json_encode([
+            'status' => 'success',
+            'html' => $html,
+        ]);
+    }
+
+    public function do_sharing()
+    {
+        $id = decode_id($this->input->post('id'));
+        $id_cabang = $this->input->post('id_cabang');
+        $tanggal = date('Y-m-d', strtotime($this->input->post('tanggal')));
+        $qty = $this->input->post('qty');
+
+        $barang_cabang = $this->db->query("SELECT * from barang_cabang where id='$id' ")->row();
+
+        if ($qty > $barang_cabang->stock) {
+            dd([
+                'status' => 'failed',
+                'msg' => 'stock tersedia ' . $barang_cabang->stock,
+            ]);
+        }
+
+        $cek_data = $this->db->query("SELECT * from sharing where id_cabang='$id_cabang' and tanggal='$tanggal' and deleted is null ")->row();
+        if (!empty($cek_data)) {
+            $id_sharing = $cek_data->id;
+        } else {
+            $this->db->insert('sharing', [
+                'id_cabang' => $id_cabang,
+                'tanggal' => $tanggal,
+                'created' => date('Y-m-d H:i:s'),
+            ]);
+            $id_sharing = $this->db->insert_id();
+        }
+
+        $this->db->insert('sharing_detail', [
+            'id_sharing' => $id_sharing,
+            'id_barang' => $barang_cabang->id_barang,
+            'stock' => $qty,
+            'is_transfer' => '1',
+            'created' => date('Y-m-d H:i:s'),
+        ]);
+
+        $updated = date('Y-m-d H:i:s');
+        $this->db->query("UPDATE barang_cabang set stock=(stock - $qty), updated='$updated' where id='$id' ");
+
+        echo json_encode([
+            'status' => 'success',
+        ]);
+    }
 }

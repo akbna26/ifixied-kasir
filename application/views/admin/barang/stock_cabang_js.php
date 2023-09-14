@@ -15,7 +15,7 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('admin/barang/table_stock_cabang') ?>',
+                url: '<?= base_url(session('type') . '/barang/table_stock_cabang') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
@@ -38,5 +38,36 @@
                 },
             ],
         })
+    }
+
+    function sharing(id) {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('admin/barang/sharing') ?>",
+            dataType: "JSON",
+            data: {
+                id: id,
+            },
+            beforeSend: function(res) {
+                Swal.fire({
+                    title: 'Loading ...',
+                    html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            },
+            complete: function(res) {
+                Swal.close();
+            },
+            success: function(res) {
+                if (res.status == 'success') {
+                    show_modal_custom({
+                        judul: 'Sharing ke cabang lain',
+                        html: res.html,
+                        size: 'modal-lg',
+                    });
+                }
+            }
+        });
     }
 </script>

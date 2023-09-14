@@ -3,7 +3,7 @@
         <div class="card">
             <div class="card-body bg1 br-atas p-3 mb-0 d-flex justify-content-between">
                 <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
-                <div>               
+                <div>
                     <button onclick="history.go(-1);" class="btn btn-light fw-600 btn-sm">
                         <i class="fa fa-arrow-left mr-1"></i> Kembali
                     </button>
@@ -47,6 +47,9 @@
                                 <th class="fw-600">STOCK</th>
                                 <th class="fw-600">KODE BARCODE</th>
                                 <th class="fw-600">INFORMASI</th>
+                                <?php if (session('type') == 'admin') : ?>
+                                    <th class="fw-600">AKSI</th>
+                                <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody>

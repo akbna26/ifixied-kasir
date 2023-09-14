@@ -1,34 +1,19 @@
 <form onsubmit="event.preventDefault();do_submit(this);">
-    <div class="form-group">
-        <label>Cabang</label>
-        <select class="form-control js_select2" required data-placeholder="pilih cabang" name="id_cabang">
-            <option value=""></option>
-            <?php foreach ($ref_cabang as $dt) : ?>
-                <option <?= $dt->id == @$data->id_cabang ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?> - <?= $dt->lokasi ?></option>
-            <?php endforeach; ?>
-        </select>
-    </div>
 
     <div class="form-group">
-        <label>Tanggal</label>
-        <input type="date" required name="tanggal" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal) ? '' : date('Y-m-d', strtotime($data->tanggal)) ?>">
+        <label>Alasan Refund <small class="text-danger fw-600">*</small></label>
+        <textarea name="alasan_refund" rows="3" placeholder="Masukkan isian" class="form-control"></textarea>
     </div>
 
-    <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
+    <input type="hidden" name="id" value="<?= encode_id($id) ?>">
     <button type="submit" class="btn btn-block btn-rounded fw-600 btn-primary"><i class="fas fa-check"></i> KLIK DISINI UNTUK SIMPAN</button>
 </form>
 
 <script>
-    $(document).ready(function() {
-        $('.js_select2').select2({
-            width: '100%'
-        });
-    });
-
     function do_submit(dt) {
 
         Swal.fire({
-            title: 'Simpan Data Sharing ?',
+            title: 'Simpan Klaim Refund ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -39,7 +24,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/barang_sharing/do_submit') ?>",
+                    url: "<?= base_url('cabang/servis_berat/do_klaim_refund') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,
@@ -65,7 +50,7 @@
                                 })
                                 .then(() => {
                                     $('#table_data').DataTable().ajax.reload();
-                                    $('[data-toggle="tooltip"]').tooltip();
+                                    get_total();
                                 })
                         }
                     }

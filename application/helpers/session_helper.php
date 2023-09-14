@@ -4,7 +4,7 @@ function data_sistem($get = 'nama')
 {
     $data = [
         'nama' => 'Sistem Informasi Kasir Ifixied',
-        'deskripsi' => 'CV. iFixied Global Indonesia',
+        'deskripsi' => 'IFixied Global Indonesia',
         'pemilik' => 'IFIXIED',
     ];
 

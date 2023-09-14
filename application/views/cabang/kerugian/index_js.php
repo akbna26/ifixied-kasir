@@ -8,14 +8,14 @@
             destroy: true,
             processing: true,
             serverSide: true,
-            ordering: false,
+            ordering: true,
             autoWidth: false,
             lengthMenu: [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url(session('type') . '/kasbon/table') ?>',
+                url: '<?= base_url(session('type') . '/kerugian/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {},
@@ -32,7 +32,7 @@
     function tambah() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url(session('type') . '/kasbon/tambah') ?>",
+            url: "<?= base_url(session('type') . '/kerugian/tambah') ?>",
             dataType: "JSON",
             data: {},
             beforeSend: function(res) {
@@ -61,7 +61,7 @@
     function ubah(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url(session('type') . '/kasbon/ubah') ?>",
+            url: "<?= base_url(session('type') . '/kerugian/ubah') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -91,7 +91,7 @@
 
     function hapus(id) {
         Swal.fire({
-            title: 'Hapus Informasi ?',
+            title: 'Hapus Data ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -101,7 +101,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url(session('type') . '/kasbon/do_submit') ?>",
+                    url: "<?= base_url(session('type') . '/kerugian/do_submit') ?>",
                     data: {
                         hapus: true,
                         id: id,

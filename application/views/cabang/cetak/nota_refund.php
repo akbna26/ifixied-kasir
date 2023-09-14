@@ -46,7 +46,7 @@
     <table style="width: 100%;" class="font-12">
         <tr>
             <td>
-                <b style="font-size: 10px;">IFIXIED | <?= $row->nm_cabang ?></b>
+                <b>IFIXIED | <?= $row->nm_cabang ?></b>
                 <div><?= $row->lokasi ?></div>
                 <div><?= $row->kontak ?></div>
             </td>
@@ -99,7 +99,7 @@
             <?php foreach ($detail as $i => $dt) : ?>
                 <tr>
                     <td><?= $dt->barang ?></td>
-                    <td><?= $dt->qty ?> @<?= rupiah($dt->harga_modal) ?></td>
+                    <td><?= $dt->qty ?> @<?= rupiah($dt->harga_jual) ?></td>
                     <td><?= $dt->nm_klaim ?></td>
                     <td><?= in_array($dt->id_klaim, [3, 4]) ? rupiah($dt->nilai_refund) : '-' ?> <?= in_array($dt->id_klaim, [3, 4]) ? '<small>(' . ($dt->nm_pembayaran) . ')</small>' : '' ?></td>
                     <td><?= $dt->nm_pengganti ?? '-' ?></td>

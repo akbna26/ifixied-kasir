@@ -1,10 +1,16 @@
 <form onsubmit="event.preventDefault();do_submit(this);">
+
     <div class="form-group">
-        <label>Cabang</label>
-        <select class="form-control js_select2" required data-placeholder="pilih cabang" name="id_cabang">
+        <label>Jumlah Kerugian</label>
+        <input type="text" required name="jumlah" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= empty($data->jumlah) ? '' : rupiah($data->jumlah) ?>">
+    </div>
+
+    <div class="form-group">
+        <label>Sumber Dana</label>
+        <select required name="id_pembayaran" class="form-control js_select2" data-placeholder="pilih sumber dana">
             <option value=""></option>
-            <?php foreach ($ref_cabang as $dt) : ?>
-                <option <?= $dt->id == @$data->id_cabang ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?> - <?= $dt->lokasi ?></option>
+            <?php foreach ($ref_jenis_pembayaran as $dt) : ?>
+                <option <?= $dt->id == @$data->id_pembayaran ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
             <?php endforeach; ?>
         </select>
     </div>
@@ -12,6 +18,11 @@
     <div class="form-group">
         <label>Tanggal</label>
         <input type="date" required name="tanggal" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal) ? '' : date('Y-m-d', strtotime($data->tanggal)) ?>">
+    </div>
+
+    <div class="form-group">
+        <label>Keterangan</label>
+        <textarea required name="keterangan" rows="3" placeholder="Tulis keterangan jika diperlukan" class="form-control"><?= @$data->keterangan ?></textarea>
     </div>
 
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
@@ -28,7 +39,7 @@
     function do_submit(dt) {
 
         Swal.fire({
-            title: 'Simpan Data Sharing ?',
+            title: 'Simpan Data Kerugian ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -39,7 +50,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/barang_sharing/do_submit') ?>",
+                    url: "<?= base_url('cabang/kerugian/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,
@@ -65,7 +76,6 @@
                                 })
                                 .then(() => {
                                     $('#table_data').DataTable().ajax.reload();
-                                    $('[data-toggle="tooltip"]').tooltip();
                                 })
                         }
                     }

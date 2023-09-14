@@ -108,6 +108,19 @@ class Servis_berat extends MY_controller
         ]);
     }
 
+    public function klaim_refund()
+    {
+        $id = decode_id($this->input->post('id'));
+        $data['id'] = $id;
+
+        $html = $this->load->view('cabang/servis_berat/klaim_refund', $data, true);
+
+        echo json_encode([
+            'status' => 'success',
+            'html' => $html,
+        ]);
+    }
+
     public function bayar()
     {
         $id = decode_id($this->input->post('id'));
@@ -161,6 +174,11 @@ class Servis_berat extends MY_controller
         $no_hp = $this->input->post('no_hp');
         $pelanggan = $this->input->post('pelanggan');
         $serial_number = $this->input->post('serial_number');
+        $imei = $this->input->post('imei');
+        $pass_layar = $this->input->post('pass_layar');
+        $email = $this->input->post('email');
+        $warna = $this->input->post('warna');
+        $kapasitas_memori = $this->input->post('kapasitas_memori');
         $tipe_unit = $this->input->post('tipe_unit');
         $tgl_masuk = date('Y-m-d', strtotime($this->input->post('tgl_masuk')));
         $modal = clear_koma($this->input->post('modal'));
@@ -182,6 +200,11 @@ class Servis_berat extends MY_controller
                     'no_hp' => $no_hp,
                     'pelanggan' => $pelanggan,
                     'serial_number' => $serial_number,
+                    'imei' => $imei,
+                    'pass_layar' => $pass_layar,
+                    'email' => $email,
+                    'warna' => $warna,
+                    'kapasitas_memori' => $kapasitas_memori,
                     'tipe_unit' => $tipe_unit,
                     'tgl_masuk' => $tgl_masuk,
                     'modal' => $modal,
@@ -203,6 +226,11 @@ class Servis_berat extends MY_controller
                     'no_hp' => $no_hp,
                     'pelanggan' => $pelanggan,
                     'serial_number' => $serial_number,
+                    'imei' => $imei,
+                    'pass_layar' => $pass_layar,
+                    'email' => $email,
+                    'warna' => $warna,
+                    'kapasitas_memori' => $kapasitas_memori,
                     'tipe_unit' => $tipe_unit,
                     'tgl_masuk' => $tgl_masuk,
                     'modal' => $modal,
@@ -388,6 +416,26 @@ class Servis_berat extends MY_controller
         ]);
 
         insert_log_servis($id, $status, $keterangan);
+
+        echo json_encode([
+            'status' => 'success',
+        ]);
+    }
+
+    public function do_klaim_refund()
+    {
+        cek_post();
+
+        $id = decode_id($this->input->post('id'));
+        $alasan_refund = $this->input->post('alasan_refund', true);
+
+        $this->db->where('id', $id);
+        $this->db->update('servis_berat', [
+            'is_refund' => 1,
+            'alasan_refund' => $alasan_refund,
+            'tgl_refund' => date('Y-m-d H:i:s'),
+            'updated' => date('Y-m-d H:i:s'),
+        ]);
 
         echo json_encode([
             'status' => 'success',

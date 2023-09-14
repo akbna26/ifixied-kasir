@@ -40,7 +40,7 @@
 
                         var html = '<option value=""></option>';
                         $.map(res.data, function(e, i) {
-                            html += `<option data-hargamodal="${e.harga_modal}" value="${e.id}">${e.barcode} - ${e.nama}</option>`
+                            html += `<option data-hargamodal="${e.harga_modal}" data-hargajual="${e.harga_jual}" value="${e.id}">${e.barcode} - ${e.nama}</option>`
                         });
                         $('#select_barang').html(html);
 
@@ -76,7 +76,9 @@
     function pilih_barang(dt) {
         $('.tr_hidden').show();
         var harga_modal = $('option:selected', dt).data('hargamodal');
+        var harga_jual = $('option:selected', dt).data('hargajual');
         $('#harga_modal').html(formatRupiah(harga_modal + ''));
+        $('#harga_jual').html(formatRupiah(harga_jual + ''));
 
         // reset pilihan
         $('#status_klaim').val('').change();
@@ -92,8 +94,8 @@
             $('#tr_refund').show()
             $('#tr_pengganti').hide();
 
-            var harga_modal = $('option:selected', $('#select_barang')).data('hargamodal');
-            $('#nilai_refund').val(formatRupiah(harga_modal + ''));
+            var harga_jual = $('option:selected', $('#select_barang')).data('hargajual');
+            $('#nilai_refund').val(formatRupiah(harga_jual + ''));
         } else {
             $('#tr_pengganti').show()
             $('#tr_refund').hide();
@@ -104,6 +106,7 @@
         var detik = new Date().getTime();
         var select_barang = $('#select_barang').val();
         var harga_modal = angka($('#harga_modal').html());
+        var harga_jual = angka($('#harga_jual').html());
         var total_qty = angka($('#total_qty').val());
         var status_klaim = $('#status_klaim').val();
 
@@ -160,7 +163,8 @@
         var html = `
             <tr id="tr_${select_barang}_${detik}">
                 <td class="td_barang" data-nilai="${select_barang}">${nama_barang}</td>
-                <td class="td_hargamodal" data-nilai="${harga_modal}">${formatRupiah(harga_modal+'')}</td>
+                <td class="td_hargajual" data-nilai="${harga_jual}">${formatRupiah(harga_jual+'')}</td>
+                <td style="display:none;" class="td_hargamodal" data-nilai="${harga_modal}">${formatRupiah(harga_modal+'')}</td>
                 <td class="td_qty" data-nilai="${total_qty}">${formatRupiah(total_qty+'')}</td>
                 <td class="td_klaim" data-nilai="${status_klaim}">${nama_klaim}</td>
                 <td class="td_refund" data-pembayaran="${pembayaran}" data-nilai="${nilai_refund}">${formatRupiah(nilai_refund+'')}</td>
@@ -231,6 +235,12 @@
                     harga_modal.push(nilai);
                 });
 
+                var harga_jual = [];
+                $('.td_hargajual').each(function(i, obj) {
+                    var nilai = $(this).data('nilai');
+                    harga_jual.push(nilai);
+                });
+
                 var qty = [];
                 $('.td_qty').each(function(i, obj) {
                     var nilai = $(this).data('nilai');
@@ -266,6 +276,7 @@
                 form.append('invoice', invoice);
                 form.append('id_barang', id_barang);
                 form.append('harga_modal', harga_modal);
+                form.append('harga_jual', harga_jual);
                 form.append('qty', qty);
                 form.append('id_klaim', id_klaim);
                 form.append('nilai_refund', id_refund);

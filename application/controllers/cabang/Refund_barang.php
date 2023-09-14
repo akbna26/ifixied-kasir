@@ -14,7 +14,7 @@ class Refund_barang extends MY_controller
         $data = [
             'index' => 'cabang/refund_barang/index',
             'index_js' => 'cabang/refund_barang/index_js',
-            'title' => 'Refund Barang',
+            'title' => 'Refund/Klaim Garansi',
         ];
 
         $data['sidebar_mini'] = true;
@@ -40,7 +40,7 @@ class Refund_barang extends MY_controller
         cek_post();
         $invoice = str_replace(' ', '', $this->input->post('invoice'));
 
-        $list = $this->db->query("SELECT c.id, c.barcode, c.nama, c.harga_modal from transaksi a 
+        $list = $this->db->query("SELECT c.id, c.barcode, c.nama, c.harga_modal, c.harga_jual from transaksi a 
             left join transaksi_detail b on b.id_transaksi=a.id and b.deleted is null
             left join barang c on c.id=b.id_barang
             where a.id_cabang='$this->id_cabang' and a.deleted is null AND a.no_invoice='$invoice'
@@ -62,6 +62,7 @@ class Refund_barang extends MY_controller
 
         $id_barang = explode(',', $this->input->post('id_barang'));
         $harga_modal = explode(',', $this->input->post('harga_modal'));
+        $harga_jual = explode(',', $this->input->post('harga_jual'));
         $id_klaim = explode(',', $this->input->post('id_klaim'));
         $id_pengganti = explode(',', $this->input->post('id_pengganti'));
         $nilai_refund = explode(',', $this->input->post('nilai_refund'));
@@ -87,6 +88,7 @@ class Refund_barang extends MY_controller
                 'nilai_refund' => $nilai_refund[$i],
                 'qty' => $qty[$i],
                 'harga_modal' => $harga_modal[$i],
+                'harga_jual' => $harga_jual[$i],
                 'pembayaran' => $pembayaran[$i],
                 'created' => date('Y-m-d H:i:s'),
             ];

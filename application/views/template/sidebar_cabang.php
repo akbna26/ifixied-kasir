@@ -32,6 +32,18 @@
                         <span>Operasional</span>
                     </a>
                 </li>
+                <li class="<?= $this->uri->segment(2) == 'kerugian' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('cabang/kerugian') ?>" class="waves-effect">
+                        <i class="bx bx-transfer-alt"></i>
+                        <span>Kerugian</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'human_error' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('cabang/human_error') ?>" class="waves-effect">
+                        <i class="bx bx-tired"></i>
+                        <span>Human Error</span>
+                    </a>
+                </li>
                 <li class="<?= $this->uri->segment(2) == 'retur_barang' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('cabang/retur_barang') ?>" class="waves-effect">
                         <i class="bx bx-sync"></i>
@@ -41,7 +53,7 @@
                 <li class="<?= $this->uri->segment(2) == 'refund_barang' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('cabang/refund_barang') ?>" class="waves-effect">
                         <i class="bx bx-money"></i>
-                        <span>Refund Barang</span>
+                        <span>Refund/Klaim Garansi</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'kasir_dp' ? 'mm-active' : '' ?> single-link">
@@ -64,6 +76,7 @@
                     <ul class="sub-menu <?= in_array($this->uri->segment(2), ['barang', 'barang_sharing', 'barang_sharing_detail']) ? 'mm-collapse mm-show' : '' ?>">
                         <li><a href="<?= base_url('cabang/barang') ?>">Data Barang</a></li>
                         <li><a href="<?= base_url('cabang/barang_sharing') ?>">Riwayat ReStock</a></li>
+                        <li><a href="<?= base_url('cabang/stock_cabang_lain') ?>">Stock Cabang Lain</a></li>
                     </ul>
                 </li>
 
@@ -76,6 +89,7 @@
                         <li><a href="<?= base_url('cabang/laporan_mutasi') ?>">Mutasi Transaksi</a></li>
                         <li><a href="<?= base_url('cabang/laporan_transaksi') ?>">Rekap Transaksi</a></li>
                         <li><a href="<?= base_url('cabang/laporan_refund') ?>">Refund Barang</a></li>
+                        <li><a href="<?= base_url('cabang/laporan_kerugian') ?>">Kerugian</a></li>
                     </ul>
                 </li>
 

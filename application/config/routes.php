@@ -76,3 +76,6 @@ $route['admin/operasional'] = 'cabang/operasional';
 $route['admin/operasional/(:any)'] = 'cabang/operasional/$1';
 
 $route['admin/cetak/nota_servis_berat/(:any)'] = 'cabang/cetak/nota_servis_berat/$1';
+
+$route['cabang/stock_cabang_lain'] = 'admin/barang/stock_cabang';
+$route['cabang/barang/table_stock_cabang'] = 'admin/barang/table_stock_cabang';

@@ -68,10 +68,16 @@
                                     </select>
                                 </td>
                             </tr>
-                            <tr class="tr_hidden" style="display: none;">
+                            <tr style="display: none;">
                                 <td>Harga Modal</td>
                                 <td>
                                     <span class="text-primary fw-600 h4" id="harga_modal">-</span>
+                                </td>
+                            </tr>
+                            <tr class="tr_hidden" style="display: none;">
+                                <td>Harga Jual</td>
+                                <td>
+                                    <span class="text-primary fw-600 h4" id="harga_jual">-</span>
                                 </td>
                             </tr>
                             <tr class="tr_hidden" style="display: none;">
@@ -123,13 +129,14 @@
 
                 <hr>
 
-                <h3>Daftar Refund</h3>
+                <h3>Daftar Return</h3>
                 <div class="table-responsive">
                     <table class="mt-3 table table-bordered table-striped" id="table_data">
                         <thead class="bg1 text-white">
                             <tr>
                                 <th class="fw-600">NAMA BARANG</th>
-                                <th class="fw-600">HARGA MODAL</th>
+                                <th class="fw-600">HARGA JUAL</th>
+                                <th style="display: none;" class="fw-600">HARGA MODAL</th>
                                 <th class="fw-600">QTY</th>
                                 <th class="fw-600">STATUS KLAIM</th>
                                 <th class="fw-600">NILAI REFUND</th>

@@ -4,17 +4,22 @@
         <select class="form-control js_select2" required data-placeholder="pilih cabang" name="id_cabang">
             <option value=""></option>
             <?php foreach ($ref_cabang as $dt) : ?>
-                <option <?= $dt->id == @$data->id_cabang ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?> - <?= $dt->lokasi ?></option>
+                <option value="<?= $dt->id ?>"><?= $dt->nama ?> - <?= $dt->lokasi ?></option>
             <?php endforeach; ?>
         </select>
     </div>
 
     <div class="form-group">
         <label>Tanggal</label>
-        <input type="date" required name="tanggal" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal) ? '' : date('Y-m-d', strtotime($data->tanggal)) ?>">
+        <input type="date" required name="tanggal" placeholder="Masukkan isian" class="form-control" value="<?= date('Y-m-d') ?>">
     </div>
 
-    <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
+    <div class="form-group">
+        <label>Quantity</label>
+        <input type="number" required name="qty" placeholder="Masukkan isian" class="form-control" value="">
+    </div>
+
+    <input type="hidden" name="id" value="<?= encode_id(@$id) ?>">
     <button type="submit" class="btn btn-block btn-rounded fw-600 btn-primary"><i class="fas fa-check"></i> KLIK DISINI UNTUK SIMPAN</button>
 </form>
 
@@ -39,7 +44,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/barang_sharing/do_submit') ?>",
+                    url: "<?= base_url('admin/barang/do_sharing') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,
@@ -67,6 +72,9 @@
                                     $('#table_data').DataTable().ajax.reload();
                                     $('[data-toggle="tooltip"]').tooltip();
                                 })
+                        } else {
+                            Swal.close();
+                            toastr.error(res.msg)
                         }
                     }
                 });

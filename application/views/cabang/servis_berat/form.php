@@ -12,28 +12,37 @@
 </div>
 <form onsubmit="event.preventDefault();do_submit(this);">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="form-group">
                 <label>Nama User</label>
                 <input type="text" required name="pelanggan" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->pelanggan ?>">
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="form-group">
                 <label>No HP</label>
                 <input type="number" required name="no_hp" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->no_hp ?>">
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <div class="form-group">
                 <label>Tipe Unit</label>
                 <input type="text" required name="tipe_unit" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->tipe_unit ?>">
             </div>
         </div>
-        <div class="col-md-3">
+    </div>
+
+    <div class="row">
+        <div class="col-md-6">
             <div class="form-group">
                 <label>Serial Number</label>
                 <input type="text" required name="serial_number" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->serial_number ?>">
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>IMEI</label>
+                <input type="text" required name="ime" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->ime ?>">
             </div>
         </div>
     </div>
@@ -81,6 +90,40 @@
             <div class="form-group">
                 <label>Modal</label>
                 <input type="text" required name="modal" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= !empty($data->modal) ? rupiah($data->modal) : '' ?>">
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h3>Informasi Tambahan</h3>
+            <div class="table-responsive">
+                <table class="table table-bordered table-sm">
+                    <tr>
+                        <th style="width: 150px;" class="bg-success text-white text-right">Password Layar</th>
+                        <td>
+                            <input type="text" required name="pass_layar" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->pass_layar ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="bg-success text-white text-right">Email</th>
+                        <td>
+                            <input type="text" required name="email" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->email ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="bg-success text-white text-right">Warna</th>
+                        <td>
+                            <input type="text" required name="warna" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->warna ?>">
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="bg-success text-white text-right">Kapasitas Memory (GB)</th>
+                        <td>
+                            <input type="number" required name="kapasitas_memori" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->kapasitas_memori ?>">
+                        </td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
