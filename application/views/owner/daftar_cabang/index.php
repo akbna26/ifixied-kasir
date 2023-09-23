@@ -22,7 +22,7 @@
                         <div class="media-body">
                             <h4 class="mb-1 text-white"><?= $dt->nama ?></h4>
                             <p class="text-white mb-1 d-none d-md-block font-weight-medium"><?= $dt->lokasi ?></p>
-                            <a href="<?= base_url('owner/daftar_cabang/detail/') . encode_id($dt->id) ?>" class="badge badge-primary p-1 mt-2 rounded">Detail Data <i class="fa fa-arrow-right ml-1"></i></a>
+                            <a href="<?= base_url($this->type . '/daftar_cabang/detail/') . encode_id($dt->id) ?>" class="badge badge-primary p-1 mt-2 rounded">Detail Data <i class="fa fa-arrow-right ml-1"></i></a>
                         </div>
 
                         <div class="mini-stat-icon avatar-sm d-none d-md-block rounded-circle align-self-center">

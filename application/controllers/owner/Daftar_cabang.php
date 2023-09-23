@@ -20,7 +20,9 @@ class Daftar_cabang extends MY_controller
             'title' => 'Daftar Cabang',
         ];
 
-        $data['cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null ")->result();
+        $where='';
+        if($this->type=='owner_cabang') $where .="AND id='$this->id_cabang' ";
+        $data['cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null $where ")->result();
 
         $this->templates->load($data);
     }

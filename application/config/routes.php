@@ -79,3 +79,8 @@ $route['admin/cetak/nota_servis_berat/(:any)'] = 'cabang/cetak/nota_servis_berat
 
 $route['cabang/stock_cabang_lain'] = 'admin/barang/stock_cabang';
 $route['cabang/barang/table_stock_cabang'] = 'admin/barang/table_stock_cabang';
+
+$route['owner_cabang/dashboard'] = 'owner/dashboard';
+$route['owner_cabang/daftar_cabang'] = 'owner/daftar_cabang';
+$route['owner_cabang/daftar_cabang/detail/(:any)'] = 'owner/daftar_cabang/detail/$1';
+$route['owner_cabang/daftar_cabang/(:any)'] = 'owner/daftar_cabang/$1';

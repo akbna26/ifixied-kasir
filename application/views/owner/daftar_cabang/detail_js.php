@@ -10,7 +10,7 @@
     function load_data() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('owner/daftar_cabang/get_data') ?>",
+            url: "<?= base_url($this->type . '/daftar_cabang/get_data') ?>",
             data: {
                 id_cabang: '<?= encode_id($id_cabang) ?>',
                 tanggal: $('#select_tanggal').val(),
@@ -74,12 +74,12 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('owner/daftar_cabang/table') ?>',
+                url: '<?= base_url($this->type . '/daftar_cabang/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
                     tanggal: $('#select_tanggal').val(),
-                    id_cabang:'<?= encode_id($id_cabang) ?>',
+                    id_cabang: '<?= encode_id($id_cabang) ?>',
                 },
             },
             order: [],
@@ -98,12 +98,12 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('owner/daftar_cabang/table_servis') ?>',
+                url: '<?= base_url($this->type . '/daftar_cabang/table_servis') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
                     tanggal: $('#select_tanggal').val(),
-                    id_cabang:'<?= encode_id($id_cabang) ?>',
+                    id_cabang: '<?= encode_id($id_cabang) ?>',
                 },
             },
             order: [],

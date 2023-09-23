@@ -60,6 +60,7 @@
             </div>
         </div>
     </div>
+
 </div>
 
 <div class="card">
@@ -118,3 +119,46 @@
         </div>
     </div>
 </div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Laporan Operasional</h4>
+        <hr>
+        <div class="table-responsive">
+            <table class="mt-3 table table-striped table-bordered" id="table_operasional">
+                <thead class="bg1">
+                    <tr>
+                        <th class="fw-600 text1">NO</th>
+                        <th class="fw-600 text1">TANGGAL</th>
+                        <th class="fw-600 text1">KETERANGAN</th>
+                        <th class="fw-600 text1">DEBIT</th>
+                        <th class="fw-600 text1">KREDIT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Laporan Kerugian</h4>
+        <hr>
+        <div class="table-responsive">
+            <table class="mt-3 table table-striped table-bordered" id="table_kerugian">
+                <thead class="bg1">
+                    <tr>
+                        <th class="fw-600 text1">NO</th>
+                        <th class="fw-600 text1">TANGGAL</th>
+                        <th class="fw-600 text1">KETERANGAN</th>
+                        <th class="fw-600 text1">DEBIT</th>
+                        <th class="fw-600 text1">KREDIT</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
