@@ -33,7 +33,6 @@
             <tr>
                 <th class="fw-600">BARCODE</th>
                 <th class="fw-600">NAMA BARANG</th>
-                <th class="fw-600">HARGA MODAL</th>
                 <th class="fw-600">QTY</th>
                 <th class="fw-600">JENIS KLAIM</th>
                 <th class="fw-600">ALASAN (Jika Retur Teknisi)</th>
@@ -44,7 +43,6 @@
             <tr>
                 <td><?= $detail->barcode ?></td>
                 <td><?= $detail->nm_barang ?></td>
-                <td><?= rupiah($detail->harga_modal) ?></td>
                 <td><?= $detail->qty ?></td>
                 <td><?= $detail->nm_klaim ?></td>
                 <td><?= $detail->alasan_refund ?></td>

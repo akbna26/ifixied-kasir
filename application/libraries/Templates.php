@@ -19,6 +19,7 @@ class Templates
         elseif ($_SESSION['id_otoritas'] == 5) $inc = 'template/sidebar_owner_cabang';
         elseif ($_SESSION['id_otoritas'] == 6) $inc = 'template/sidebar_owner';
         elseif ($_SESSION['id_otoritas'] == 7) $inc = 'template/sidebar_gudang';
+        elseif ($_SESSION['id_otoritas'] == 8) $inc = 'template/sidebar_servis';
 
         $data['include_sidebar'] = $inc;
 

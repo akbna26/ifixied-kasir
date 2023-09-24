@@ -18,7 +18,7 @@
     </div>
 
     <hr>
-    
+
     <div class="form-group">
         <label>Keterangan <small class="text-danger fw-600">(wajib)</small></label>
         <textarea required name="keterangan" rows="3" placeholder="Masukkan isian" class="form-control"></textarea>
@@ -57,7 +57,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/servis_berat/do_konfirmasi') ?>",
+                    url: "<?= base_url($this->type . '/servis_berat/do_konfirmasi') ?>",
                     data: form,
                     dataType: "JSON",
                     contentType: false,

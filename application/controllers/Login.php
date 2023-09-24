@@ -15,6 +15,7 @@ class Login extends CI_Controller
             elseif ($_SESSION['id_otoritas'] == 5) $link = base_url('owner_cabang/dashboard');
             elseif ($_SESSION['id_otoritas'] == 6) $link = base_url('owner/dashboard');
             elseif ($_SESSION['id_otoritas'] == 7) $link = base_url('gudang/dashboard');
+            elseif ($_SESSION['id_otoritas'] == 8) $link = base_url('servis/dashboard');
             redirect($link);
         }
 
@@ -62,6 +63,7 @@ class Login extends CI_Controller
             elseif ($run->id_otoritas == 5) $link = base_url('owner_cabang/dashboard');
             elseif ($run->id_otoritas == 6) $link = base_url('owner/dashboard');
             elseif ($run->id_otoritas == 7) $link = base_url('gudang/dashboard');
+            elseif ($run->id_otoritas == 8) $link = base_url('servis/dashboard');
 
             json([
                 'status' => 'success',

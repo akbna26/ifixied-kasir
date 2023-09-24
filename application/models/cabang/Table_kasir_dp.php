@@ -3,7 +3,7 @@
 class Table_kasir_dp extends CI_Model
 {
     var $column_order = array(null); //field yang ada di table user
-    var $column_search = array('a.nama','a.kode'); //field yang diizin untuk pencarian
+    var $column_search = array('a.nama', 'a.kode'); //field yang diizin untuk pencarian
     var $order = array('a.id' => 'desc'); // default order
 
     public function __construct()
@@ -87,11 +87,25 @@ class Table_kasir_dp extends CI_Model
             $row[] = $field->kode;
 
             if (session('type') == 'cabang') {
-                $row[] = '
-                    <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
-                    <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600 mr-1"><i class="fas fa-trash-alt"></i> Hapus</button>
-                    <a href="' . base_url('cabang/cetak/nota_dp/' . encode_id($field->id)) . '" target="_blank" class="btn btn-sm btn-success fw-600"><i class="fas fa-print"></i> Cetak</a>
-                ';
+                if ($field->is_selesai != '1') {
+                    $row[] = '
+                        <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
+                        <a href="' . base_url('cabang/cetak/nota_dp/' . encode_id($field->id)) . '" target="_blank" class="btn btn-sm btn-success fw-600"><i class="fas fa-print"></i> Cetak</a>
+                    ';
+                } else {
+                    $row[] = '
+                        <a href="' . base_url('cabang/cetak/nota_dp/' . encode_id($field->id)) . '" target="_blank" class="btn btn-sm btn-success fw-600"><i class="fas fa-print"></i> Cetak</a>
+                    ';
+                }
+            } else {
+                if (session('type') == 'admin' && $field->is_selesai == '1') {
+                    $row[] = 'selesai';
+                } else {
+                    $row[] = '
+                        <button onclick="cancel(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger mr-1 fw-600"><i class="fas fa-times"></i> Cancel</button>
+                        <button onclick="konfirmasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-warning mr-1 fw-600"><i class="fas fa-edit"></i> Konfirmasi</button>
+                    ';
+                }
             }
 
             $data[] = $row;

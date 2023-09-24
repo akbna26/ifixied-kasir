@@ -1,9 +1,9 @@
 <?php
 
-class Table_kasbon extends CI_Model
+class Table_mutasi_servis extends CI_Model
 {
     var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
-    var $column_search = array('nm_pegawai', 'keterangan'); //field yang diizin untuk pencarian
+    var $column_search = array('nm_teknisi', 'tipe_unit'); //field yang diizin untuk pencarian
     var $order = array('id' => 'desc'); // default order
 
     public function __construct()
@@ -13,14 +13,21 @@ class Table_kasbon extends CI_Model
 
     private function _get_datatables_query()
     {
-        $where = '';
-        if($this->type=='cabang') $where .= "AND a.id_cabang='$this->id_cabang'";
+        $id_cabang = $this->input->get('id_cabang');
 
-        $query = "SELECT a.*, b.nama as nm_pegawai, c.nama as nm_pembayaran, d.nama as nm_cabang from kasbon a 
-        left join pegawai b on b.id=a.id_pegawai
-        left join ref_jenis_pembayaran c on c.id=a.id_pembayaran
-        left join ref_cabang d on d.id=a.id_cabang
-        where 1=1 $where ";
+        $where = '';
+        if ($id_cabang != 'all') $where .= "AND a.id_cabang='$id_cabang'";
+
+        $query = "SELECT a.*, b.pelanggan, b.tipe_unit, b.kerusakan, d.nama as nm_teknisi, e.nama as nm_tindakan,
+        f.nama as nm_cabang
+        from profit_servis a 
+        left join servis_berat b on b.id=a.id
+        left join setting_pegawai c on c.id=b.id_teknisi_setting
+        left join pegawai d on d.id=c.id_pegawai
+        left join ref_tindakan e on e.id=b.id_tindakan
+        left join ref_cabang f on f.id=a.id_cabang
+        where 1=1 $where";
+
         $this->db->from("($query) as tabel");
 
         $i = 0;
@@ -82,25 +89,16 @@ class Table_kasbon extends CI_Model
             $no++;
             $row = [];
 
-            $kasbon = $field->nm_pegawai
-                . '<div class="text-danger fw-600">Sumber Dana : ' . $field->nm_pembayaran . '</div>';
-
             $row[] = $no;
             $row[] = $field->nm_cabang;
-            $row[] = $field->nm_pegawai;
-            $row[] = $kasbon;
-            $row[] = tgl_indo($field->tanggal);
-            $row[] = rupiah($field->jumlah);
-            $row[] = $field->keterangan;
-
-            if (session('type') == 'cabang') {
-                $row[] = '
-                <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
-                <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>
-            ';
-            } else {
-                $row[] = '-';
-            }
+            $row[] = tgl_indo($field->tgl_keluar);
+            $row[] = 'Pelanggan : ' . $field->pelanggan
+                . '<div class="text-primary">Tipe Unit : ' . $field->tipe_unit . '<span class="text-danger"> (' . $field->kerusakan . ')</span></div>';
+            $row[] = rupiah($field->biaya);
+            $row[] = rupiah($field->modal);
+            $row[] = rupiah($field->profit);
+            $row[] = $field->nm_teknisi;
+            $row[] = $field->nm_tindakan;
 
             $data[] = $row;
         }

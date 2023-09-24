@@ -165,7 +165,7 @@
                 <td class="td_barang" data-nilai="${select_barang}">${nama_barang}</td>
                 <td class="td_hargajual" data-nilai="${harga_jual}">${formatRupiah(harga_jual+'')}</td>
                 <td style="display:none;" class="td_hargamodal" data-nilai="${harga_modal}">${formatRupiah(harga_modal+'')}</td>
-                <td class="td_qty" data-nilai="${total_qty}">${formatRupiah(total_qty+'')}</td>
+                <td class="td_qty" hidden data-nilai="${total_qty}">${formatRupiah(total_qty+'')}</td>
                 <td class="td_klaim" data-nilai="${status_klaim}">${nama_klaim}</td>
                 <td class="td_refund" data-pembayaran="${pembayaran}" data-nilai="${nilai_refund}">${formatRupiah(nilai_refund+'')}</td>
                 <td class="td_pengganti" data-nilai="${barang_pengganti}">${nama_pengganti}</td>
@@ -180,7 +180,7 @@
         $('#select_barang').val('').change();
         $('#status_klaim').val('').change();
         $('#barang_pengganti').val('').change();
-        $('#total_qty').val('');
+        $('#total_qty').val('1');
         $('#nilai_refund').val('');
         $('.tr_hidden').hide();
         $('#tr_refund').hide();

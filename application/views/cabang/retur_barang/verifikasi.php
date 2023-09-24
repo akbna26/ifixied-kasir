@@ -31,13 +31,13 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-6" hidden>
             <div class="form-group">
                 <label>Harga Modal <small class="fw-600 text-danger">*otomatis</small></label>
                 <input type="int" id="potong_profit" required readonly name="harga_modal" placeholder="Jika retur petugas" class="form-control is-valid" value="<?= !empty(@$data->harga_modal) ? rupiah($data->harga_modal) : '' ?>">
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
                 <label>Qty <small class="fw-600 text-danger">*otomatis</small></label>
                 <input autocomplete="off" type="int" readonly name="qty" placeholder="Masukkan isian" class="form-control is-valid rupiah" value="<?= @$data->qty ?>">

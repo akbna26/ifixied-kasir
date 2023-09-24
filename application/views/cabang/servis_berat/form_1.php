@@ -27,7 +27,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/servis_berat/do_konfirmasi') ?>",
+                    url: "<?= base_url($this->type . '/servis_berat/do_konfirmasi') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

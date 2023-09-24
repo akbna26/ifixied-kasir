@@ -80,10 +80,10 @@
                                     <span class="text-primary fw-600 h4" id="harga_jual">-</span>
                                 </td>
                             </tr>
-                            <tr class="tr_hidden" style="display: none;">
+                            <tr style="display: none;">
                                 <td>Quantity</td>
                                 <td>
-                                    <input id="total_qty" type="text" class="form-control rupiah" placeholder="quantity" autocomplete="off">
+                                    <input id="total_qty" value="1" type="text" class="form-control rupiah" placeholder="quantity" autocomplete="off">
                                 </td>
                             </tr>
                             <tr class="tr_hidden" style="display: none;">
@@ -120,7 +120,7 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <button class="btn btn-warning btn-block btn-lg fw-600" onclick="tambah_produk();" style="color: #01293c !important;"><i class="fa fa-plus"></i> TAMBAH PRODUK KEDAFTAR REFUND</button>
+                                    <button class="btn btn-warning btn-block btn-lg fw-600" onclick="tambah_produk();" style="color: #01293c !important;"><i class="fa fa-plus"></i> TAMBAH</button>
                                 </td>
                             </tr>
                         </table>
@@ -137,7 +137,7 @@
                                 <th class="fw-600">NAMA BARANG</th>
                                 <th class="fw-600">HARGA JUAL</th>
                                 <th style="display: none;" class="fw-600">HARGA MODAL</th>
-                                <th class="fw-600">QTY</th>
+                                <th class="fw-600" hidden>QTY</th>
                                 <th class="fw-600">STATUS KLAIM</th>
                                 <th class="fw-600">NILAI REFUND</th>
                                 <th class="fw-600">BARANG PENGGANTI</th>

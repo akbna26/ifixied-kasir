@@ -302,7 +302,7 @@ class Servis_berat extends MY_controller
     public function konfirmasi()
     {
         cek_post();
-        if (session('type') != 'admin') dd('not allowed');
+        if (!in_array(session('type'), ['admin', 'servis'])) dd('not allowed');
 
         $id_servis = decode_id($this->input->post('id_servis'));
         $row = $this->db->query("SELECT * from servis_berat where id='$id_servis' ")->row();
@@ -336,7 +336,7 @@ class Servis_berat extends MY_controller
     public function do_konfirmasi()
     {
         cek_post();
-        if (session('type') != 'admin') dd('not allowed');
+        if (!in_array(session('type'), ['admin', 'servis'])) dd('not allowed');
 
         $id = decode_id($this->input->post('id'));
         $form = decode_id($this->input->post('form'));
@@ -361,7 +361,7 @@ class Servis_berat extends MY_controller
             $this->db->set('invoice', $no_invoice);
         }
 
-        if (in_array($status, [7, 8, 9])) $this->db->set('id_pengambilan', 3);
+        if (in_array($status, [7, 8])) $this->db->set('id_pengambilan', 3);
 
         if (in_array($status, [9])) {
             if ($row_cabang->is_klaim_garansi == '1') {
@@ -503,7 +503,7 @@ class Servis_berat extends MY_controller
     public function do_cancel()
     {
         cek_post();
-        if (session('type') != 'admin') dd('not allowed');
+        if (!in_array(session('type'), ['admin', 'servis'])) dd('not allowed');
         $id = decode_id($this->input->post('id'));
         $hapus = $this->input->post('hapus');
 
@@ -511,9 +511,28 @@ class Servis_berat extends MY_controller
             $this->db->where('id', $id);
             $this->db->update('servis_berat', [
                 'deleted' => date('Y-m-d H:i:s'),
+                'tgl_cancel' => date('Y-m-d H:i:s'),
                 'is_cancel' => '1',
             ]);
         }
+
+        echo json_encode([
+            'status' => 'success'
+        ]);
+    }
+
+    public function do_barang_tiba()
+    {
+        cek_post();
+        $id = decode_id($this->input->post('id'));
+
+        $this->db->where('id', $id);
+        $this->db->update('servis_berat', [
+            'updated' => date('Y-m-d H:i:s'),
+            'id_pengambilan' => '3',
+        ]);
+
+        insert_log_servis($id, 9, 'Barang Tiba di Cabang');
 
         echo json_encode([
             'status' => 'success'

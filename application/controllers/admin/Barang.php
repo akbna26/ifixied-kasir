@@ -198,7 +198,7 @@ class Barang extends MY_controller
             ]);
         }
 
-        $cek_data = $this->db->query("SELECT * from sharing where id_cabang='$id_cabang' and tanggal='$tanggal' and deleted is null ")->row();
+        $cek_data = $this->db->query("SELECT * from sharing where id_cabang='$id_cabang' and tanggal='$tanggal' and is_konfirmasi='0' and deleted is null ")->row();
         if (!empty($cek_data)) {
             $id_sharing = $cek_data->id;
         } else {

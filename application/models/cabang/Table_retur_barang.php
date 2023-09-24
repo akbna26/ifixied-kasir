@@ -3,7 +3,7 @@
 class Table_retur_barang extends CI_Model
 {
     var $column_order = array(null, 'a.nama', 'b.nama', 'c.nama', null); //field yang ada di table user
-    var $column_search = array('b.nm_barang'); //field yang diizin untuk pencarian
+    var $column_search = array('b.nama'); //field yang diizin untuk pencarian
     var $order = array('a.id' => 'desc'); // default order
 
     public function __construct()

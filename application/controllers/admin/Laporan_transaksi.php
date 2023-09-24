@@ -40,6 +40,7 @@ class Laporan_transaksi extends MY_controller
             $this->db->where('id', $id);
             $this->db->update('transaksi', [
                 'deleted' => date('Y-m-d H:i:s'),
+                'tgl_cancel' => date('Y-m-d H:i:s'),
                 'is_cancel' => '1',
             ]);
         }

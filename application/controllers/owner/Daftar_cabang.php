@@ -24,8 +24,9 @@ class Daftar_cabang extends MY_controller
             'title' => 'Daftar Cabang',
         ];
 
+        $user = $this->db->query("SELECT * from data_user where id='$this->id_akun' ")->row();
         $where = '';
-        if ($this->type == 'owner_cabang') $where .= "AND id='$this->id_cabang' ";
+        if ($this->type == 'owner_cabang') $where .= "AND id in ($user->id_cabang_multi) ";
         $data['cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null $where ")->result();
 
         $this->templates->load($data);

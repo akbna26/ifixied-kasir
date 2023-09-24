@@ -194,6 +194,53 @@
         })
     }
 
+    function barangTiba(id) {
+        Swal.fire({
+            title: 'Barang sudah tiba di cabang ?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?= base_url('cabang/servis_berat/do_barang_tiba') ?>",
+                    data: {
+                        id: id,
+                    },
+                    dataType: "JSON",
+                    beforeSend: function(res) {
+                        Swal.fire({
+                            title: 'Loading ...',
+                            html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                        });
+                    },
+                    error: function(res) {
+                        Swal.close();
+                    },
+                    success: function(res) {
+                        if (res.status == 'success') {
+                            Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil disimpan',
+                                    showConfirmButton: true,
+                                })
+                                .then(() => {
+                                    $('#table_data').DataTable().ajax.reload();
+                                });
+                        }
+                    }
+                });
+            } else {
+                return false;
+            }
+        })
+    }
+
     function konfirmasi(id) {
         $.ajax({
             type: "POST",

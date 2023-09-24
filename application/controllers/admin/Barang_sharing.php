@@ -103,7 +103,7 @@ class Barang_sharing extends MY_controller
             $cek_stock = $this->db->query("SELECT c.stock as stock_barang, c.nama, b.* from sharing a 
                 left join sharing_detail b on b.id_sharing=a.id and b.deleted is null 
                 left join barang c on c.id=b.id_barang
-                where a.id='$id' and a.deleted is null and b.stock > c.stock
+                where a.id='$id' and a.deleted is null and b.stock > c.stock and b.is_transfer != '1'
             ")->row();
 
             if (!empty($cek_stock)) {

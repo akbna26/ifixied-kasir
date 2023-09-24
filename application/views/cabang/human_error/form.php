@@ -11,7 +11,7 @@
     </div>
 
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <div class="form-group">
                 <label>Barang</label>
                 <select required name="id_barang" class="form-control js_select2" onchange="select_harga_modal(this);" data-placeholder="pilih barang">
@@ -22,10 +22,10 @@
                 </select>
             </div>
         </div>
-        <div class="col-md-6">
+        <div class="col-md-6" hidden>
             <div class="form-group">
                 <label>Harga Barang <small class="fw-600 text-danger">*otomatis</small></label>
-                <input type="int" id="potong_profit" required readonly name="harga_modal" placeholder="Pilih barang terlebih dahulu" class="form-control" value="<?= !empty(@$data->modal) ? rupiah($data->modal) : '' ?>">
+                <input type="int" id="potong_profit" readonly name="harga_modal" placeholder="Pilih barang terlebih dahulu" class="form-control" value="<?= !empty(@$data->modal) ? rupiah($data->modal) : '' ?>">
             </div>
         </div>
     </div>

@@ -23,7 +23,7 @@
                                 <th class="fw-600">INVOICE</th>
                                 <th class="fw-600">JENIS KLAIM</th>
                                 <th class="fw-600">VERIFIKASI GUDANG</th>
-                                <th class="fw-600" style="width: 200px;">AKSI</th>
+                                <th class="fw-600" style="width: 150px;">AKSI</th>
                             </tr>
                         </thead>
                         <tbody>

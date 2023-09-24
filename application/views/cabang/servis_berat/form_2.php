@@ -136,7 +136,7 @@
     function select_tindakan(dt) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/servis_berat/get_tindakan_teknisi') ?>",
+            url: "<?= base_url($this->type . '/servis_berat/get_tindakan_teknisi') ?>",
             data: {
                 id_tindakan: $(dt).val(),
             },
@@ -183,7 +183,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/servis_berat/do_konfirmasi') ?>",
+                    url: "<?= base_url($this->type . '/servis_berat/do_konfirmasi') ?>",
                     data: form,
                     dataType: "JSON",
                     contentType: false,

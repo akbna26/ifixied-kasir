@@ -70,7 +70,7 @@
 
     <div class="form-group">
         <label>Tanggal Keluar <small class="text-danger fw-600">*</small></label>
-        <input type="date" required name="tgl_keluar" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tgl_keluar) ? '' : date('Y-m-d', strtotime($data->tgl_keluar)) ?>">
+        <input type="date" required name="tgl_keluar" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tgl_keluar) ? date('Y-m-d') : date('Y-m-d', strtotime($data->tgl_keluar)) ?>">
     </div>
 
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">

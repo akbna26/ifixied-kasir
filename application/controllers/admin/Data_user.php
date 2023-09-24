@@ -90,6 +90,8 @@ class Data_user extends MY_controller
             * from ref_kelurahan where kode_kec='$row->kode_kec'
         ")->result();
 
+        $arr_multi = explode(',', $row->id_cabang_multi);
+        $data['arr_multi'] = $arr_multi;
         $html = $this->load->view('admin/data_user/form', $data, true);
 
         echo json_encode([
@@ -118,6 +120,8 @@ class Data_user extends MY_controller
         $kabupaten = $this->input->post('kabupaten');
         $kecamatan = $this->input->post('kecamatan');
         $kelurahan = $this->input->post('kelurahan');
+
+        $id_cabang_multi = implode(',', $this->input->post('id_cabang_multi'));
 
         $cek_username = $this->db->query("SELECT * from data_user where deleted is null and username='$username' ")->row();
         $cek_email = $this->db->query("SELECT * from data_user where deleted is null and email='$email' ")->row();
@@ -181,6 +185,7 @@ class Data_user extends MY_controller
                     'kode_kel' => $kelurahan,
                     'alamat' => $alamat,
                     'no_hp' => $no_hp,
+                    'id_cabang_multi' => $id_cabang_multi,
                     'foto' => 'uploads/img/img_error.png',
                     'created' => date('Y-m-d H:i:s')
                 ]);
@@ -200,6 +205,7 @@ class Data_user extends MY_controller
                     'kode_kel' => $kelurahan,
                     'alamat' => $alamat,
                     'no_hp' => $no_hp,
+                    'id_cabang_multi' => $id_cabang_multi,
                     'updated' => date('Y-m-d H:i:s')
                 ]);
             }

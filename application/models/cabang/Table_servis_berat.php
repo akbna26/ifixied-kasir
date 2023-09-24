@@ -103,7 +103,7 @@ class Table_servis_berat extends CI_Model
                 . '<div class="text-danger fw-600">Biaya : ' . (!empty($field->biaya) ? rupiah($field->biaya) : '-') . '</div>';
 
             $informasi = '<div><i class="fa fa-wrench mr-1"></i> Tindakan : ' . $field->nm_tindakan . '</div>';
-            if (session('type') == 'admin') $informasi .= '<div><i class="fa fa-user mr-1"></i> Teknisi : ' . $field->nm_teknisi . '</div>';
+            if (in_array(session('type'), ['admin', 'servis'])) $informasi .= '<div><i class="fa fa-user mr-1"></i> Teknisi : ' . $field->nm_teknisi . '</div>';
 
             if ($field->status == 9 && $field->id_pengambilan == 4) {
                 if ($field->jarak_hari > 30) {
@@ -144,15 +144,19 @@ class Table_servis_berat extends CI_Model
                 <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt mr-1"></i> Hapus</button>
             ';
 
-            if ($field->status != 1 || session('type') == 'admin') $aksi = '';
+            if ($field->status != 1 || in_array(session('type'), ['admin', 'servis'])) $aksi = '';
 
             $aksi .= '<button onclick="detail(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-success fw-600 mt-1"><i class="fas fa-eye mr-1"></i> Detail</button>';
+
+            if (in_array($field->status, [9]) && $field->id_pengambilan == 2 && session('type') == 'cabang') {
+                $aksi .= '<button onclick="barangTiba(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-warning fw-600 mt-1"><i class="fas fa-car mr-1"></i> Barang Tiba</button>';
+            }
 
             if (in_array($field->status, [7, 8, 9]) && $field->id_pengambilan == 3 && $field->is_klaim_garansi == 0 && session('type') == 'cabang') {
                 $aksi .= '<button onclick="bayar(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary fw-600 mt-1"><i class="fas fa-money-check-alt mr-1"></i> Payment</button>';
             }
 
-            if (session('type') == 'admin' && !in_array($field->status, [7, 8, 9])) {
+            if (in_array(session('type'), ['admin', 'servis']) && !in_array($field->status, [7, 8, 9])) {
                 $aksi .= '<button onclick="konfirmasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary fw-600 mt-1"><i class="fas fa-gavel mr-1"></i> Konfirmasi</button>';
             }
 
@@ -163,7 +167,7 @@ class Table_servis_berat extends CI_Model
 
             $aksi .= '<button onclick="log(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-dark fw-600 ml-1 mt-1"><i class="far fa-list-alt mr-1"></i> Log</button>';
 
-            if (session('type') == 'admin') {
+            if (in_array(session('type'), ['admin', 'servis'])) {
                 $aksi .= '<button onclick="cancelTransaksi(\'' . encode_id($field->id) . '\',\'' . $field->invoice . '\');" type="button" class="btn btn-sm btn-danger mr-1 fw-600"><i class="fas fa-times"></i> Cancel</button>';
             }
 

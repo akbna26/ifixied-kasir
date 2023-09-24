@@ -76,6 +76,7 @@ class Dashboard extends MY_controller
             elseif ($run->id_otoritas == 5) $link = base_url('owner_cabang/dashboard');
             elseif ($run->id_otoritas == 6) $link = base_url('owner/dashboard');
             elseif ($run->id_otoritas == 7) $link = base_url('gudang/dashboard');
+            elseif ($run->id_otoritas == 8) $link = base_url('servis/dashboard');
 
             redirect($link);
         }

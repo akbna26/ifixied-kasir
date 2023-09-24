@@ -122,4 +122,38 @@ class Kasir_dp extends MY_controller
             'link' => base_url('cabang/cetak/nota_dp/') . encode_id($id),
         ]);
     }
+
+    public function do_konfirmasi()
+    {
+        cek_post();
+        $id = decode_id($this->input->post('id'));
+
+        $this->db->where('id', $id);
+        $this->db->update('dp', [
+            'updated' => date('Y-m-d H:i:s'),
+            'is_selesai' => '1',
+        ]);
+
+        echo json_encode([
+            'status' => 'success'
+        ]);
+    }
+
+    public function do_cancel()
+    {
+        cek_post();
+        $id = decode_id($this->input->post('id'));
+
+        $this->db->where('id', $id);
+        $this->db->update('dp', [
+            'deleted' => date('Y-m-d H:i:s'),
+            'tgl_cancel' => date('Y-m-d H:i:s'),
+            'is_cancel' => '1',
+        ]);
+
+        echo json_encode([
+            'status' => 'success'
+        ]);
+    }
+
 }

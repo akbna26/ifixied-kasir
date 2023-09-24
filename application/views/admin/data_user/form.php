@@ -1,5 +1,4 @@
 <form onsubmit="event.preventDefault();do_submit(this);">
-
     <div class="row">
         <div class="col-md-6">
             <div class="form-group">
@@ -58,6 +57,22 @@
             </div>
         </div>
     </div>
+
+    <?php if ($otoritas == 5) : ?>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label>Cabang Owner <small class="text-danger">*khusus owner cabang</small></label>
+                    <select required multiple name="id_cabang_multi[]" class="form-control js_select2" data-placeholder="pilih cabang">
+                        <option value=""></option>
+                        <?php foreach ($ref_cabang as $dt) : ?>
+                            <option <?= in_array(@$dt->id, $arr_multi) ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?> - <?= $dt->lokasi ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+    <?php endif; ?>
 
     <div class="row">
         <div class="col-md-6">

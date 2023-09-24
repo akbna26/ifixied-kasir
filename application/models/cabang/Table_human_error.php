@@ -83,7 +83,7 @@ class Table_human_error extends CI_Model
             $row[] = $field->nm_cabang;
             $row[] = $field->nm_pegawai;
             $row[] = $field->nm_barang;
-            $row[] = rupiah($field->harga_modal);
+            // $row[] = rupiah($field->harga_modal);
             $row[] = tgl_indo($field->tanggal);
             $row[] = $field->keterangan;
 
