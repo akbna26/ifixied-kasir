@@ -147,7 +147,7 @@ class Barang_sharing extends MY_controller
                     ]);
                 }
 
-                if (@$cek_cabang->is_transfer != '1') {
+                if ($dt->is_transfer != '1') {
                     $this->db->where('id', $dt->id_barang);
                     $this->db->update('barang', [
                         'stock' => $dt->stock_real - $dt->stock,
