@@ -61,10 +61,19 @@ class Barang_sharing extends MY_controller
         $tanggal = date('Y-m-d', strtotime($this->input->post('tanggal')));
 
         if (!empty($hapus)) {
-            $this->db->where('id', $id);
-            $this->db->update('sharing', [
-                'deleted' => date('Y-m-d H:i:s'),
-            ]);
+            $cek = $this->db->query("SELECT * from sharing_detail where id_sharing='$id' and is_transfer='1' ")->result();
+            if (!empty($cek)) {
+                echo json_encode([
+                    'status' => 'failed',
+                    'msg' => 'Silahkan hapus detail sharing terlebih dahulu',
+                ]);
+                die;
+            } else {
+                $this->db->where('id', $id);
+                $this->db->update('sharing', [
+                    'deleted' => date('Y-m-d H:i:s'),
+                ]);
+            }
         } else {
             if (empty($id)) {
                 $this->db->insert('sharing', [
@@ -114,7 +123,8 @@ class Barang_sharing extends MY_controller
                 die;
             }
 
-            $cek_cabang = $this->db->query("SELECT a.id_cabang, b.*, c.id as cek_ada, c.stock as stock_cabang, c.id as id_barang_cabang, d.stock as stock_real from sharing a 
+            $cek_cabang = $this->db->query("SELECT a.id_cabang, b.*, c.id as cek_ada, c.stock as stock_cabang, c.id as id_barang_cabang, d.stock as stock_real 
+                from sharing a 
                 left join sharing_detail b on b.id_sharing=a.id and b.deleted is null
                 left join (select * from barang_cabang where deleted is null group by id_cabang, id_barang) c on c.id_cabang=a.id_cabang and c.id_barang=b.id_barang
                 left join barang d on d.id=b.id_barang
@@ -137,11 +147,13 @@ class Barang_sharing extends MY_controller
                     ]);
                 }
 
-                $this->db->where('id', $dt->id_barang);
-                $this->db->update('barang', [
-                    'stock' => $dt->stock_real - $dt->stock,
-                    'updated' => date('Y-m-d H:i:s'),
-                ]);
+                if (@$cek_cabang->is_transfer != '1') {
+                    $this->db->where('id', $dt->id_barang);
+                    $this->db->update('barang', [
+                        'stock' => $dt->stock_real - $dt->stock,
+                        'updated' => date('Y-m-d H:i:s'),
+                    ]);
+                }
             }
 
             $this->db->where('id', $id);

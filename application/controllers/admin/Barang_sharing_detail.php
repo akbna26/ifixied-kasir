@@ -72,10 +72,14 @@ class Barang_sharing_detail extends MY_controller
             $this->db->update('sharing_detail', [
                 'deleted' => date('Y-m-d H:i:s'),
             ]);
+            $row = $this->db->query("SELECT * from sharing_detail where id='$id' ")->row();
+            if ($row->is_transfer == 1) {
+                $this->db->query("UPDATE barang_cabang set stock=(stock + $row->stock) where id='$row->id_asal' ");
+            }
         } else {
             if (empty($id)) {
 
-                $cek_sudah = $this->db->query("SELECT * from sharing_detail where id_sharing='$id_sharing' and id_barang='$id_barang' ")->row();
+                $cek_sudah = $this->db->query("SELECT * from sharing_detail where id_sharing='$id_sharing' and id_barang='$id_barang' and deleted is null ")->row();
                 if (!empty($cek_sudah)) {
                     echo json_encode([
                         'status' => 'failed',

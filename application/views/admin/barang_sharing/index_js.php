@@ -132,6 +132,12 @@
                                     $('#table_data').DataTable().ajax.reload();
                                     $('[data-toggle="tooltip"]').tooltip();
                                 });
+                        } else {
+                            Swal.fire({
+                                    icon: 'warning',
+                                    title: res.msg,
+                                    showConfirmButton: true,
+                                })
                         }
                     }
                 });
