@@ -21,6 +21,7 @@
                 data: {
                     id_kategori: $('#id_kategori').val(),
                     id_cabang: $('#id_cabang').val(),
+                    is_cek_stock: 1,
                 },
             },
             initComplete: function() {

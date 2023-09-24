@@ -3,7 +3,7 @@
 class Table_stock_cabang extends CI_Model
 {
     var $column_order = array(null, 'a.nama', 'c.nama', null); //field yang ada di table user
-    var $column_search = array('a.nama'); //field yang diizin untuk pencarian
+    var $column_search = array('a.nama','a.barcode'); //field yang diizin untuk pencarian
     var $order = array('a.id' => 'desc'); // default order
 
     public function __construct()

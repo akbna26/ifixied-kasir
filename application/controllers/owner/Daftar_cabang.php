@@ -4,12 +4,16 @@ defined('BASEPATH') or exit('No direct script access allowed');
 
 class Daftar_cabang extends MY_controller
 {
-    
+
     public function __construct()
     {
         parent::__construct();
         $this->load->model('owner/table_mutasi', 'table');
         $this->load->model('owner/table_mutasi_servis', 'table_servis');
+        $this->load->model('owner/table_operasional', 'table_operasional');
+        $this->load->model('owner/table_kerugian', 'table_kerugian');
+        $this->load->model('owner/table_kasbon', 'table_kasbon');
+        $this->load->model('owner/table_stock_cabang', 'table_stock_cabang');
     }
 
     public function index()
@@ -20,8 +24,8 @@ class Daftar_cabang extends MY_controller
             'title' => 'Daftar Cabang',
         ];
 
-        $where='';
-        if($this->type=='owner_cabang') $where .="AND id='$this->id_cabang' ";
+        $where = '';
+        if ($this->type == 'owner_cabang') $where .= "AND id='$this->id_cabang' ";
         $data['cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null $where ")->result();
 
         $this->templates->load($data);
@@ -35,6 +39,21 @@ class Daftar_cabang extends MY_controller
     public function table_servis()
     {
         echo $this->table_servis->generate_table();
+    }
+
+    public function table_operasional()
+    {
+        echo $this->table_operasional->generate_table();
+    }
+
+    public function table_kerugian()
+    {
+        echo $this->table_kerugian->generate_table();
+    }
+
+    public function table_kasbon()
+    {
+        echo $this->table_kasbon->generate_table();
     }
 
     public function detail($id)
@@ -112,6 +131,26 @@ class Daftar_cabang extends MY_controller
                 'series' => $series,
             ]
         ]);
+    }
+
+    public function barang()
+    {
+        $data = [
+            'index' => 'owner/stock_cabang/index',
+            'index_js' => 'owner/stock_cabang/index_js',
+            'title' => 'Stock Cabang',
+        ];
+
+        $data['id_cabang'] = decode_id($this->input->get('id'));
+
+        $data['ref_kategori'] = $this->db->query("SELECT * from ref_kategori where deleted is null")->result();
+
+        $this->templates->load($data);
+    }
+
+    public function table_stock_cabang()
+    {
+        echo $this->table_stock_cabang->generate_table();
     }
 }
 

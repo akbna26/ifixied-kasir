@@ -7,7 +7,20 @@
 
             <div class="card-body">
 
-                <div class="row bg2 border1 rounded p-3 mb-3">            
+                <div class="row bg2 border1 rounded p-3 mb-3">
+                    <?php if ($this->type == 'admin') : ?>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Cabang</label>
+                                <select id="select_cabang" class="form-control js_select2" data-placeholder="pilih cabang" onchange="load_table();">
+                                    <option selected value="all">Semua Data</option>
+                                    <?php foreach ($ref_cabang as $dt) : ?>
+                                        <option value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    <?php endif; ?>
                     <div class="col-md-3">
                         <div class="form-group">
                             <label>Tahun</label>
@@ -38,6 +51,7 @@
                         <thead class="bg1 text-white">
                             <tr>
                                 <th class="fw-600">NO</th>
+                                <th class="fw-600">CABANG</th>
                                 <th class="fw-600">TANGGAL</th>
                                 <th class="fw-600">INVOICE</th>
                                 <th class="fw-600">TOTAL ITEM</th>

@@ -1,10 +1,10 @@
 <?php
 
-class Table_kasir_dp extends CI_Model
+class Table_kasbon extends CI_Model
 {
-    var $column_order = array(null); //field yang ada di table user
-    var $column_search = array('a.nama','a.kode'); //field yang diizin untuk pencarian
-    var $order = array('a.id' => 'desc'); // default order
+    var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
+    var $column_search = array('nm_pegawai', 'keterangan'); //field yang diizin untuk pencarian
+    var $order = array('id' => 'desc'); // default order
 
     public function __construct()
     {
@@ -13,12 +13,22 @@ class Table_kasir_dp extends CI_Model
 
     private function _get_datatables_query()
     {
-        $this->db->select('a.*, b.nama as nm_pembayaran');
-        $this->db->from('dp a');
-        $this->db->join('ref_jenis_pembayaran b', 'b.id = a.pembayaran', 'left');
+        $id_cabang = decode_id($this->input->get('id_cabang'));
+        $tanggal = $this->input->get('tanggal');
 
-        $this->db->where('a.deleted', null);
-        if (session('type') == 'cabang') $this->db->where('a.id_cabang', $this->id_cabang);
+        $where = '';
+        if (!empty($tanggal)) {
+            $bulan = date('m',strtotime($tanggal));
+            $tahun = date('Y',strtotime($tanggal));
+            $where .= "AND MONTH(a.tanggal)='$bulan' AND YEAR(a.tanggal)='$tahun' ";
+        }
+
+        $query = "SELECT a.*, b.nama as nm_pegawai, c.nama as nm_pembayaran, d.nama as nm_cabang from kasbon a 
+        left join pegawai b on b.id=a.id_pegawai
+        left join ref_jenis_pembayaran c on c.id=a.id_pembayaran
+        left join ref_cabang d on d.id=a.id_cabang
+        where a.id_cabang='$id_cabang' $where ";
+        $this->db->from("($query) as tabel");
 
         $i = 0;
 
@@ -28,9 +38,9 @@ class Table_kasir_dp extends CI_Model
                 if ($i === 0) // looping awal
                 {
                     $this->db->group_start();
-                    $this->db->like($item, $_GET['search']['value']);
+                    $this->db->like('LOWER(' . $item . ')', strtolower($_GET['search']['value']));
                 } else {
-                    $this->db->or_like($item, $_GET['search']['value']);
+                    $this->db->or_like('LOWER(' . $item . ')', strtolower($_GET['search']['value']));
                 }
 
                 if (count($this->column_search) - 1 == $i)
@@ -79,19 +89,24 @@ class Table_kasir_dp extends CI_Model
             $no++;
             $row = [];
 
+            $kasbon = $field->nm_pegawai
+                . '<div class="text-danger fw-600">Sumber Dana : ' . $field->nm_pembayaran . '</div>';
+
             $row[] = $no;
-            $row[] = nl2br($field->keterangan);
-            $row[] = $field->nm_pembayaran . ' (' . $field->potongan . '%)';
-            $row[] = rupiah($field->total);
+            $row[] = $field->nm_cabang;
+            $row[] = $field->nm_pegawai;
+            $row[] = $kasbon;
             $row[] = tgl_indo($field->tanggal);
-            $row[] = $field->kode;
+            $row[] = rupiah($field->jumlah);
+            $row[] = $field->keterangan;
 
             if (session('type') == 'cabang') {
                 $row[] = '
-                    <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
-                    <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600 mr-1"><i class="fas fa-trash-alt"></i> Hapus</button>
-                    <a href="' . base_url('cabang/cetak/nota_dp/' . encode_id($field->id)) . '" target="_blank" class="btn btn-sm btn-success fw-600"><i class="fas fa-print"></i> Cetak</a>
-                ';
+                <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
+                <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>
+            ';
+            } else {
+                $row[] = '-';
             }
 
             $data[] = $row;

@@ -46,12 +46,12 @@
     <table style="width: 100%;" class="font-12">
         <tr>
             <td>
-                <b>IFIXIED | <?= $row->nm_cabang ?></b>
+                <b style="font-size: 16px;">IFIXIED | <?= $row->nm_cabang ?></b>
                 <div><?= $row->lokasi ?></div>
                 <div><?= $row->kontak ?></div>
             </td>
             <td style="text-align: right;">
-                <b>FAKTUR PENJUALAN</b>
+                <b style="font-size: 16px;">FAKTUR PENJUALAN</b>
                 <div style="text-align: right;">NO. INVOICE : <b style="font-size: 10px;"><?= $row->no_invoice ?></b></div>
                 <div style="text-align: right;"><?= tgl_indo($row->created, true) ?></div>
             </td>
@@ -90,7 +90,8 @@
             <tr>
                 <th>Barcode</th>
                 <th style="width: 200px;">Produk</th>
-                <th>Qty/@Harga</th>
+                <th>Qty</th>
+                <th>Harga</th>
                 <th>Deskripsi</th>
                 <th>Subtotal</th>
             </tr>
@@ -100,7 +101,8 @@
                 <tr>
                     <td><?= $dt->barcode ?></td>
                     <td><?= $dt->nm_barang ?></td>
-                    <td><?= $dt->qty ?> @<?= rupiah($dt->harga) ?></td>
+                    <td><?= $dt->qty ?></td>
+                    <td><?= rupiah($dt->harga) ?></td>
                     <td><?= $dt->keterangan ?? '-' ?></td>
                     <td style="text-align: right;"><?= rupiah($dt->sub_total) ?></td>
                 </tr>

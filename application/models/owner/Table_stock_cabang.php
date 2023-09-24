@@ -1,9 +1,9 @@
 <?php
 
-class Table_barang extends CI_Model
+class Table_stock_cabang extends CI_Model
 {
     var $column_order = array(null, 'a.nama', 'c.nama', null); //field yang ada di table user
-    var $column_search = array('a.nama','a.barcode'); //field yang diizin untuk pencarian
+    var $column_search = array('a.nama'); //field yang diizin untuk pencarian
     var $order = array('a.id' => 'desc'); // default order
 
     public function __construct()
@@ -13,13 +13,15 @@ class Table_barang extends CI_Model
 
     private function _get_datatables_query()
     {
+        $id_cabang = decode_id($this->input->get('id_cabang'));
         $id_kategori = $this->input->get('id_kategori');
 
-        $this->db->select('a.*, c.nama as kategori, d.nama as supplier');
+        $this->db->select('a.*, c.nama as kategori, d.stock');
         $this->db->from('barang a');
         $this->db->join('ref_kategori c', 'c.id = a.id_kategori', 'left');
-        $this->db->join('ref_supplier d', 'd.id = a.id_supplier', 'left');
+        $this->db->join('barang_cabang d', 'd.id_barang = a.id and d.deleted is null', 'left');        
         $this->db->where('a.deleted', null);
+        $this->db->where('d.id_cabang', $id_cabang);
 
         if ($id_kategori != 'all') $this->db->where('a.id_kategori', $id_kategori);
 
@@ -115,15 +117,7 @@ class Table_barang extends CI_Model
             $row[] = $field->barcode;
 
             $row[] = '<span class="d-block">Ket. : ' . $field->keterangan . '</span>'
-                .'<span class="d-block text-secondary">Supplier : ' . $field->supplier . '</span>'
                 . $gambar;
-
-            $row[] = '
-                <div class="btn-group">
-                    <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button"  data-toggle="tooltip" data-placement="top" title="edit barang" class="btn btn-primary fw-600"><i class="fas fa-edit"></i></button>
-                    <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button"  data-toggle="tooltip" data-placement="top" title="hapus barang" class="btn btn-danger fw-600"><i class="fas fa-trash-alt"></i></button>
-                </div>
-            ';
 
             $data[] = $row;
         }

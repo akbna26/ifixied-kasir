@@ -14,13 +14,17 @@ class Table_stock_cabang extends CI_Model
     private function _get_datatables_query()
     {
         $id_kategori = $this->input->get('id_kategori');
+        $id_cabang = $this->input->get('id_cabang');
+        $is_cek_stock = $this->input->get('is_cek_stock');
 
         $this->db->select('a.*, c.nama as kategori, d.stock');
         $this->db->from('barang a');
         $this->db->join('ref_kategori c', 'c.id = a.id_kategori', 'left');
-        $this->db->join('barang_cabang d', 'd.id_barang = a.id and d.deleted is null', 'left');        
+        $this->db->join('barang_cabang d', 'd.id_barang = a.id and d.deleted is null', 'left');
         $this->db->where('a.deleted', null);
-        $this->db->where('d.id_cabang', $this->id_cabang);
+
+        if ($is_cek_stock == 1) $this->db->where('d.id_cabang', $id_cabang);
+        else $this->db->where('d.id_cabang', $this->id_cabang);
 
         if ($id_kategori != 'all') $this->db->where('a.id_kategori', $id_kategori);
 

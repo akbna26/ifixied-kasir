@@ -102,10 +102,11 @@ class Table_retur_barang extends CI_Model
             $row[] = $field->nm_klaim;
             $row[] = $retur;
 
-            $aksi = '<button onclick="detail(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-warning mr-1 fw-600"><i class="fas fa-eye"></i> Detail</button>';
+            $aksi = '';
 
-            if (empty($field->status_retur) && session('type')=='cabang' && $field->id_klaim==5) {
-                $aksi .='
+            if (empty($field->status_retur) && session('type') == 'cabang' && $field->id_klaim == 5) {
+                $aksi .= '
+                    <button onclick="detail(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-warning mr-1 fw-600"><i class="fas fa-eye"></i> Detail</button>
                     <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
                     <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger mt-1 fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>
                 ';

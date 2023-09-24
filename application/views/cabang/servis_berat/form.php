@@ -106,7 +106,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <th class="bg-success text-white text-right">Email</th>
+                        <th class="bg-success text-white text-right">iCloud</th>
                         <td>
                             <input type="text" required name="email" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->email ?>">
                         </td>

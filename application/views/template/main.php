@@ -33,19 +33,19 @@
                     <div class="navbar-brand-box" style="border-bottom: 2px solid #f0fece;">
                         <a href="<?= base_url() ?>" target="_blank" class="logo logo-dark">
                             <span class="logo-sm">
-                                <img src="<?= base_url('uploads/img/logo2.png') ?>" alt="" height="22">
+                                <img src="<?= base_url('uploads/img/logo.png') ?>" alt="" height="22">
                             </span>
                             <span class="logo-lg">
-                                <img src="<?= base_url('uploads/img/logo2.png') ?>" alt="" height="40">
+                                <img src="<?= base_url('uploads/img/logo.png') ?>" alt="" height="40">
                             </span>
                         </a>
 
                         <a href="<?= base_url() ?>" target="_blank" class="logo logo-light">
                             <span class="logo-sm">
-                                <img src="<?= base_url('uploads/img/logo2.png') ?>" alt="" height="22">
+                                <img src="<?= base_url('uploads/img/logo.png') ?>" alt="" height="22">
                             </span>
                             <span class="logo-lg">
-                                <img src="<?= base_url('uploads/img/logo2.png') ?>" style="border:1px solid #fff;border-radius: 50%;" alt="" height="40">
+                                <img src="<?= base_url('uploads/img/logo.png') ?>" style="border:1px solid #fff;border-radius: 50%;" alt="" height="40">
                                 <span class="ml-2 bold text1">IFIXIED</span>
                             </span>
                         </a>

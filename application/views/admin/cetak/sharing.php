@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sharing Detail</title>
+    <title>Nota Part Kirim</title>
     <style>
         table {
             border-collapse: collapse;
@@ -22,12 +22,13 @@
     <table>
         <tr>
             <td style="width: 60px;">
-                <img src="<?= base_url('uploads/img/logo2.png') ?>" alt="image" style="width: 50px;">
+                <img src="<?= base_url('uploads/img/logo.png') ?>" alt="image" style="width: 50px;">
             </td>
             <td>
-                <h3>Detail Sharing Cabang</h3>
+                <h3>NOTA PART KIRIM</h3>
                 <div><?= $detail->nama ?>, <?= tgl_indo($detail->tanggal) ?></div>
             </td>
+            <td style="text-align: right;font-size: 10px;vertical-align: bottom;">Admin yang bertugas : <?= $user->nama ?></td>
         </tr>
     </table>
 
@@ -43,8 +44,7 @@
                 <th>KATEGORI</th>
                 <th>BARCODE</th>
                 <th>BARANG</th>
-                <th>STOCK</th>
-                <th>MODAL</th>
+                <th>QUANTITY</th>
             </tr>
         </thead>
         <tbody>
@@ -56,7 +56,6 @@
                     <td><?= $dt->barcode ?></td>
                     <td><?= $dt->barang ?></td>
                     <td><?= $dt->stock ?></td>
-                    <td><?= rupiah($dt->modal) ?></td>
                 </tr>
             <?php endforeach; ?>
         </tbody>

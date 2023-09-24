@@ -44,12 +44,12 @@
     <table style="width: 100%;" class="font-12">
         <tr>
             <td>
-                <b>IFIXIED | <?= $row->nm_cabang ?></b>
+                <b style="font-size: 16px;">IFIXIED | <?= $row->nm_cabang ?></b>
                 <div><?= $row->lokasi ?></div>
                 <div><?= $row->kontak ?></div>
             </td>
             <td style="text-align: right;">
-                <b>NOTA DOWN PAYMENT</b>
+                <b style="font-size: 16px;">NOTA DOWN PAYMENT</b>
                 <div style="text-align: right;">NO. INVOICE : <b style="font-size: 10px;"><?= $row->kode ?></b></div>
                 <div style="text-align: right;"><?= tgl_indo($row->tanggal, true) ?></div>
             </td>

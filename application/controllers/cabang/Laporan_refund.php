@@ -18,6 +18,7 @@ class Laporan_refund extends MY_controller
             'title' => 'Laporan Refund',
         ];
 
+        $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null")->result();
         $data['ref_tahun'] = $this->db->query("SELECT * from ref_tahun where deleted is null")->result();
         $data['ref_bulan'] = $this->db->query("SELECT * from ref_bulan where deleted is null")->result();
 

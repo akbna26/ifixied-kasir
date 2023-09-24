@@ -19,6 +19,7 @@
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
+                    select_cabang: $('#select_cabang').val(),
                     select_tahun: $('#select_tahun').val(),
                     select_bulan: $('#select_bulan').val(),
                 },

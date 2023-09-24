@@ -28,7 +28,7 @@
 
         body {
             font-size: 12px !important;
-            letter-spacing: 2 !important;
+            /* letter-spacing: 2 !important; */
         }
 
         .border-bottom {
@@ -46,12 +46,12 @@
     <table style="width: 100%;" class="font-12">
         <tr>
             <td>
-                <b>IFIXIED | <?= $row->nm_cabang ?></b>
+                <b style="font-size: 16px;">IFIXIED | <?= $row->nm_cabang ?></b>
                 <div><?= $row->lokasi ?></div>
                 <div><?= $row->kontak ?></div>
             </td>
             <td style="text-align: right;">
-                <b>NOTA SERVICE</b>
+                <b style="font-size: 16px;">NOTA SERVICE</b>
                 <div style="text-align: right;">NO. INVOICE : <b style="font-size: 10px;"><?= $row->invoice ?></b></div>
                 <div style="text-align: right;"><?= tgl_indo($row->created, true) ?></div>
             </td>
@@ -162,6 +162,11 @@
             </tr>
     </table>
 
+    <?php if (empty($row->biaya)) : ?>
+        <br>
+        <br>
+        <div>NB: <span style="color: red;">lorem ipsum dolor sit amet</span></div>
+    <?php endif; ?>
 </body>
 
 </html>

@@ -15,7 +15,7 @@ class Paylater extends MY_controller
         $data = [
             'index' => 'admin/paylater/index',
             'index_js' => 'admin/paylater/index_js',
-            'title' => 'Transaksi Paylater',
+            'title' => 'Transaksi Market Place',
         ];
 
         $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null")->result();

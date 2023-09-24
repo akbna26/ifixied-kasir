@@ -53,6 +53,7 @@ class Cetak extends MY_controller
             AND a.id_sharing = '$id'
         ")->result();
 
+        $data['user'] = $this->db->query("SELECT * from data_user where id='$this->id_akun' ")->row();
         $html = $this->load->view('admin/cetak/sharing', $data, true);
         $mpdf->WriteHTML($html);
         $cetak = 'detail-sharing.pdf';

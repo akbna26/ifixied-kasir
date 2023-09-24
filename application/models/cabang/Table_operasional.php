@@ -3,7 +3,7 @@
 class Table_operasional extends CI_Model
 {
     var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
-    var $column_search = array('judul'); //field yang diizin untuk pencarian
+    var $column_search = array('a.keterangan'); //field yang diizin untuk pencarian
     var $order = array('id' => 'desc'); // default order
 
     public function __construct()

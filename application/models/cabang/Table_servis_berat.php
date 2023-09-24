@@ -3,7 +3,7 @@
 class Table_servis_berat extends CI_Model
 {
     var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
-    var $column_search = array('a.invoice','a.pelanggan','a.no_hp','a.imei'); //field yang diizin untuk pencarian
+    var $column_search = array('a.invoice', 'a.pelanggan', 'a.no_hp', 'a.imei'); //field yang diizin untuk pencarian
     var $order = array('id' => 'desc'); // default order
 
     public function __construct()
@@ -132,7 +132,7 @@ class Table_servis_berat extends CI_Model
             elseif ($field->is_klaim_garansi == 2) $is_klaim_garansi = '<br><span class="badge badge-primary fw-600 font-size-12">Klaim Garansi Selesai</span>';
 
             $refund = '';
-            if($field->is_refund==1) $refund = '<br><span class="badge badge-info fw-600 font-size-12">KLAIM REFUND</span>';
+            if ($field->is_refund == 1) $refund = '<br><span class="badge badge-info fw-600 font-size-12">KLAIM REFUND</span>';
 
             $row[] = '<span class="badge badge-' . $warna . ' fw-600 font-size-12">' . $field->nm_status . '</span>'
                 . '<br><span class="badge badge-dark fw-600 font-size-12">' . $field->nm_pengambilan . '</span>'
@@ -162,6 +162,10 @@ class Table_servis_berat extends CI_Model
             }
 
             $aksi .= '<button onclick="log(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-dark fw-600 ml-1 mt-1"><i class="far fa-list-alt mr-1"></i> Log</button>';
+
+            if (session('type') == 'admin') {
+                $aksi .= '<button onclick="cancelTransaksi(\'' . encode_id($field->id) . '\',\'' . $field->invoice . '\');" type="button" class="btn btn-sm btn-danger mr-1 fw-600"><i class="fas fa-times"></i> Cancel</button>';
+            }
 
             $row[] = $aksi;
 

@@ -53,13 +53,13 @@
     <div class="row">
         <div class="col-md-4" <?= !empty($data) ? 'hidden' : '' ?>>
             <div class="form-group">
-                <label>Stock <small class="text-danger fw-600">*pertama kali barang di input</small></label>
+                <label>Quantity <small class="text-danger fw-600">*pertama kali barang di input</small></label>
                 <input <?= !empty($data) ? 'disabled' : '' ?> type="text" required name="stock" autocomplete="off" placeholder="Masukkan isian" class="form-control <?= !empty($data) ? 'border border-danger' : '' ?> rupiah" value="<?= !empty($data->stock) ? rupiah($data->stock) : '' ?>">
             </div>
         </div>
         <div class="col-md-4" <?= !empty($data) ? 'hidden' : '' ?>>
             <div class="form-group">
-                <label>Tanggal Stock <small class="text-danger fw-600">*pertama kali barang di input</small></label>
+                <label>Tanggal Masuk <small class="text-danger fw-600">*pertama kali barang di input</small></label>
                 <input <?= !empty($data) ? 'disabled' : '' ?> type="date" required name="tanggal_restock" placeholder="Masukkan isian" class="form-control <?= !empty($data) ? 'border border-danger' : '' ?>" value="<?= empty($data->tanggal_restock) ? '' : date('Y-m-d', strtotime($data->tanggal_restock)) ?>">
             </div>
         </div>

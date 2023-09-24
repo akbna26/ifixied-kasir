@@ -263,14 +263,22 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-danger">
+                        <h3 class="mb-0 text-center text-danger">WAJIB DIBACAKAN/DICEK</h3>
+                    </div>
+                    <div class="card my-3">
+                        <div class="card-body">
+                            <div id="target_cek_dulu"></div>
+                        </div>
+                    </div>
                     <form onsubmit="event.preventDefault();do_submit(this);" enctype="multipart/form-data">
                         <div class="form-group">
-                            <label>Nama Pelanggan <small class="text-danger">*) opsional</small></label>
-                            <input type="text" name="nama_pelanggan" autocomplete="off" placeholder="Nama Pelanggan" class="form-control">
+                            <label>Nama Pelanggan <small class="text-danger">*) wajib</small></label>
+                            <input type="text" required name="nama_pelanggan" autocomplete="off" placeholder="Nama Pelanggan" class="form-control">
                         </div>
                         <div class="form-group">
-                            <label>No HP <small class="text-danger">*) opsional</small></label>
-                            <input type="number" name="no_hp" autocomplete="off" placeholder="Nomer HP Pelanggan" class="form-control">
+                            <label>No HP <small class="text-danger">*) wajib</small></label>
+                            <input type="number" required name="no_hp" autocomplete="off" placeholder="Nomer HP Pelanggan" class="form-control">
                         </div>
                         <div class="form-group">
                             <label>Keterangan <small class="text-danger">*) opsional</small></label>

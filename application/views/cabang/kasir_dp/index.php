@@ -21,7 +21,9 @@
                                 <th class="fw-600">TOTAL</th>
                                 <th class="fw-600">TANGGAL</th>
                                 <th class="fw-600">INVOICE</th>
-                                <th class="fw-600" style="width: 250px;">AKSI</th>
+                                <?php if ($this->type == 'cabang') : ?>
+                                    <th class="fw-600" style="width: 250px;">AKSI</th>
+                                <?php endif; ?>
                             </tr>
                         </thead>
                         <tbody>

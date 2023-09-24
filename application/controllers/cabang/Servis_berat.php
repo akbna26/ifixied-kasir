@@ -499,4 +499,24 @@ class Servis_berat extends MY_controller
             'html' => $html,
         ]);
     }
+
+    public function do_cancel()
+    {
+        cek_post();
+        if (session('type') != 'admin') dd('not allowed');
+        $id = decode_id($this->input->post('id'));
+        $hapus = $this->input->post('hapus');
+
+        if (!empty($hapus)) {
+            $this->db->where('id', $id);
+            $this->db->update('servis_berat', [
+                'deleted' => date('Y-m-d H:i:s'),
+                'is_cancel' => '1',
+            ]);
+        }
+
+        echo json_encode([
+            'status' => 'success'
+        ]);
+    }
 }

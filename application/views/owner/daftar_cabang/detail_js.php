@@ -5,7 +5,19 @@
         load_data();
         load_table();
         load_table_servis();
+        load_table_operasional();
+        load_table_kerugian();
+        load_table_kasbon();
     });
+
+    function load_semua() {
+        load_data();
+        load_table();
+        load_table_servis();
+        load_table_operasional();
+        load_table_kerugian();
+        load_table_kasbon();
+    }
 
     function load_data() {
         $.ajax({
@@ -99,6 +111,78 @@
             ],
             ajax: {
                 url: '<?= base_url($this->type . '/daftar_cabang/table_servis') ?>',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    tanggal: $('#select_tanggal').val(),
+                    id_cabang: '<?= encode_id($id_cabang) ?>',
+                },
+            },
+            order: [],
+        })
+    }
+
+    function load_table_operasional() {
+        $('#table_operasional').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?= base_url($this->type . '/daftar_cabang/table_operasional') ?>',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    tanggal: $('#select_tanggal').val(),
+                    id_cabang: '<?= encode_id($id_cabang) ?>',
+                },
+            },
+            order: [],
+        })
+    }
+
+    function load_table_kerugian() {
+        $('#table_kerugian').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?= base_url($this->type . '/daftar_cabang/table_kerugian') ?>',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    tanggal: $('#select_tanggal').val(),
+                    id_cabang: '<?= encode_id($id_cabang) ?>',
+                },
+            },
+            order: [],
+        })
+    }
+
+    function load_table_kasbon() {
+        $('#table_kasbon').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?= base_url($this->type . '/daftar_cabang/table_kasbon') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {

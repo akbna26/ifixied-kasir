@@ -46,12 +46,12 @@
     <table style="width: 100%;" class="font-12">
         <tr>
             <td>
-                <b>IFIXIED | <?= $row->nm_cabang ?></b>
+                <b style="font-size: 16px;">IFIXIED | <?= $row->nm_cabang ?></b>
                 <div><?= $row->lokasi ?></div>
                 <div><?= $row->kontak ?></div>
             </td>
             <td style="text-align: right;">
-                <b>NOTA REFUND</b>
+                <b style="font-size: 16px;">NOTA REFUND</b>
                 <div style="text-align: right;">NO. INVOICE : <b style="font-size: 10px;"><?= $row->no_invoice ?></b></div>
                 <div style="text-align: right;"><?= tgl_indo($row->created, true) ?></div>
             </td>
@@ -89,7 +89,8 @@
         <thead>
             <tr>
                 <th>PRODUK</th>
-                <th>QTY/HARGA</th>
+                <th>QTY</th>
+                <th>HARGA</th>
                 <th style="width: 150px;">STATUS KLAIM</th>
                 <th>NILAI REFUND</th>
                 <th>BARANG<br>PENGGANTI</th>
@@ -99,7 +100,8 @@
             <?php foreach ($detail as $i => $dt) : ?>
                 <tr>
                     <td><?= $dt->barang ?></td>
-                    <td><?= $dt->qty ?> @<?= rupiah($dt->harga_jual) ?></td>
+                    <td><?= $dt->qty ?></td>
+                    <td><?= rupiah($dt->harga_jual) ?></td>
                     <td><?= $dt->nm_klaim ?></td>
                     <td><?= in_array($dt->id_klaim, [3, 4]) ? rupiah($dt->nilai_refund) : '-' ?> <?= in_array($dt->id_klaim, [3, 4]) ? '<small>(' . ($dt->nm_pembayaran) . ')</small>' : '' ?></td>
                     <td><?= $dt->nm_pengganti ?? '-' ?></td>

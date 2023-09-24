@@ -450,6 +450,17 @@
                 throw false;
             }
         }
+
+        var cekDulu = $('#table_data').html();
+        $('#target_cek_dulu').html(`
+            <table class="table table-bordered" id="table_dummy_cek">
+                ${cekDulu}
+            </table>
+        `);
+        $("#table_dummy_cek tr").each(function() {
+            $(this).find("th:last").remove();
+            $(this).find("td:last").remove();
+        });
         $('#modal_custom_2').modal('show');
     }
 

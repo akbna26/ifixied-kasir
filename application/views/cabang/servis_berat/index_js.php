@@ -348,4 +348,53 @@
             }
         });
     }
+
+    function cancelTransaksi(id, no_inv) {
+        Swal.fire({
+            title: 'Cancel Service ?',
+            html: 'pastikan anda sudah yakin<br>No Invoice : <span class="text-danger">' + no_inv+'</span>',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?= base_url('admin/servis_berat/do_cancel') ?>",
+                    data: {
+                        hapus: true,
+                        id: id,
+                    },
+                    dataType: "JSON",
+                    beforeSend: function(res) {
+                        Swal.fire({
+                            title: 'Loading ...',
+                            html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                        });
+                    },
+                    error: function(res) {
+                        Swal.close();
+                    },
+                    success: function(res) {
+                        if (res.status == 'success') {
+                            Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil dicancel',
+                                    showConfirmButton: true,
+                                })
+                                .then(() => {
+                                    $('#table_data').DataTable().ajax.reload();
+                                });
+                        }
+                    }
+                });
+            } else {
+                return false;
+            }
+        })
+    }
 </script>

@@ -87,8 +87,8 @@
     </div>
 
     <div class="form-group">
-        <label>Keterangan Status<small class="text-danger fw-600">(opsional)</small></label>
-        <textarea name="keterangan" rows="3" placeholder="Masukkan isian" class="form-control"></textarea>
+        <label>Keterangan Status<small class="text-danger fw-600">(wajib)</small></label>
+        <textarea required name="keterangan" rows="3" placeholder="Masukkan isian" class="form-control"></textarea>
     </div>
 
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">

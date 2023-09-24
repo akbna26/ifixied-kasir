@@ -1,9 +1,9 @@
 <?php
 
-class Table_laporan_transaksi extends CI_Model
+class Table_operasional extends CI_Model
 {
-    var $column_order = array(null, 'a.nama', 'b.nama', 'c.nama', null); //field yang ada di table user
-    var $column_search = array('a.no_invoice'); //field yang diizin untuk pencarian
+    var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
+    var $column_search = array('a.keterangan'); //field yang diizin untuk pencarian
     var $order = array('a.id' => 'desc'); // default order
 
     public function __construct()
@@ -13,21 +13,23 @@ class Table_laporan_transaksi extends CI_Model
 
     private function _get_datatables_query()
     {
+        $id_cabang = decode_id($this->input->get('id_cabang'));
+        $tanggal = $this->input->get('tanggal');
 
-        $id_cabang = $this->input->get('id_cabang');
-        $select_tahun = $this->input->get('select_tahun');
-        $select_bulan = $this->input->get('select_bulan');
-        $select_dp = $this->input->get('select_dp');
+        $where = '';
+        if (!empty($tanggal)) {
+            $bulan = date('m',strtotime($tanggal));
+            $tahun = date('Y',strtotime($tanggal));
+            $where .= "AND MONTH(a.tanggal)='$bulan' AND YEAR(a.tanggal)='$tahun' ";
+        }
 
-        $this->db->select('a.*, b.nama as cabang, c.nama as pegawai');
-        $this->db->from('transaksi a');
-        $this->db->join('ref_cabang b', 'b.id = a.id_cabang', 'left');
-        $this->db->join('pegawai c', 'c.id = a.id_pegawai', 'left');
+        $this->db->select('a.*, b.nama as nm_operasional, c.nama as nm_pembayaran, d.nama as nm_cabang');
+        $this->db->from('operasional a');
+        $this->db->join('ref_operasional b', 'b.id = a.id_operasional', 'left');
+        $this->db->join('ref_jenis_pembayaran c', 'c.id = a.id_pembayaran', 'left');
+        $this->db->join('ref_cabang d', 'd.id = a.id_cabang', 'left');
         $this->db->where('a.deleted', null);
-
-        if ($id_cabang != 'all') $this->db->where('a.id_cabang', $id_cabang);
-        if ($select_tahun != 'all') $this->db->where('YEAR(a.created)', $select_tahun);
-        if ($select_bulan != 'all') $this->db->where('MONTH(a.created)', $select_bulan);
+        $this->db->where("a.id_cabang='$id_cabang' $where ");
 
         $i = 0;
 
@@ -88,16 +90,16 @@ class Table_laporan_transaksi extends CI_Model
             $no++;
             $row = [];
 
+            $operasional = $field->nm_operasional
+                . '<div class="text-danger fw-600">Sumber Dana : ' . $field->nm_pembayaran . '</div>';
+
             $row[] = $no;
-            $row[] = $field->created
-                . '<br>Invoice : <span class="text-primary">' . $field->no_invoice . '</span>';
-            $row[] = $field->cabang;
-            $row[] = $field->pegawai;
-            $row[] = rupiah($field->total);
-            $row[] = '
-                <button onclick="detail(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-eye"></i> Detail</button>
-                <button onclick="cancelTransaksi(\'' . encode_id($field->id) . '\',\'' . $field->no_invoice . '\');" type="button" class="btn btn-sm btn-danger mr-1 fw-600"><i class="fas fa-times"></i> Cancel</button>
-            ';
+            $row[] = $field->nm_cabang;
+            $row[] = $operasional;
+            $row[] = tgl_indo($field->tanggal);
+            $row[] = rupiah($field->jumlah);
+            $row[] = $field->keterangan;
+
 
             $data[] = $row;
         }

@@ -29,4 +29,23 @@ class Laporan_transaksi extends MY_controller
     {
         echo $this->table->generate_table();
     }
+
+    public function do_submit()
+    {
+        cek_post();
+        $id = decode_id($this->input->post('id'));
+        $hapus = $this->input->post('hapus');
+
+        if (!empty($hapus)) {
+            $this->db->where('id', $id);
+            $this->db->update('transaksi', [
+                'deleted' => date('Y-m-d H:i:s'),
+                'is_cancel' => '1',
+            ]);
+        }
+
+        echo json_encode([
+            'status' => 'success'
+        ]);
+    }
 }

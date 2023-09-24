@@ -49,7 +49,7 @@
                         <li><a href="<?= base_url('admin/laporan_refund') ?>">Refund Barang</a></li>
                         <li><a href="<?= base_url('admin/retur_barang') ?>">Retur Barang</a></li>
                         <li><a href="<?= base_url('admin/operasional') ?>">Operasional</a></li>
-                        <li><a href="<?= base_url('admin/paylater') ?>">PayLater</a></li>
+                        <li><a href="<?= base_url('admin/paylater') ?>">Market Place</a></li>
                     </ul>
                 </li>
 

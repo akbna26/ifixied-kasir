@@ -22,8 +22,9 @@
 
 <div class="card-body bg1 rounded p-3 mb-3 d-flex align-items-center justify-content-between">
     <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
-    <div style="width: 150px;">
-        <input onchange="load_data();load_table();load_table_servis();" value="<?= date('Y-m-d') ?>" type="date" style="width: 140px;" class="form-control form-control-sm" id="select_tanggal">
+    <div style="width: 230px;" class="d-flex">
+        <a href="<?= base_url($this->type . '/daftar_cabang/barang?id=') . encode_id($id_cabang) ?>" class="btn btn-light btn-sm mr-1"><i class="fa fa-database"></i> Stock Barang</a>
+        <input onchange="load_semua();" value="<?= date('Y-m-d') ?>" type="date" style="width: 110px;" class="form-control form-control-sm" id="select_tanggal">
     </div>
 </div>
 
@@ -129,10 +130,11 @@
                 <thead class="bg1">
                     <tr>
                         <th class="fw-600 text1">NO</th>
+                        <th class="fw-600 text1">CABANG</th>
+                        <th class="fw-600 text1">JENIS OPERASIONAL</th>
                         <th class="fw-600 text1">TANGGAL</th>
                         <th class="fw-600 text1">KETERANGAN</th>
-                        <th class="fw-600 text1">DEBIT</th>
-                        <th class="fw-600 text1">KREDIT</th>
+                        <th class="fw-600 text1">JUMLAH</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -151,10 +153,11 @@
                 <thead class="bg1">
                     <tr>
                         <th class="fw-600 text1">NO</th>
+                        <th class="fw-600 text1">CABANG</th>
+                        <th class="fw-600 text1">SUMBER DANA</th>
                         <th class="fw-600 text1">TANGGAL</th>
                         <th class="fw-600 text1">KETERANGAN</th>
-                        <th class="fw-600 text1">DEBIT</th>
-                        <th class="fw-600 text1">KREDIT</th>
+                        <th class="fw-600 text1">JUMLAH</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -162,3 +165,28 @@
             </table>
         </div>
     </div>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <h4>Laporan Kasbon</h4>
+        <hr>
+        <div class="table-responsive">
+            <table class="mt-3 table table-striped table-bordered" id="table_kasbon">
+                <thead class="bg1">
+                    <tr>
+                        <th class="fw-600 text1">NO</th>
+                        <th class="fw-600 text1">CABANG</th>
+                        <th class="fw-600 text1">NAMA PEGAWAI</th>
+                        <th class="fw-600 text1">SUMBER DANA</th>
+                        <th class="fw-600 text1">TANGGAL</th>
+                        <th class="fw-600 text1">KETERANGAN</th>
+                        <th class="fw-600 text1">JUMLAH</th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
