@@ -135,7 +135,7 @@
                                             <div class="bordd bordd-b select-cust py-1 px-3">
                                                 <select id="select_jenis_pembayaran" class="w-100 ph js-select2 form_focus">
                                                     <option selected disabled value="">Jenis Pembayaran</option>
-                                                    <?php foreach ($ref_jenis_pembayaran as $key) : ?>
+                                                    <?php foreach ($ref_jenis_pembayaran as $i => $key) : ?>
                                                         <option value="<?= $key->id ?>"><?= $key->nama ?> (potongan <?= $key->persen_potongan ?> %)</option>
                                                     <?php endforeach; ?>
                                                 </select>

@@ -460,6 +460,10 @@
         $("#table_dummy_cek tr").each(function() {
             $(this).find("th:last").remove();
             $(this).find("td:last").remove();
+            $(this).find("td.tr_id").removeClass('tr_id')
+            $(this).find("td.tr_qty").removeClass('tr_qty')
+            $(this).find("td.tr_harga").removeClass('tr_harga')
+            $(this).find("td.tr_sub_total").removeClass('tr_sub_total')
         });
         $('#modal_custom_2').modal('show');
     }
