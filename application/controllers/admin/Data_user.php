@@ -121,7 +121,8 @@ class Data_user extends MY_controller
         $kecamatan = $this->input->post('kecamatan');
         $kelurahan = $this->input->post('kelurahan');
 
-        $id_cabang_multi = implode(',', $this->input->post('id_cabang_multi'));
+        $id_cabang_multi = $this->input->post('id_cabang_multi');
+        if (!empty($id_cabang_multi)) $id_cabang_multi = implode(',',$id_cabang_multi);
 
         $cek_username = $this->db->query("SELECT * from data_user where deleted is null and username='$username' ")->row();
         $cek_email = $this->db->query("SELECT * from data_user where deleted is null and email='$email' ")->row();
