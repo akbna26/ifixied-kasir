@@ -9,7 +9,7 @@
     <meta content="Kasir" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="<?= base_url('uploads/img/logo2.png') ?>">
+    <link rel="shortcut icon" href="<?= base_url('uploads/img/logo.png') ?>">
 
     <link href="<?= base_url('assets/skote/dist/') ?>assets/libs/select2/css/select2.min.css" rel="stylesheet" type="text/css" />
     <link href="<?= base_url('assets/skote/dist/') ?>assets/libs/bootstrap-touchspin/jquery.bootstrap-touchspin.min.css" rel="stylesheet" />
@@ -49,7 +49,7 @@
                                 <div class="col-lg-8">
                                     <div class="media">
                                         <div class="mr-3">
-                                            <img width="100" src="<?= base_url('uploads/img/logo2.png') ?>" alt="" class="img-thumbnail back_home">
+                                            <img width="100" src="<?= base_url('uploads/img/logo.png') ?>" alt="" class="img-thumbnail back_home">
                                         </div>
                                         <div class="media-body align-self-center float-right">
                                             <div class="text-muted">
