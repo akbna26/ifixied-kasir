@@ -43,6 +43,15 @@ class Laporan_transaksi extends MY_controller
                 'tgl_cancel' => date('Y-m-d H:i:s'),
                 'is_cancel' => '1',
             ]);
+
+            $row = $this->db->query("SELECT * from transaksi where id='$id' ")->row();
+            $list_barang = $this->db->query("SELECT * from transaksi_detail where id_transaksi='$id' and deleted is null ")->result();
+            foreach ($list_barang as $key) {
+                $penambah = $key->qty;
+                $this->db->query("UPDATE barang_cabang set stock=stock+$penambah 
+                    where id_barang='$key->id_barang' and id_cabang='$row->id_cabang'
+                ");
+            }
         }
 
         echo json_encode([
