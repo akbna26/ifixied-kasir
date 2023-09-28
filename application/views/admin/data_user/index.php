@@ -10,9 +10,9 @@
 <div class="card">
     <div class="card-body bg2 border1" style="border-top-left-radius: 15px;border-top-right-radius: 15px;">
         <h3 class="text-center fw-600">AKSES YANG TERSEDIA</h3>
-        <div style="display: flex;flex-direction: row;justify-content: center;">
+        <div style="display: flex;flex-direction: row;justify-content: center;flex-wrap: wrap;">
             <?php foreach ($ref_role as $i => $dt) : ?>
-                <div class="ml-2 mr-2">
+                <div class="m-1">
                     <button style="border-radius:15px 15px 0 0;" onclick="load_table('<?= encode_id($dt->id) ?>');set_radio(this,'select_type');" class="btn select_type p-2 <?= $i == 0 ? 'active' : '' ?> btn-outline-primary glow2 fw-600 btn-block">
                         <i class="fa fa-users"></i> <?= $dt->keterangan ?>
                     </button>

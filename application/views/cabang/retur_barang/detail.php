@@ -48,7 +48,7 @@
                 <td><?= $detail->alasan_refund ?></td>
                 <?php
                 if (empty($detail->status_retur)) $verifikasi = '<span class="fw-600 text-primary">Belum diverifikasi</span>';
-                elseif ($detail->status_retur == 1) $verifikasi = '<span class="fw-600 text-danger">Potong Profit</span>';
+                elseif ($detail->status_retur == 1) $verifikasi = '<span class="fw-600 text-danger">Kerugian</span>';
                 elseif ($detail->status_retur == 2) $verifikasi = '<span class="fw-600 text-success">Disetujui</span>';
                 ?>
                 <td><?= $verifikasi ?></td>
@@ -69,7 +69,7 @@
         </div>
         <div class="col-md-4">
             <div class="form-group">
-                <label>Potong Profit <small class="fw-600 text-danger">*</small></label>
+                <label>Kerugian <small class="fw-600 text-danger">*</small></label>
                 <div readonly class="form-control is-valid"><?= rupiah(@$detail->potong_profit) ?></div>
             </div>
         </div>

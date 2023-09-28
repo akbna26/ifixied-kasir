@@ -1,10 +1,10 @@
 <?php
 
-class Table_kerugian extends CI_Model
+class Table_cancel_transaksi extends CI_Model
 {
-    var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
-    var $column_search = array('keterangan'); //field yang diizin untuk pencarian
-    var $order = array('tanggal' => 'desc'); // default order
+    var $column_order = array(null, 'a.nama', 'b.nama', 'c.nama', null); //field yang ada di table user
+    var $column_search = array('a.no_invoice'); //field yang diizin untuk pencarian
+    var $order = array('a.id' => 'desc'); // default order
 
     public function __construct()
     {
@@ -13,21 +13,20 @@ class Table_kerugian extends CI_Model
 
     private function _get_datatables_query()
     {
-        $id_cabang = decode_id($this->input->get('id_cabang'));
-        $tanggal = $this->input->get('tanggal');
 
-        $where = '';
-        if (!empty($tanggal)) {
-            $bulan = date('m',strtotime($tanggal));
-            $tahun = date('Y',strtotime($tanggal));
-            $where .= "AND MONTH(a.tanggal)='$bulan' AND YEAR(a.tanggal)='$tahun' ";
-        }
+        $id_cabang = $this->input->get('id_cabang');
+        $select_tahun = $this->input->get('select_tahun');
+        $select_bulan = $this->input->get('select_bulan');
 
-        $query = "SELECT a.*, b.nama as nm_cabang from data_kerugian a 
-            left join ref_cabang b on b.id=a.id_cabang
-            where a.id_cabang='$id_cabang' $where 
-        ";
-        $this->db->from("($query) as tabel");
+        $this->db->select('a.*, b.nama as cabang, c.nama as pegawai');
+        $this->db->from('transaksi a');
+        $this->db->join('ref_cabang b', 'b.id = a.id_cabang', 'left');
+        $this->db->join('pegawai c', 'c.id = a.id_pegawai', 'left');
+        $this->db->where('a.is_cancel', '1');
+
+        if ($id_cabang != 'all') $this->db->where('a.id_cabang', $id_cabang);
+        if ($select_tahun != 'all') $this->db->where('YEAR(a.created)', $select_tahun);
+        if ($select_bulan != 'all') $this->db->where('MONTH(a.created)', $select_bulan);
 
         $i = 0;
 
@@ -89,11 +88,16 @@ class Table_kerugian extends CI_Model
             $row = [];
 
             $row[] = $no;
-            $row[] = $field->nm_cabang;
-            $row[] = tgl_indo($field->tanggal);
-            $row[] = strtoupper(str_replace('_',' ',$field->jenis));
-            $row[] = $field->keterangan;
-            $row[] = rupiah($field->jumlah);
+            $row[] = $field->created
+                . '<br>Invoice : <span class="text-primary">' . $field->no_invoice . '</span>';
+            $row[] = $field->cabang;
+            $row[] = $field->pegawai;
+            $row[] = rupiah($field->total);
+            $row[] = tgl_indo($field->tgl_cancel);
+            $row[] = '
+                <button onclick="detail(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-eye"></i> Detail</button>
+            ';
+
             $data[] = $row;
         }
 

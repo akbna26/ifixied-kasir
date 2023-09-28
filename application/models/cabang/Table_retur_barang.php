@@ -96,7 +96,7 @@ class Table_retur_barang extends CI_Model
             $retur = '';
 
             if (empty($field->status_retur)) $retur = '<span class="fw-600 text-primary">Belum diverifikasi</span>';
-            elseif ($field->status_retur == 1) $retur = '<span class="fw-600 text-danger">Potong Profit</span>';
+            elseif ($field->status_retur == 1) $retur = '<span class="fw-600 text-danger">Kerugian</span>';
             elseif ($field->status_retur == 2) $retur = '<span class="fw-600 text-success">Disetujui</span>';
 
             $row[] = $field->nm_klaim;

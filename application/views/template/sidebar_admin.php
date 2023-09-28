@@ -62,6 +62,17 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-file-find"></i>
+                        <span>Log</span>
+                    </a>
+                    <ul class="sub-menu <?= $this->uri->segment(2) == 'log' ? 'mm-collapse mm-show' : '' ?>">
+                        <li><a href="<?= base_url('admin/cancel_transaksi') ?>">Transaksi Cancel</a></li>
+                        <li><a href="<?= base_url('admin/cancel_servis') ?>">Servis Cancel</a></li>
+                    </ul>
+                </li>
+
                 <li class="menu-title" key="t-apps">Setting</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

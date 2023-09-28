@@ -165,7 +165,7 @@
     <?php if (empty($row->biaya)) : ?>
         <br>
         <br>
-        <div>NB: <span style="color: red;">lorem ipsum dolor sit amet</span></div>
+        <div>PENTING: <span style="color: red;">lorem ipsum dolor sit amet</span></div>
     <?php endif; ?>
 </body>
 

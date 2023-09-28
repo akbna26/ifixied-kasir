@@ -90,3 +90,6 @@ $route['servis/servis_berat/(:any)'] = 'cabang/servis_berat/$1';
 
 $route['admin/kasbon'] = 'cabang/kasbon';
 $route['admin/kasbon/(:any)'] = 'cabang/kasbon/$1';
+
+$route['cs/stock_cabang_lain'] = 'admin/barang/stock_cabang';
+$route['cs/barang/table_stock_cabang'] = 'admin/barang/table_stock_cabang';

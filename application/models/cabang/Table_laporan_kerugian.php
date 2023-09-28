@@ -3,7 +3,7 @@
 class Table_laporan_kerugian extends CI_Model
 {
     var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
-    var $column_search = array('jenis', 'keterangan'); //field yang diizin untuk pencarian
+    var $column_search = array('keterangan'); //field yang diizin untuk pencarian
     var $order = array('tanggal' => 'desc'); // default order
 
     public function __construct()
@@ -82,8 +82,8 @@ class Table_laporan_kerugian extends CI_Model
 
             $row[] = $no;
             $row[] = tgl_indo($field->tanggal);
-            $row[] = $field->jenis;
-            $row[] = rupiah($field->jumlah);
+            $row[] = strtoupper(str_replace('_',' ',$field->jenis));
+            $row[] = $field->keterangan;            
 
             $data[] = $row;
         }

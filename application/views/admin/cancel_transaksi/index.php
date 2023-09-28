@@ -53,7 +53,8 @@
                                 <th class="fw-600">TANGGAL</th>
                                 <th class="fw-600">INFORMASI</th>
                                 <th class="fw-600">PETUGAS</th>
-                                <th class="fw-600">TOTAL TRANSAKSI</th>                                
+                                <th class="fw-600">TOTAL TRANSAKSI</th>
+                                <th class="fw-600">TANGGAL CANCEL</th>
                                 <th class="fw-600" style="width: 250px;">AKSI</th>
                             </tr>
                         </thead>

@@ -11,12 +11,12 @@
             <div class="card-body">
                 <div class="table-responsive">
                     <table class="mt-3 table table-striped" id="table_data">
-                        <thead>
+                        <thead class="bg1">
                             <tr>
-                                <th class="fw-600">NO</th>
-                                <th class="fw-600">TANGGAL</th>
-                                <th class="fw-600">JENIS</th>
-                                <th class="fw-600">TOTAL</th>
+                                <th class="fw-600 text1">NO</th>
+                                <th class="fw-600 text1">TANGGAL</th>
+                                <th class="fw-600 text1">JENIS</th>
+                                <th class="fw-600 text1">KETERANGAN</th>
                             </tr>
                         </thead>
                         <tbody>
