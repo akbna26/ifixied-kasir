@@ -37,7 +37,7 @@
             <tr>
                 <th style="width: 70px;">No.</th>
                 <th class="fw-600">NAMA BARANG</th>
-                <th class="fw-600">HARGA MODAL</th>
+                <th class="fw-600">HARGA JUAL</th>
                 <th class="fw-600">QTY</th>
                 <th class="fw-600">STATUS KLAIM</th>
                 <th class="fw-600">NILAI REFUND</th>
@@ -49,7 +49,7 @@
                 <tr>
                     <td><?= $i + 1 ?></td>
                     <td><?= $dt->barang ?></td>
-                    <td><?= rupiah($dt->harga_modal) ?></td>
+                    <td><?= rupiah($dt->harga_jual) ?></td>
                     <td><?= $dt->qty ?></td>
                     <td><?= $dt->nm_klaim ?></td>
                     <td><?= in_array($dt->id_klaim, [3, 4]) ? rupiah($dt->nilai_refund) : '-' ?> <?= in_array($dt->id_klaim, [3, 4]) ? '<span class="badge badge-primary ml-1 fw-600">' . ($dt->nm_pembayaran) . '</span>' : '' ?></td>

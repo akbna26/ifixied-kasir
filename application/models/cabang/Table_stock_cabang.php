@@ -94,10 +94,6 @@ class Table_stock_cabang extends CI_Model
             $row[] = '
             <table class="table table-sm table-bordered mb-0">
                 <tr class="bg-white">
-                    <th>Harga Modal</th>
-                    <td>' . rupiah($field->harga_modal) . '</td>
-                </tr>
-                <tr class="bg-white">
                     <th>Harga Jual</th>
                     <td>' . rupiah($field->harga_jual) . '</td>
                 </tr>
