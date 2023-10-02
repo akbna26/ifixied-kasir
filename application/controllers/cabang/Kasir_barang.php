@@ -44,7 +44,10 @@ class Kasir_barang extends MY_controller
     public function get_one()
     {
         $barcode = $this->input->post('barcode');
-        $row = $this->db->query("SELECT * from barang where barcode='$barcode' and deleted is null ")->row();
+        $row = $this->db->query("SELECT a.*, b.stock from barang a 
+            left join barang_cabang b on b.id_barang = a.id and b.id_cabang='$this->id_cabang' and b.deleted is null
+            where a.barcode='$barcode' and a.deleted is null 
+        ")->row();
         echo json_encode([
             'status' => 'success',
             'data' => $row,
