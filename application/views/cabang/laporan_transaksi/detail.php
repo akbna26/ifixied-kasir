@@ -57,7 +57,6 @@
                 <th style="width: 70px;">No.</th>
                 <th>Produk</th>
                 <th>Qty</th>
-                <th>Modal</th>
                 <th>Harga Satuan</th>
                 <th class="text-right">Total</th>
             </tr>
@@ -68,7 +67,6 @@
                     <td><?= $i + 1 ?></td>
                     <td><?= $dt->barang ?></td>
                     <td><?= $dt->qty ?></td>
-                    <td><?= rupiah($dt->harga_modal) ?></td>
                     <td><?= rupiah($dt->harga) ?></td>
                     <td class="text-right"><?= rupiah($dt->sub_total) ?></td>
                 </tr>
