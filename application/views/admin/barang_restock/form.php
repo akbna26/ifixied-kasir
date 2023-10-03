@@ -40,7 +40,7 @@
 
     <div class="form-group">
         <label>Tanggal</label>
-        <input type="date" required name="tanggal_restock" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal_restock) ? '' : date('Y-m-d', strtotime($data->tanggal_restock)) ?>">
+        <input type="date" required name="tanggal_restock" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal_restock) ? date('Y-m-d') : date('Y-m-d', strtotime($data->tanggal_restock)) ?>">
     </div>
 
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">

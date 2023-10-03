@@ -1,44 +1,42 @@
+<div class="alert alert-success">
+    Catatan
+    <ul>
+        <li>Pilih barang bisa lebih dari satu</li>
+        <li>Pastikan untuk memperhatikan ceklist disebelah kanan</li>
+        <li>Cek stock barang</li>
+        <li>Jika ganti kategori maka akan ke reset</li>
+        <li>Jika merah maka tidak dapat di pilih</li>
+    </ul>
+</div>
 <form onsubmit="event.preventDefault();do_submit(this);">
 
-    <?php if (empty($data)) : ?>
-        <div class="row">
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Kategori Barang</label>
-                    <select required class="form-control js_select2" data-placeholder="pilih kategori" onchange="pilih_barang(this);">
-                        <option value=""></option>
-                        <?php foreach ($ref_kategori as $dt) : ?>
-                            <option <?= $dt->id == @$data->id_kategori ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
-            <div class="col-md-6">
-                <div class="form-group">
-                    <label>Barang</label>
-                    <select name="id_barang" required class="form-control js_select2" data-placeholder="pilih produk" id="select_barang" onchange="cek_stock(this);">
-                        <option value=""></option>
-                        <?php foreach ($ref_barang as $dt) : ?>
-                            <option <?= $dt->id == @$data->id_barang ? 'selected' : '' ?> value="<?= $dt->id ?>" data-stock="<?= $dt->stock ?>"><?= $dt->nama ?></option>
-                        <?php endforeach; ?>
-                    </select>
-                </div>
-            </div>
-        </div>
-    <?php else : ?>
-        <input type="hidden" name="id_barang" value="<?= @$data->id_barang ?>">
-    <?php endif; ?>
-
-    <div class="alert alert-success" id="div_stock" style="display: none;">
-        <h3 class="text-center fw-600 mb-0">Stock Saat ini : <span id="total_stock">-</span></h3>
-    </div>
-
     <div class="form-group">
-        <label>Total Sharing Stock</label>
-        <input type="text" required name="stock" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= @$data->stock ?>">
+        <label>Kategori Barang</label>
+        <select required class="form-control js_select2" data-placeholder="pilih kategori" onchange="pilih_barang(this);">
+            <option value=""></option>
+            <?php foreach ($ref_kategori as $dt) : ?>
+                <option <?= $dt->id == @$data->id_kategori ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
-    <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
+    <div class="table-responsive">
+        <table class="mt-3 table table-striped table-sm" id="table_barang">
+            <thead class="bg1 text-white">
+                <tr>
+                    <th class="fw-600">BARCODE</th>
+                    <th class="fw-600">BARANG</th>
+                    <th class="fw-600">MODAL</th>
+                    <th class="fw-600">QTY</th>
+                    <th class="fw-600">TOTAL SHARING</th>
+                    <th class="fw-600" style="width: 150px;">PILIH</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+    </div>
+
     <button type="submit" class="btn btn-block btn-rounded fw-600 btn-primary"><i class="fas fa-check"></i> KLIK DISINI UNTUK SIMPAN</button>
 </form>
 
@@ -61,8 +59,40 @@
         }).then((result) => {
             if (result.value) {
 
+                var barang_id = [];
+                var barang_qty = [];
+                $('.data_pilih').each(function(i, obj) {
+                    if ($(this).is(':checked')) {
+                        var id = $(this).data('target');
+                        var value = $('#input_id_' + id).val();
+                        console.log(value);
+                        if (value == '' || value == 0) {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Stock tidak boleh kosong',
+                                showConfirmButton: true,
+                            })
+                            throw false;
+                        }
+
+                        barang_id.push(id);
+                        barang_qty.push(value);
+                    }
+                });
+
+                if (barang_id.length < 1) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Barang wajib dipilih',
+                        showConfirmButton: true,
+                    });
+                    throw false;
+                }
+
                 var form = new FormData(dt);
                 form.append('id_sharing', ID_SHARING);
+                form.append('barang_id', barang_id);
+                form.append('barang_qty', barang_qty);
 
                 $.ajax({
                     type: "POST",
@@ -119,24 +149,39 @@
             dataType: "JSON",
             success: function(res) {
                 if (res.status == 'success') {
-                    var html = '<option value=""></option>';
+                    var html = '';
                     $.map(res.data, function(e, i) {
+                        var is_disable = '';
+                        var is_danger = '';
+
+                        if (e.stock == 0 || e.stock == null || e.stock < 0) {
+                            var is_disable = 'disabled';
+                            var is_danger = 'bg-danger';
+                        }
+
                         html += `
-                            <option value="${e.id}" data-stock="${e.stock}">${e.nama}</option>
+                            <tr>
+                                <td class="${is_danger}">${e.barcode}</td>
+                                <td class="${is_danger}">${e.nama}</td>
+                                <td class="${is_danger}">${formatRupiah(e.harga_modal)}</td>
+                                <td class="${is_danger}">${e.stock}</td>
+                                <td class="${is_danger}">
+                                    <input type="number" disabled id="input_id_${e.id}" style="width:150px;" onchange="cek_max(this,'${e.id}');" data-max="${e.stock}" placeholder="Masukkan stock sharing" class="form-control" value="">
+                                </td>
+                                <td class="${is_danger}">
+                                    <div class="custom-control custom-switch mb-3" dir="ltr">
+                                        <input ${is_disable} type="checkbox" data-target="${e.id}" class="custom-control-input data_pilih" onchange="cek_disable(this,'${e.id}');" id="customSwitch_${e.id}">
+                                        <label class="custom-control-label" for="customSwitch_${e.id}"></label>
+                                    </div>
+                                </td>
+                            </tr>
                        `;
                     });
-                    $('#select_barang').html(html);
-                    $('#div_stock').slideUp(500);
+                    $('#table_barang tbody').html(html);
                 } else {
                     toastr.error('Gagal');
                 }
             }
         });
-    }
-
-    function cek_stock(dt) {
-        var stock = $('option:selected', dt).data('stock');
-        $('#total_stock').html(stock);
-        $('#div_stock').slideDown(500);
     }
 </script>

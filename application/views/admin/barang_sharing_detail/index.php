@@ -7,7 +7,7 @@
                     <span class="text-white fw-600 text-underline">Sharing Cabang : <?= $row->nama ?>, <?= tgl_indo($row->tanggal) ?></span>
                 </div>
                 <div>
-                    <button onclick="history.go(-1);" class="btn btn-light btn-sm fw-600 mr-2">
+                    <button onclick="history.go(-1);" class="btn btn-light btn-sm fw-600">
                         <i class="fa fa-arrow-left"></i> Kembali
                     </button>
                     <?php if ($row->is_konfirmasi == 0) : ?>

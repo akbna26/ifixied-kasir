@@ -224,6 +224,7 @@ class Profil extends MY_controller
     public function get_barang()
     {
         $id_kategori = $this->input->post('id_kategori');
+        $this->db->order_by('nama', 'asc');        
         $data = $this->db->get_where('barang', [
             'id_kategori' => $id_kategori,
             'deleted' => null,

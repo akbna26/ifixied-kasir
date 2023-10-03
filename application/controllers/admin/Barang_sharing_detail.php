@@ -64,8 +64,26 @@ class Barang_sharing_detail extends MY_controller
         $hapus = $this->input->post('hapus');
 
         $id_sharing = decode_id($this->input->post('id_sharing'));
-        $id_barang = $this->input->post('id_barang');
-        $stock = clear_koma($this->input->post('stock'));
+
+        $barang_id = explode(',', $this->input->post('barang_id'));
+        $barang_qty = explode(',', $this->input->post('barang_qty'));
+
+        $barang_in = '';
+        if (!empty($barang_id)) {
+            for ($i = 0; $i < count($barang_id); $i++) {
+                $arr_insert[] = [
+                    'id_sharing' => $id_sharing,
+                    'id_barang' => $barang_id[$i],
+                    'stock' => $barang_qty[$i],
+                    'created' => date('Y-m-d H:i:s'),
+                ];
+                if ($i + 1 == count($barang_id)) {
+                    $barang_in .= $barang_id[$i];
+                } else {
+                    $barang_in .= $barang_id[$i] . ',';
+                }
+            }
+        }
 
         if (!empty($hapus)) {
             $this->db->where('id', $id);
@@ -79,7 +97,7 @@ class Barang_sharing_detail extends MY_controller
         } else {
             if (empty($id)) {
 
-                $cek_sudah = $this->db->query("SELECT * from sharing_detail where id_sharing='$id_sharing' and id_barang='$id_barang' and deleted is null ")->row();
+                $cek_sudah = $this->db->query("SELECT * from sharing_detail where id_sharing='$id_sharing' and id_barang in ($barang_in) and deleted is null ")->row();
                 if (!empty($cek_sudah)) {
                     echo json_encode([
                         'status' => 'failed',
@@ -88,19 +106,9 @@ class Barang_sharing_detail extends MY_controller
                     die;
                 }
 
-                $this->db->insert('sharing_detail', [
-                    'id_sharing' => $id_sharing,
-                    'id_barang' => $id_barang,
-                    'stock' => $stock,
-                    'created' => date('Y-m-d H:i:s'),
-                ]);
-            } else {
-
-                $this->db->where('id', $id);
-                $this->db->update('sharing_detail', [
-                    'stock' => $stock,
-                    'updated' => date('Y-m-d H:i:s'),
-                ]);
+                if (count($arr_insert) > 0) {
+                    $this->db->insert_batch('sharing_detail', $arr_insert);
+                }
             }
         }
 

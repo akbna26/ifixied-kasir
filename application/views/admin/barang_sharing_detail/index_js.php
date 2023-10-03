@@ -21,7 +21,7 @@
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
-                    id_sharing:'<?= encode_id($id) ?>'
+                    id_sharing: '<?= encode_id($id) ?>'
                 },
             },
             order: [],
@@ -55,7 +55,7 @@
                     show_modal_custom({
                         judul: 'Tambah <?= $title ?>',
                         html: res.html,
-                        size: 'modal-lg',
+                        size: 'modal-xl',
                     });
                 }
             }
@@ -139,5 +139,33 @@
                 return false;
             }
         })
+    }
+
+    function cek_disable(dt, id) {
+        if ($(dt).is(':checked')) {
+            $('#input_id_' + id).prop('disabled', false);
+            $('#input_id_' + id).focus();
+        } else {
+            $('#input_id_' + id).prop('disabled', true);
+            $('#input_id_' + id).val('');
+        }
+    }
+
+    function cek_max(dt, id) {
+        var value = parseInt($(dt).val());
+        var max = parseInt($(dt).data('max'));
+
+        if (value > max) {
+            Swal.fire({
+                    icon: 'error',
+                    title: 'stock melebihi batas maksimal',
+                    text: `stock sekarang ${max}, di input ${value}`,
+                    showConfirmButton: true,
+                })
+                .then(() => {
+                    $('#input_id_' + id).val('');
+                    throw false;
+                })
+        }
     }
 </script>
