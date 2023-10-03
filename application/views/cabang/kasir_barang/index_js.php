@@ -306,7 +306,7 @@
                             $('.input_quantity').val('1');
                             $('#input_barcode').val('');
                         })
-                    } else if (!qty || qty == null) {
+                    } else if (!qty || res.data.stock == null) {
                         Swal.fire({
                             icon: 'warning',
                             title: 'Stock tidak valid',
