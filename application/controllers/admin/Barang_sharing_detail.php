@@ -34,7 +34,7 @@ class Barang_sharing_detail extends MY_controller
 
     public function tambah()
     {
-        $data['ref_kategori'] = $this->db->query("SELECT * from ref_kategori where deleted is null")->result();
+        $data['ref_kategori'] = $this->db->query("SELECT * from ref_kategori where deleted is null order by nama asc")->result();
         $html = $this->load->view('admin/barang_sharing_detail/form', $data, true);
 
         echo json_encode([
