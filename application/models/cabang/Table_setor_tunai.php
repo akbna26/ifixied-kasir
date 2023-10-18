@@ -1,6 +1,6 @@
 <?php
 
-class Table_kasbon extends CI_Model
+class Table_setor_tunai extends CI_Model
 {
     var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
     var $column_search = array('nm_pegawai', 'keterangan'); //field yang diizin untuk pencarian
@@ -16,11 +16,11 @@ class Table_kasbon extends CI_Model
         $where = '';
         if ($this->type == 'cabang') $where .= "AND a.id_cabang='$this->id_cabang'";
 
-        $query = "SELECT a.*, b.nama as nm_pegawai, c.nama as nm_pembayaran, d.nama as nm_cabang from kasbon a 
-        left join pegawai b on b.id=a.id_pegawai
-        left join ref_jenis_pembayaran c on c.id=a.id_pembayaran
-        left join ref_cabang d on d.id=a.id_cabang
-        where a.deleted is null $where ";
+        $query = "SELECT a.*, b.nama as nm_pembayaran, c.nama as nm_cabang 
+        from setor_tunai a 
+        left join ref_jenis_pembayaran b on b.id=a.id_pembayaran
+        left join ref_cabang c on c.id=a.id_cabang
+        where 1=1 $where ";
         $this->db->from("($query) as tabel");
 
         $i = 0;
@@ -82,24 +82,35 @@ class Table_kasbon extends CI_Model
             $no++;
             $row = [];
 
-            $kasbon = $field->nm_pegawai
-                . '<div class="text-danger fw-600">Sumber Dana : ' . $field->nm_pembayaran . '</div>';
-
             $row[] = $no;
             $row[] = $field->nm_cabang;
-            $row[] = $field->nm_pegawai;
-            $row[] = $kasbon;
+            $row[] = $field->nm_pembayaran;
             $row[] = tgl_indo($field->tanggal);
-            $row[] = rupiah($field->jumlah);
-            $row[] = $field->keterangan;
+            $row[] = rupiah($field->nominal);
 
-            if (session('type') == 'admin') {
-                $row[] = '
-                <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
-                <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>
-            ';
+            if ($field->deleted != null) {
+                $row[] = '<div class="text-danger">cancel</div>';
+            } elseif ($field->is_konfirmasi == 0) {
+                if (session('type') == 'admin') {
+                    $row[] = '<button onclick="konfirmasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-success mr-1 fw-600"><i class="fas fa-check"></i> Konfirmasi</button>';
+                } else {
+                    $row[] = '<div class="text-danger">Belum dikonfirmasi</div>';
+                }
             } else {
-                $row[] = '<div class="text-info">jika terjadi kesalahan hubungi admin</div>';
+                $row[] = '<div class="text-success fw-600">Sudah dikonfirmasi</div>';
+            }
+
+
+            if ($field->deleted != null) {
+                $row[] = '<div class="text-danger">dicancel oleh admin</div>';
+            } elseif ($field->is_konfirmasi == 0) {
+                if (session('type') == 'admin') {
+                    $row[] = '<button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-times"></i> Cancel</button>';
+                } else {
+                    $row[] = '<div class="text-info">jika terjadi kesalahan hubungi admin</div>';
+                }
+            } else {
+                $row[] = '<div class="badge badge-soft-success">Final</div>';
             }
 
             $data[] = $row;

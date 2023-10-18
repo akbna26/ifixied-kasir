@@ -58,6 +58,37 @@
         });
     }
 
+    function form_refund(id) {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('admin/laporan_dp/form_refund') ?>",
+            dataType: "JSON",
+            data: {
+                id: id,
+            },
+            beforeSend: function(res) {
+                Swal.fire({
+                    title: 'Loading ...',
+                    html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            },
+            complete: function(res) {
+                Swal.close();
+            },
+            success: function(res) {
+                if (res.status == 'success') {
+                    show_modal_custom({
+                        judul: 'Refund DP',
+                        html: res.html,
+                        size: 'modal-lg',
+                    });
+                }
+            }
+        });
+    }
+
     function ubah(id) {
         $.ajax({
             type: "POST",
@@ -197,6 +228,53 @@
                 $.ajax({
                     type: "POST",
                     url: "<?= base_url('admin/laporan_dp/do_cancel') ?>",
+                    data: {
+                        id: id,
+                    },
+                    dataType: "JSON",
+                    beforeSend: function(res) {
+                        Swal.fire({
+                            title: 'Loading ...',
+                            html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                        });
+                    },
+                    error: function(res) {
+                        Swal.close();
+                    },
+                    success: function(res) {
+                        if (res.status == 'success') {
+                            Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil disimpan',
+                                    showConfirmButton: true,
+                                })
+                                .then(() => {
+                                    $('#table_data').DataTable().ajax.reload();
+                                });
+                        }
+                    }
+                });
+            } else {
+                return false;
+            }
+        })
+    }
+
+    function refund(id) {
+        Swal.fire({
+            title: 'Konfirmasi Refund DP ?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?= base_url('admin/laporan_dp/do_refund') ?>",
                     data: {
                         id: id,
                     },

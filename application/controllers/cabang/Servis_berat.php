@@ -112,7 +112,7 @@ class Servis_berat extends MY_controller
     {
         $id = decode_id($this->input->post('id'));
         $data['id'] = $id;
-
+        $data['ref_jenis_pembayaran'] = $this->db->query("SELECT * from ref_jenis_pembayaran where deleted is null")->result();
         $html = $this->load->view('cabang/servis_berat/klaim_refund', $data, true);
 
         echo json_encode([
@@ -251,6 +251,7 @@ class Servis_berat extends MY_controller
     {
         cek_post();
         $id = decode_id($this->input->post('id'));
+        $row = $this->db->query("SELECT * from servis_berat where id='$id' and deleted is null ")->row();
 
         $tgl_keluar = date('Y-m-d', strtotime($this->input->post('tgl_keluar')));
         $bayar = clear_koma($this->input->post('bayar'));
@@ -290,6 +291,7 @@ class Servis_berat extends MY_controller
 
             'prosen_split_1' => $get_prosen_bayar_1->persen_potongan,
             'prosen_split_2' => @$get_prosen_bayar_2->persen_potongan ?? 0,
+            'kembalian' => ($bayar + $bayar_split) - $row->biaya,
             'updated' => date('Y-m-d H:i:s'),
         ]);
 
@@ -428,11 +430,13 @@ class Servis_berat extends MY_controller
 
         $id = decode_id($this->input->post('id'));
         $alasan_refund = $this->input->post('alasan_refund', true);
+        $id_pembayaran = $this->input->post('id_pembayaran');
 
         $this->db->where('id', $id);
         $this->db->update('servis_berat', [
             'is_refund' => 1,
             'alasan_refund' => $alasan_refund,
+            'id_pembayaran_refund' => $id_pembayaran,
             'tgl_refund' => date('Y-m-d H:i:s'),
             'updated' => date('Y-m-d H:i:s'),
         ]);

@@ -44,6 +44,9 @@
                         });
                         $('#select_barang').html(html);
 
+                        $('#cabang_asal').val(res.data_row.nm_cabang).addClass('is-valid');
+                        $('#cabang_asal_id').val(res.data_row.id_cabang)
+
                     } else {
                         Swal.fire({
                             icon: 'warning',
@@ -52,6 +55,12 @@
                             showConfirmButton: true,
                         });
                     }
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: res.msg,
+                        showConfirmButton: true,
+                    });
                 }
             }
         });
@@ -112,7 +121,7 @@
 
         var nilai_refund = angka($('#nilai_refund').val());
         var barang_pengganti = $('#barang_pengganti').val();
-        var pembayaran = $('.btn_pembayaran.active').data('nilai')
+        var pembayaran = $('#jenis_pembayaran').val()
 
         var nama_barang = $('option:selected', $('#select_barang')).text()
         var nama_klaim = $('option:selected', $('#status_klaim')).text()
@@ -135,7 +144,7 @@
                     });
                     throw false;
                 }
-                if (pembayaran == undefined) {
+                if (pembayaran == '') {
                     Swal.fire({
                         icon: 'warning',
                         title: 'pilih jenis pembayaran',
@@ -185,7 +194,7 @@
         $('.tr_hidden').hide();
         $('#tr_refund').hide();
         $('#tr_pengganti').hide();
-        $('.btn_pembayaran').removeClass('active');
+        // $('.btn_pembayaran').removeClass('active');
         toastr.success('barang berhasil ditambahkan');
     }
 
@@ -271,6 +280,7 @@
 
                 var invoice = $('#invoice').val();
                 var select_pegawai = $('#select_pegawai').val();
+                var id_cabang_asal = $('#cabang_asal_id').val();
 
                 var form = new FormData(dt);
                 form.append('invoice', invoice);
@@ -283,6 +293,7 @@
                 form.append('id_pengganti', id_pengganti);
                 form.append('pembayaran', pembayaran);
                 form.append('id_pegawai', select_pegawai);
+                form.append('id_cabang_asal', id_cabang_asal);
 
                 $.ajax({
                     type: "POST",
@@ -312,7 +323,7 @@
                                 })
                                 .then(() => {
                                     window.open(res.link);
-                                    location.href="<?= base_url('cabang/refund_barang') ?>";
+                                    location.href = "<?= base_url('cabang/refund_barang') ?>";
                                 })
                         }
                     }

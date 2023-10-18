@@ -88,6 +88,8 @@ class Kasir_barang extends MY_controller
         if ($cek_split == 1) $potongan_split = $total_bayar_split * ($get_prosen_bayar_2->persen_potongan / 100);
         else $potongan_split = 0;
 
+        $inv_dp = $this->input->post('inv_dp');
+
         $this->db->insert('transaksi', [
             'id_cabang' => $this->id_cabang,
             'id_jenis_pembayaran' => $jenis_bayar_1,
@@ -107,6 +109,7 @@ class Kasir_barang extends MY_controller
             'potongan_split' => $potongan_split,
             'prosen_split_2' => @$get_prosen_bayar_2->persen_potongan ?? 0,
             'kembalian' => $kembalian,
+            'inv_dp' => $inv_dp,
             'created' => date('Y-m-d H:i:s'),
         ]);
 
@@ -140,5 +143,43 @@ class Kasir_barang extends MY_controller
             'status' => 'success',
             'link' => base_url('cabang/cetak/nota_transaksi/') . encode_id($id_transaksi),
         ]);
+    }
+
+    public function cari_dp()
+    {
+        cek_post();
+        $inv = $this->input->post('inv');
+        $cek = $this->db->query("SELECT * from dp where kode='$inv' and deleted is null")->row();
+        $klaim = $this->db->query("SELECT * from transaksi where inv_dp='$inv' and deleted is null")->row();
+
+        if (!empty($klaim)) {
+            echo json_encode([
+                'status' => 'failed',
+                'msg' => 'inv sudah di klaim, ' . tgl_indo($klaim->created),
+            ]);
+        } elseif (!empty($cek)) {
+            if ($cek->is_refund == '1') {
+                echo json_encode([
+                    'status' => 'failed',
+                    'msg' => 'inv direfund oleh admin',
+                ]);
+            } elseif ($cek->is_selesai != '1') {
+                echo json_encode([
+                    'status' => 'failed',
+                    'msg' => 'inv belum dikonfirmasi admin',
+                ]);
+            } else {
+                echo json_encode([
+                    'status' => 'success',
+                    'msg' => $cek->nama . ' -> ' . $cek->tanggal . ' (' . rupiah($cek->total) . ') ',
+                    'total' => $cek->total,
+                ]);
+            }
+        } else {
+            echo json_encode([
+                'status' => 'failed',
+                'msg' => 'inv tidak ditemukan',
+            ]);
+        }
     }
 }

@@ -93,3 +93,15 @@ $route['admin/kasbon/(:any)'] = 'cabang/kasbon/$1';
 
 $route['cs/stock_cabang_lain'] = 'admin/barang/stock_cabang';
 $route['cs/barang/table_stock_cabang'] = 'admin/barang/table_stock_cabang';
+
+$route['admin/laporan_modal'] = 'cabang/laporan_modal';
+$route['admin/laporan_modal/table'] = 'cabang/laporan_modal/table';
+$route['admin/laporan_modal/(:any)'] = 'cabang/laporan_modal/$1';
+
+$route['admin/kerugian'] = 'cabang/kerugian';
+$route['admin/kerugian/table'] = 'cabang/kerugian/table';
+$route['admin/kerugian/(:any)'] = 'cabang/kerugian/$1';
+
+$route['admin/setor_tunai'] = 'cabang/setor_tunai';
+$route['admin/setor_tunai/table'] = 'cabang/setor_tunai/table';
+$route['admin/setor_tunai/(:any)'] = 'cabang/setor_tunai/$1';

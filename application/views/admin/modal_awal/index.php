@@ -3,11 +3,9 @@
         <div class="card">
             <div class="card-body bg1 br-atas p-3 mb-0 d-flex justify-content-between">
                 <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
-                <?php if (session('type') == 'cabang') : ?>
-                    <button onclick="tambah();" class="btn btn-light btn-sm fw-600">
-                        <i class="fa fa-plus mr-1"></i> Tambah Data Transaksi
-                    </button>
-                <?php endif; ?>
+                <button onclick="tambah();" class="btn btn-light btn-sm fw-600">
+                    <i class="fa fa-plus mr-1"></i> Tambah Data
+                </button>
             </div>
 
             <div class="card-body">
@@ -17,14 +15,10 @@
                             <tr>
                                 <th class="fw-600">NO</th>
                                 <th class="fw-600">CABANG</th>
-                                <th class="fw-600">KETERANGAN</th>
-                                <th class="fw-600">PEMBAYARAN</th>
-                                <th class="fw-600">TOTAL</th>
+                                <th class="fw-600">MODAL AWAL</th>
                                 <th class="fw-600">TANGGAL</th>
-                                <th class="fw-600">INVOICE</th>
-                                <th class="fw-600">CETAK INVOICE</th>
-                                <th class="fw-600" style="width: 100px;">REFUND</th>
-                                <th class="fw-600" style="width: 250px;">STATUS</th>
+                                <th class="fw-600">METODE PEMBAYARAN</th>
+                                <th class="fw-600" style="width: 250px;">AKSI</th>
                             </tr>
                         </thead>
                         <tbody>

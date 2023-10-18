@@ -24,17 +24,29 @@
 
                 <div class="row">
                     <div class="col-md-8">
-                        <div class="row">
-                            <div class="col-md-8">
-                                <div class="form-group">
-                                    <input type="text" autocomplete="off" class="form-control" id="invoice" placeholder="invoice, contoh : INV1-202301-XXXX" value="">
-                                    <small class="text-danger fw-600">*) masukkan invoice</small>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <button id="cari_invoice" onclick="cari_invoice();" class="btn btn-block btn-primary fw-600"><i class="bx bx-search-alt-2 mr-1"></i> Cari Invoice</button>
-                                <button id="ganti_invoice" style="display: none;" onclick="reload_halaman();" class="btn btn-block mt-0 btn-danger fw-600"><i class="fa fa-times mr-1"></i> Ganti Invoice</button>
-                            </div>
+                        <div class="form-group">
+                            <input type="text" autocomplete="off" class="form-control" id="invoice" placeholder="invoice, contoh : INV1-202301-XXXX" value="">
+                            <small class="text-danger fw-600">*) masukkan invoice</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <button id="cari_invoice" onclick="cari_invoice();" class="btn btn-block btn-primary fw-600"><i class="bx bx-search-alt-2 mr-1"></i> Cari Invoice</button>
+                        <button id="ganti_invoice" style="display: none;" onclick="reload_halaman();" class="btn btn-block mt-0 btn-danger fw-600"><i class="fa fa-times mr-1"></i> Ganti Invoice</button>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" disabled placeholder="cabang asal" class="form-control" id="cabang_asal">
+                            <input type="hidden" id="cabang_asal_id">
+                            <small class="text-danger fw-600">*) Cabang Asal</small>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <input type="text" disabled placeholder="cabang klaim" class="form-control" value="<?= $ref_cabang->nama ?>">
+                            <small class="text-danger fw-600">*) Cabang Klaim</small>
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -101,8 +113,12 @@
                                 <td>Nilai Refund</td>
                                 <td>
                                     <div class="mb-1">
-                                        <button onclick="set_radio(this,'btn_pembayaran')" data-nilai="1" class="btn btn_pembayaran btn-outline-success btn-lg fw-600 w-25">Cash</button>
-                                        <button onclick="set_radio(this,'btn_pembayaran')" data-nilai="2" class="btn btn_pembayaran btn-outline-danger btn-lg fw-600 w-25">Transfer</button>
+                                        <select class="form-control js_select2" data-placeholder="pilih jenis pembayaran" id="jenis_pembayaran">
+                                            <option value=""></option>
+                                            <?php foreach ($ref_jenis_pembayaran as $dt) : ?>
+                                                <option value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                                            <?php endforeach; ?>
+                                        </select>
                                     </div>
                                     <input disabled id="nilai_refund" type="text" class="form-control rupiah is-valid" placeholder="nilai refund" autocomplete="off">
                                 </td>
@@ -120,7 +136,8 @@
                             </tr>
                             <tr>
                                 <td colspan="2">
-                                    <button class="btn btn-warning btn-block btn-lg fw-600" onclick="tambah_produk();" style="color: #01293c !important;"><i class="fa fa-plus"></i> TAMBAH</button>
+                                    <button class="btn btn-warning btn-block btn-lg fw-600" onclick="tambah_produk();" style="color: #01293c !important;"><i class="fa fa-plus"></i> TAMBAH
+                                    </button>
                                 </td>
                             </tr>
                         </table>

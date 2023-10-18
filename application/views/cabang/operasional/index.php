@@ -21,6 +21,7 @@
                                 <th class="fw-600">TANGGAL</th>
                                 <th class="fw-600">JUMLAH</th>
                                 <th class="fw-600">KETERANGAN</th>
+                                <th class="fw-600">REFUND</th>
                                 <th class="fw-600" style="width: 150px;">AKSI</th>
                             </tr>
                         </thead>

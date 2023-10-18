@@ -98,4 +98,37 @@ class Operasional extends MY_controller
             'status' => 'success'
         ]);
     }
+
+    public function form_refund()
+    {
+        $id = decode_id($this->input->post('id'));
+        $data['id'] = $id;
+        $data['data'] = $this->db->query("SELECT * from operasional where id='$id' and deleted is null ")->row();
+
+        $html = $this->load->view('cabang/operasional/form_refund', $data, true);
+
+        echo json_encode([
+            'status' => 'success',
+            'html' => $html,
+        ]);
+    }
+
+    public function do_refund()
+    {
+        cek_post();
+        $id = decode_id($this->input->post('id'));
+        $keterangan = $this->input->post('keterangan');
+
+        $this->db->where('id', $id);
+        $this->db->update('operasional', [
+            'updated' => date('Y-m-d H:i:s'),
+            'tgl_refund' => date('Y-m-d'),
+            'is_refund' => '1',
+            'keterangan_refund' => $keterangan,
+        ]);
+
+        echo json_encode([
+            'status' => 'success'
+        ]);
+    }
 }

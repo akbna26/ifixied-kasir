@@ -1,24 +1,36 @@
 <?php
 
-class Table_kerugian extends CI_Model
+class Table_laporan_modal extends CI_Model
 {
-    var $column_order = array(null, 'judul', 'tanggal', 'keterangan', null); //field yang ada di table user
-    var $column_search = array('judul'); //field yang diizin untuk pencarian
-    var $order = array('id' => 'desc'); // default order
+    var $column_order = array(null); //field yang ada di table user
+    var $column_search = array('keterangan', 'jenis_transaksi'); //field yang diizin untuk pencarian
+    var $order = array('tanggal' => 'desc'); // default order
 
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('query_global');
     }
 
     private function _get_datatables_query()
     {
-        $this->db->select('a.*, c.nama as nm_pembayaran, d.nama as nm_cabang');
-        $this->db->from('kerugian a');
-        $this->db->join('ref_jenis_pembayaran c', 'c.id = a.id_pembayaran', 'left');
-        $this->db->join('ref_cabang d', 'd.id = a.id_cabang', 'left');
-        $this->db->where('a.deleted', null);
-        if (session('type') == 'cabang') $this->db->where('a.id_cabang', $this->id_cabang);
+        $query = $this->query_global->modal();
+        $filter_rekening = $this->input->get('filter_rekening');
+        $filter_cabang = $this->input->get('filter_cabang');
+        $filter_tanggal = $this->input->get('filter_tanggal');
+
+        $this->db->select('tabel.*');
+        $this->db->from("($query) as tabel");
+        $this->db->join('ref_jenis_pembayaran b', 'b.id = tabel.id_pembayaran', 'left');
+
+        if ($this->type == 'cabang') $this->db->where('id_cabang', $this->id_cabang);
+        else {
+            if ($filter_cabang != 'all') $this->db->where('id_cabang', $filter_cabang);
+        }
+
+        if ($filter_rekening != 'all') $this->db->where('b.nm_jenis', $filter_rekening);
+        if ($filter_tanggal != '') $this->db->where('tanggal', $filter_tanggal);
+
 
         $i = 0;
 
@@ -79,25 +91,29 @@ class Table_kerugian extends CI_Model
             $no++;
             $row = [];
 
-            $pembayaran = '<div class="text-danger fw-600">Sumber Dana : ' . $field->nm_pembayaran . '</div>';
-
             $row[] = $no;
             $row[] = $field->nm_cabang;
-            $row[] = $pembayaran;
             $row[] = tgl_indo($field->tanggal);
-            $row[] = rupiah($field->jumlah);
-            $row[] = $field->keterangan;
 
-            if (session('type') == 'admin') {
-                $row[] = '
-                    <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
-                    <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>
-                ';
-            } else {
-                $row[] = '<div class="text-info">jika terjadi kesalahan hubungi admin</div>';
+            $jenis_transaksi = $field->jenis_transaksi;
+            if (in_array($field->jenis_transaksi, ['PENJUALAN', 'PENJUALAN SPLIT', 'DP', 'REFUND DP', 'SERVIS IC', 'SERVIS IC SPLIT', 'REFUND SERVIS IC', 'REFUND PENJUALAN'])) {
+                $jenis_transaksi .= '<div class="text-primary">Nama user : ' . $field->nama_user . '</div>'
+                    . '<div class="text-primary">No HP : ' . $field->no_hp . '</div>';
             }
 
+            $row[] = $jenis_transaksi;
 
+            $row[] = rupiah($field->kredit);
+
+            $row[] = rupiah($field->debit);
+            $row[] = $field->jenis_pembayaran;
+
+            $keterangan = $field->keterangan;
+            if (in_array($field->jenis_transaksi, ['PENJUALAN'])) {
+                $keterangan .= '<div class="text-primary">DP : ' . rupiah($field->dp) . '</div>'
+                    . '<div class="text-primary">Tgl : ' . tgl_indo($field->tgl_dp) . '</div>';
+            }
+            $row[] = $keterangan;
             $data[] = $row;
         }
 

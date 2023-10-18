@@ -44,7 +44,7 @@
                 </select>
             </td>
             <td>
-                <input type="text" required name="bayar" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= !empty($data->bayar) ? rupiah($data->bayar) : '' ?>">
+                <input type="text" required name="bayar" id="form_bayar" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= !empty($data->bayar) ? rupiah($data->bayar) : '' ?>">
             </td>
             <td class="bg-white text-center" rowspan="2" style="vertical-align: middle;">
                 <div class="btn-group btn-group-example" role="group">
@@ -63,7 +63,7 @@
                 </select>
             </td>
             <td>
-                <input type="text" name="bayar_split" autocomplete="off" placeholder="Masukkan isian" class="form-control bayar_2 rupiah" value="<?= !empty($data->bayar) ? rupiah($data->bayar) : '' ?>">
+                <input type="text" name="bayar_split" id="form_bayar_split" autocomplete="off" placeholder="Masukkan isian" class="form-control bayar_2 rupiah" value="<?= !empty($data->bayar) ? rupiah($data->bayar) : '' ?>">
             </td>
         </tr>
     </table>
@@ -78,6 +78,8 @@
 </form>
 
 <script>
+    var total_biaya = <?= $data->biaya ?>;
+
     $(document).ready(function() {
         $('.js_select2').select2({
             width: '100%'
@@ -85,6 +87,24 @@
     });
 
     function do_submit(dt) {
+        var cek_split = $('.cek_split.active').data('value');
+        var form_bayar = angka($('#form_bayar').val());
+        if (cek_split == 0) {
+            var form_bayar_split = 0;
+        } else {
+            var form_bayar_split = angka($('#form_bayar_split').val());
+        }
+
+        var total = total_biaya - (form_bayar + form_bayar_split)
+
+        if (total > 0) {
+            Swal.fire({
+                icon: 'error',
+                title: 'nominal pembayaran tidak sesuai',
+                showConfirmButton: true,
+            })
+            throw false;
+        }
 
         Swal.fire({
             title: 'Proses Pengambilan ?',

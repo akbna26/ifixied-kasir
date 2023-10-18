@@ -17,7 +17,8 @@ class Refund_barang extends MY_controller
             'title' => 'Refund/Klaim Garansi',
         ];
 
-        $data['sidebar_mini'] = true;
+        $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where id='$this->id_cabang' ")->row();;
+        $data['ref_jenis_pembayaran'] = $this->db->query("SELECT * from ref_jenis_pembayaran where deleted is null ")->result();
 
         $data['ref_status_refund'] = $this->db->query("SELECT * from ref_status_refund where id !=5 and deleted is null")->result();
         $data['list_barang'] = $this->db->query("SELECT
@@ -40,15 +41,37 @@ class Refund_barang extends MY_controller
         cek_post();
         $invoice = str_replace(' ', '', $this->input->post('invoice'));
 
-        $list = $this->db->query("SELECT c.id, c.barcode, c.nama, c.harga_modal, c.harga_jual from transaksi a 
+        $cek_sudah_klaim = $this->db->query("SELECT * 
+            from transaksi a 
+            join refund b on b.id_transaksi=a.id and b.deleted is null
+            where a.no_invoice='$invoice' 
+        ")->row();
+
+        if (!empty($cek_sudah_klaim)) {
+            echo json_encode([
+                'status' => 'failed',
+                'msg' => 'invoice sudah diklaim sebelumnya',
+            ]);
+            die;
+        }
+
+        $list = $this->db->query("SELECT c.id, c.barcode, c.nama, c.harga_modal, c.harga_jual 
+            from transaksi a 
             left join transaksi_detail b on b.id_transaksi=a.id and b.deleted is null
             left join barang c on c.id=b.id_barang
-            where a.id_cabang='$this->id_cabang' and a.deleted is null AND a.no_invoice='$invoice'
+            where a.deleted is null AND a.no_invoice='$invoice'
         ")->result();
+
+        $row = $this->db->query("SELECT a.id_cabang, b.nama as nm_cabang
+            from transaksi a 
+            left join ref_cabang b on b.id=a.id_cabang
+            where a.deleted is null AND a.no_invoice='$invoice'
+        ")->row();
 
         echo json_encode([
             'status' => 'success',
             'data' => $list,
+            'data_row' => $row,
         ]);
     }
 
@@ -57,8 +80,9 @@ class Refund_barang extends MY_controller
         cek_post();
         $invoice = $this->input->post('invoice');
         $id_pegawai = $this->input->post('id_pegawai');
+        $id_cabang_asal = $this->input->post('id_cabang_asal');
 
-        $transaksi = $this->db->query("SELECT * from transaksi where no_invoice='$invoice' and id_cabang='$this->id_cabang' and deleted is null ")->row();
+        $transaksi = $this->db->query("SELECT * from transaksi where no_invoice='$invoice' and deleted is null ")->row();
 
         $id_barang = explode(',', $this->input->post('id_barang'));
         $harga_modal = explode(',', $this->input->post('harga_modal'));
@@ -71,6 +95,7 @@ class Refund_barang extends MY_controller
 
         $this->db->insert('refund', [
             'id_cabang' => $this->id_cabang,
+            'id_cabang_asal' => $id_cabang_asal,
             'id_transaksi' => $transaksi->id,
             'id_pegawai' => $id_pegawai,
             'tanggal' => date('Y-m-d'),

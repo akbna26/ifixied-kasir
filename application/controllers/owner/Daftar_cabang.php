@@ -136,13 +136,27 @@ class Daftar_cabang extends MY_controller
 
     public function barang()
     {
+        $id_cabang = decode_id($this->input->get('id'));
+
         $data = [
             'index' => 'owner/stock_cabang/index',
             'index_js' => 'owner/stock_cabang/index_js',
             'title' => 'Stock Cabang',
         ];
 
-        $data['id_cabang'] = decode_id($this->input->get('id'));
+        $data['row'] = $this->db->query("SELECT count(1) as total_item, sum(b.stock) as total_stock, 
+            sum(
+                case when a.id_kategori = '2' then b.stock*a.harga_modal else 0 end
+            ) as total_modal_acc,
+            sum(
+                case when a.id_kategori != '2' then b.stock*a.harga_modal else 0 end
+            ) as total_modal_part
+            from barang a 
+            left join barang_cabang b on b.id_barang=a.id
+            where a.deleted is null and b.id_cabang='$id_cabang'
+        ")->row();
+
+        $data['id_cabang'] = $id_cabang;
 
         $data['ref_kategori'] = $this->db->query("SELECT * from ref_kategori where deleted is null")->result();
 

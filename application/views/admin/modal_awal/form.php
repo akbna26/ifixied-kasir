@@ -1,8 +1,13 @@
 <form onsubmit="event.preventDefault();do_submit(this);">
 
     <div class="form-group">
-        <label>Jumlah Kerugian</label>
-        <input type="text" required name="jumlah" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= empty($data->jumlah) ? '' : rupiah($data->jumlah) ?>">
+        <label>Cabang</label>
+        <select required name="id_cabang" class="form-control js_select2" data-placeholder="pilih cabang">
+            <option value=""></option>
+            <?php foreach ($ref_cabang as $dt) : ?>
+                <option <?= $dt->id == @$data->id_cabang ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?> - <?= $dt->lokasi ?></option>
+            <?php endforeach; ?>
+        </select>
     </div>
 
     <div class="form-group">
@@ -10,19 +15,19 @@
         <select required name="id_pembayaran" class="form-control js_select2" data-placeholder="pilih sumber dana">
             <option value=""></option>
             <?php foreach ($ref_jenis_pembayaran as $dt) : ?>
-                <option <?= $dt->id == @$data->id_pembayaran ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                <option <?= $dt->id == @$data->id_pembayaran ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?> (<?= $dt->persen_potongan ?>)</option>
             <?php endforeach; ?>
         </select>
     </div>
 
     <div class="form-group">
-        <label>Tanggal</label>
-        <input type="date" required name="tanggal" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal) ? '' : date('Y-m-d', strtotime($data->tanggal)) ?>">
+        <label>Modal</label>
+        <input type="text" required name="modal" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= !empty($data->modal) ? rupiah($data->modal) : '' ?>">
     </div>
 
     <div class="form-group">
-        <label>Keterangan</label>
-        <textarea required name="keterangan" rows="3" placeholder="Tulis keterangan jika diperlukan" class="form-control"><?= @$data->keterangan ?></textarea>
+        <label>Tanggal</label>
+        <input type="date" required name="tanggal" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal) ? date('Y-m-d') : date('Y-m-d', strtotime($data->tanggal)) ?>">
     </div>
 
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
@@ -39,7 +44,7 @@
     function do_submit(dt) {
 
         Swal.fire({
-            title: 'Simpan Data Kerugian ?',
+            title: 'Simpan Modal Awal ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -50,7 +55,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url($this->type . '/kerugian/do_submit') ?>",
+                    url: "<?= base_url('admin/modal_awal/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

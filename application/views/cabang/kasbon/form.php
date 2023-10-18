@@ -18,7 +18,7 @@
                 <select required name="id_pembayaran" class="form-control js_select2" data-placeholder="pilih sumber dana">
                     <option value=""></option>
                     <?php foreach ($ref_jenis_pembayaran as $dt) : ?>
-                        <option <?= $dt->id == @$data->id_pembayaran ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                        <option <?= $dt->id == @$data->id_pembayaran ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?> (<?= $dt->persen_potongan ?>)</option>
                     <?php endforeach; ?>
                 </select>
             </div>
@@ -27,7 +27,7 @@
 
     <div class="form-group">
         <label>Tanggal</label>
-        <input type="date" required name="tanggal" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal) ? '' : date('Y-m-d', strtotime($data->tanggal)) ?>">
+        <input type="date" required name="tanggal" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal) ? date('Y-m-d') : date('Y-m-d', strtotime($data->tanggal)) ?>">
     </div>
 
     <div class="form-group">
@@ -65,7 +65,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('cabang/kasbon/do_submit') ?>",
+                    url: "<?= base_url($this->type . '/kasbon/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

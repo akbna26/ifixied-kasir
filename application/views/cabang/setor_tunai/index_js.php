@@ -8,14 +8,14 @@
             destroy: true,
             processing: true,
             serverSide: true,
-            ordering: true,
+            ordering: false,
             autoWidth: false,
             lengthMenu: [
                 [10, 25, 50, 100, -1],
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url(session('type') . '/operasional/table') ?>',
+                url: '<?= base_url(session('type') . '/setor_tunai/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {},
@@ -32,7 +32,7 @@
     function tambah() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url(session('type') . '/operasional/tambah') ?>",
+            url: "<?= base_url(session('type') . '/setor_tunai/tambah') ?>",
             dataType: "JSON",
             data: {},
             beforeSend: function(res) {
@@ -61,7 +61,7 @@
     function ubah(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url(session('type') . '/operasional/ubah') ?>",
+            url: "<?= base_url(session('type') . '/setor_tunai/ubah') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -91,7 +91,7 @@
 
     function hapus(id) {
         Swal.fire({
-            title: 'Hapus Informasi ?',
+            title: 'Batalkan setor tunai ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -101,7 +101,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url(session('type') . '/operasional/do_submit') ?>",
+                    url: "<?= base_url(session('type') . '/setor_tunai/do_submit') ?>",
                     data: {
                         hapus: true,
                         id: id,
@@ -137,35 +137,50 @@
         })
     }
 
-    function form_refund(id) {
-        $.ajax({
-            type: "POST",
-            url: "<?= base_url('admin/operasional/form_refund') ?>",
-            dataType: "JSON",
-            data: {
-                id: id,
-            },
-            beforeSend: function(res) {
-                Swal.fire({
-                    title: 'Loading ...',
-                    html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
+    function konfirmasi(id) {
+        Swal.fire({
+            title: 'Konfirmasi Setor Tunai ?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?= base_url('admin/setor_tunai/do_konfirmasi') ?>",
+                    data: {
+                        id: id,
+                    },
+                    dataType: "JSON",
+                    beforeSend: function(res) {
+                        Swal.fire({
+                            title: 'Loading ...',
+                            html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                        });
+                    },
+                    error: function(res) {
+                        Swal.close();
+                    },
+                    success: function(res) {
+                        if (res.status == 'success') {
+                            Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil disimpan',
+                                    showConfirmButton: true,
+                                })
+                                .then(() => {
+                                    $('#table_data').DataTable().ajax.reload();
+                                });
+                        }
+                    }
                 });
-            },
-            complete: function(res) {
-                Swal.close();
-            },
-            success: function(res) {
-                if (res.status == 'success') {
-                    show_modal_custom({
-                        judul: 'Refund Operasional',
-                        html: res.html,
-                        size: 'modal-lg',
-                    });
-                }
+            } else {
+                return false;
             }
-        });
+        })
     }
-
 </script>

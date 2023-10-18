@@ -2,20 +2,20 @@
 
 defined('BASEPATH') or exit('No direct script access allowed');
 
-class Kasbon extends MY_controller
+class Setor_tunai extends MY_controller
 {
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('cabang/table_kasbon', 'table');
+        $this->load->model('cabang/table_setor_tunai', 'table');
     }
 
     public function index()
     {
         $data = [
-            'index' => 'cabang/kasbon/index',
-            'index_js' => 'cabang/kasbon/index_js',
-            'title' => 'Data Kasbon',
+            'index' => 'cabang/setor_tunai/index',
+            'index_js' => 'cabang/setor_tunai/index_js',
+            'title' => 'Data Setor Tunai',
         ];
 
         $this->templates->load($data);
@@ -28,9 +28,8 @@ class Kasbon extends MY_controller
 
     public function tambah()
     {
-        $data['pegawai'] = $this->db->query("SELECT * from pegawai where id_cabang='$this->id_cabang' and deleted is null")->result();
-        $data['ref_jenis_pembayaran'] = $this->db->query("SELECT * from ref_jenis_pembayaran where deleted is null")->result();
-        $html = $this->load->view('cabang/kasbon/form', $data, true);
+        $data['ref_jenis_pembayaran'] = $this->db->query("SELECT * from ref_jenis_pembayaran where deleted is null and id in (8,9)")->result();
+        $html = $this->load->view('cabang/setor_tunai/form', $data, true);
 
         echo json_encode([
             'status' => 'success',
@@ -42,11 +41,9 @@ class Kasbon extends MY_controller
     {
         $id = decode_id($this->input->post('id'));
         $data['id'] = $id;
-        $row = $this->db->query("SELECT * from kasbon where id='$id' and deleted is null ")->row();
-        $data['data'] = $row;
-        $data['pegawai'] = $this->db->query("SELECT * from pegawai where id_cabang='$row->id_cabang' and deleted is null")->result();
-        $data['ref_jenis_pembayaran'] = $this->db->query("SELECT * from ref_jenis_pembayaran where deleted is null")->result();
-        $html = $this->load->view('cabang/kasbon/form', $data, true);
+        $data['ref_jenis_pembayaran'] = $this->db->query("SELECT * from ref_jenis_pembayaran where deleted is null and id in (8,9)")->result();
+        $data['data'] = $this->db->query("SELECT * from kasbon where id='$id' and deleted is null ")->row();
+        $html = $this->load->view('cabang/setor_tunai/form', $data, true);
 
         echo json_encode([
             'status' => 'success',
@@ -60,37 +57,30 @@ class Kasbon extends MY_controller
         $id = decode_id($this->input->post('id'));
         $hapus = $this->input->post('hapus');
 
-        $id_pegawai = $this->input->post('id_pegawai');
         $id_pembayaran = $this->input->post('id_pembayaran');
         $tanggal = date('Y-m-d', strtotime($this->input->post('tanggal')));
-        $keterangan = $this->input->post('keterangan');
         $jumlah = clear_koma($this->input->post('jumlah'));
 
         if (!empty($hapus)) {
             $this->db->where('id', $id);
-            $this->db->update('kasbon', [
+            $this->db->update('setor_tunai', [
                 'deleted' => date('Y-m-d H:i:s'),
             ]);
         } else {
             if (empty($id)) {
-                $this->db->insert('kasbon', [
+                $this->db->insert('setor_tunai', [
                     'id_cabang' => $this->id_cabang,
-                    'id_pegawai' => $id_pegawai,
                     'id_pembayaran' => $id_pembayaran,
                     'tanggal' => $tanggal,
-                    'jumlah' => $jumlah,
-                    'keterangan' => $keterangan,
+                    'nominal' => $jumlah,
                     'created' => date('Y-m-d H:i:s'),
                 ]);
             } else {
                 $this->db->where('id', $id);
-                $this->db->update('kasbon', [
-                    'id_cabang' => $this->id_cabang,
-                    'id_pegawai' => $id_pegawai,
+                $this->db->update('setor_tunai', [
                     'id_pembayaran' => $id_pembayaran,
                     'tanggal' => $tanggal,
-                    'jumlah' => $jumlah,
-                    'keterangan' => $keterangan,
+                    'nominal' => $jumlah,
                     'updated' => date('Y-m-d H:i:s'),
                 ]);
             }
@@ -100,4 +90,21 @@ class Kasbon extends MY_controller
             'status' => 'success'
         ]);
     }
+
+    public function do_konfirmasi()
+    {
+        cek_post();
+        $id = decode_id($this->input->post('id'));
+
+        $this->db->where('id', $id);
+        $this->db->update('setor_tunai', [
+            'updated' => date('Y-m-d H:i:s'),
+            'is_konfirmasi' => '1',
+        ]);
+
+        echo json_encode([
+            'status' => 'success'
+        ]);
+    }
+
 }

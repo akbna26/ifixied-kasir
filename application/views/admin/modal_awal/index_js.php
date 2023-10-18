@@ -15,7 +15,7 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url(session('type') . '/operasional/table') ?>',
+                url: '<?= base_url('admin/modal_awal/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {},
@@ -32,7 +32,7 @@
     function tambah() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url(session('type') . '/operasional/tambah') ?>",
+            url: "<?= base_url('admin/modal_awal/tambah') ?>",
             dataType: "JSON",
             data: {},
             beforeSend: function(res) {
@@ -61,7 +61,7 @@
     function ubah(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url(session('type') . '/operasional/ubah') ?>",
+            url: "<?= base_url('admin/modal_awal/ubah') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -91,7 +91,7 @@
 
     function hapus(id) {
         Swal.fire({
-            title: 'Hapus Informasi ?',
+            title: 'Hapus Data ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -101,7 +101,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url(session('type') . '/operasional/do_submit') ?>",
+                    url: "<?= base_url('admin/modal_awal/do_submit') ?>",
                     data: {
                         hapus: true,
                         id: id,
@@ -136,36 +136,4 @@
             }
         })
     }
-
-    function form_refund(id) {
-        $.ajax({
-            type: "POST",
-            url: "<?= base_url('admin/operasional/form_refund') ?>",
-            dataType: "JSON",
-            data: {
-                id: id,
-            },
-            beforeSend: function(res) {
-                Swal.fire({
-                    title: 'Loading ...',
-                    html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
-                    allowOutsideClick: false,
-                    showConfirmButton: false,
-                });
-            },
-            complete: function(res) {
-                Swal.close();
-            },
-            success: function(res) {
-                if (res.status == 'success') {
-                    show_modal_custom({
-                        judul: 'Refund Operasional',
-                        html: res.html,
-                        size: 'modal-lg',
-                    });
-                }
-            }
-        });
-    }
-
 </script>

@@ -32,6 +32,11 @@
         .back_home {
             cursor: pointer;
         }
+
+        .inv_dp:hover {
+            cursor: pointer;
+            text-decoration: underline;
+        }
     </style>
 </head>
 
@@ -153,6 +158,10 @@
                                                 </div>
                                             </div>
                                             <div class="bordd bordd-b isi-cust py-1 px-3">
+                                                <div class="d-flex justify-content-between">
+                                                    <div id="span_inv_dp" class="text-danger"></div>
+                                                    <span onclick="inv_dp()" class="text-primary inv_dp">invoice DP</span>
+                                                </div>
                                                 <div class="input-group">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-text bg1 text-white fw-600" style="width: 80px;">
@@ -160,7 +169,7 @@
                                                         </span>
                                                     </div>
                                                     <div class="custom-file">
-                                                        <input onchange="hitung_bayar();" type="text" id="total_dp" class="form-control rupiah" placeholder="masukkan DP jika ada">
+                                                        <input onchange="hitung_bayar();" readonly type="text" id="total_dp" class="form-control rupiah" placeholder="otomatis dari Invoice DP">
                                                     </div>
                                                 </div>
                                             </div>
@@ -286,6 +295,26 @@
                         </div>
                         <button type="submit" class="btn btn-block fw-600 btn-primary"><i class="fas fa-check"></i> PROSES TRANSAKSI</button>
                     </form>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div>
+
+    <div id="modal_inv" class="modal fade" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" style="background-color: rgba(0, 0, 0, .5);">
+        <div class="modal-dialog modal-md">
+            <div style="border: 0;" class="modal-content shadow1">
+                <div class="modal-header bg1">
+                    <h5 class="modal-title mt-0 text1">Cek Invoice DP</h5>
+                    <button type="button" class="close" onclick="$('#modal_inv').modal('hide');">
+                        <span class="text-white" aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label>Nomer Invoice</label>
+                        <input id="val_inv_dp" type="text" class="form-control" placeholder="INVDP ...">
+                    </div>
+                    <button onclick="cari_dp();" class="btn btn-primary">Cari</button>
                 </div>
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->

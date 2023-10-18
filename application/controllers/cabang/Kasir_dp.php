@@ -65,7 +65,7 @@ class Kasir_dp extends MY_controller
         $bulan = date('m');
         $total_transaksi = $this->db->query("SELECT count(1)+1 as total from dp where id_cabang='$this->id_cabang' and month(created)='$bulan' and year(created)='$tahun' ")->row();
         $no_invoice = 'INVDP' . $this->id_cabang . '-' . date('Ym') . '-' . sprintf("%04d", $total_transaksi->total);
-        
+
         $pembayaran = $this->input->post('pembayaran');
         $total = clear_koma($this->input->post('total'));
         $estimasi_biaya = clear_koma($this->input->post('estimasi_biaya'));
@@ -97,6 +97,7 @@ class Kasir_dp extends MY_controller
                     'estimasi_biaya' => $estimasi_biaya,
                     'no_hp' => $no_hp,
                     'potongan' => $potongan,
+                    'total_potongan' => $total * ($potongan / 100),
                     'created' => date('Y-m-d H:i:s'),
                 ]);
                 $id = $this->db->insert_id();
@@ -156,4 +157,41 @@ class Kasir_dp extends MY_controller
         ]);
     }
 
+    public function form_refund()
+    {
+        $id = decode_id($this->input->post('id'));
+        $data['id'] = $id;
+        $data['data'] = $this->db->query("SELECT * from dp where id='$id' and deleted is null ")->row();
+        $data['ref_jenis_pembayaran'] = $this->db->query("SELECT * from ref_jenis_pembayaran where deleted is null ")->result();
+
+        $html = $this->load->view('cabang/kasir_dp/form_refund', $data, true);
+
+        echo json_encode([
+            'status' => 'success',
+            'html' => $html,
+        ]);
+    }
+
+    public function do_refund()
+    {
+        cek_post();
+        $id = decode_id($this->input->post('id'));
+        $pembayaran = $this->input->post('pembayaran');
+
+        $cek_refund = $this->db->query("SELECT * from dp where id='$id' and deleted is null ")->row();
+        $ref_pembayaran = $this->db->query("SELECT * from ref_jenis_pembayaran where id='$pembayaran' and deleted is null ")->row();
+
+        $this->db->where('id', $id);
+        $this->db->update('dp', [
+            'updated' => date('Y-m-d H:i:s'),
+            'tgl_refund' => date('Y-m-d'),
+            'is_refund' => '1',
+            'id_pembayaran_refund' => $pembayaran,
+            'potongan_refund' => $cek_refund->total * ($ref_pembayaran->persen_potongan / 100),
+        ]);
+
+        echo json_encode([
+            'status' => 'success'
+        ]);
+    }
 }

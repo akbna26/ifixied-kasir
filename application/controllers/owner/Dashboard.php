@@ -31,6 +31,18 @@ class Dashboard extends MY_controller
             where a.id='$this->id_akun'
         ")->row();
         
+        $data['row_data'] = $this->db->query("SELECT count(1) as total_item, sum(b.stock) as total_stock, 
+            sum(
+                case when a.id_kategori = '2' then b.stock*a.harga_modal else 0 end
+            ) as total_modal_acc,
+            sum(
+                case when a.id_kategori != '2' then b.stock*a.harga_modal else 0 end
+            ) as total_modal_part
+            from barang a 
+            left join barang_cabang b on b.id_barang=a.id
+            where a.deleted is null
+        ")->row();
+
         $this->templates->load($data);
     }
 

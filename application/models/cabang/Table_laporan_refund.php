@@ -17,16 +17,17 @@ class Table_laporan_refund extends CI_Model
         $select_bulan = $this->input->get('select_bulan');
         $select_cabang = $this->input->get('select_cabang');
 
-        $this->db->select('a.*, b.total, b.nm_barang, c.no_invoice, d.nama as nm_cabang');
+        $this->db->select('a.*, b.total, b.nm_barang, c.no_invoice, d.nama as nm_cabang, e.nama as nm_cabang_asal');
         $this->db->from('refund a');
         $this->db->join('(select a.id_refund, count(1) as total, group_concat(b.nama separator "<br>") as nm_barang from refund_detail a 
         left join barang b on b.id=a.id_barang
         where a.deleted is null group by a.id_refund) b', 'b.id_refund = a.id', 'left');
         $this->db->join('transaksi c', 'c.id = a.id_transaksi', 'left');
         $this->db->join('ref_cabang d', 'd.id = a.id_cabang', 'left');
-        
+        $this->db->join('ref_cabang e', 'e.id = a.id_cabang_asal', 'left');
+
         $this->db->where('a.deleted', null);
-        if (session('type') == 'cabang') $this->db->where('a.id_cabang', $this->id_cabang);
+        if (session('type') == 'cabang') $this->db->where('a.id_cabang_asal', $this->id_cabang);
 
         if ($select_tahun != 'all') $this->db->where('YEAR(a.created)', $select_tahun);
         if ($select_bulan != 'all') $this->db->where('MONTH(a.created)', $select_bulan);
@@ -92,7 +93,8 @@ class Table_laporan_refund extends CI_Model
             $row = [];
 
             $row[] = $no;
-            $row[] = $field->nm_cabang;
+            $row[] = 'Asal :' . $field->nm_cabang_asal
+                . '<div>Klaim :' . $field->nm_cabang . '</div>';
             $row[] = tgl_indo($field->tanggal);
             $row[] = '<span class="text-primary fw-600">' . $field->no_invoice . '</span>';
             $row[] = $field->total;

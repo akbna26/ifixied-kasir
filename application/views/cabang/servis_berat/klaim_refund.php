@@ -1,6 +1,16 @@
 <form onsubmit="event.preventDefault();do_submit(this);">
 
     <div class="form-group">
+        <label>Metode Pembayaran</label>
+        <select required name="id_pembayaran" class="form-control js_select2" data-placeholder="pilih sumber dana">
+            <option value=""></option>
+            <?php foreach ($ref_jenis_pembayaran as $dt) : ?>
+                <option value="<?= $dt->id ?>"><?= $dt->nama ?> (<?= $dt->persen_potongan ?>)</option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+
+    <div class="form-group">
         <label>Alasan Refund <small class="text-danger fw-600">*</small></label>
         <textarea name="alasan_refund" rows="3" placeholder="Masukkan isian" class="form-control"></textarea>
     </div>
@@ -10,6 +20,12 @@
 </form>
 
 <script>
+    $(document).ready(function() {
+        $('.js_select2').select2({
+            width: '100%'
+        });
+    });
+
     function do_submit(dt) {
 
         Swal.fire({

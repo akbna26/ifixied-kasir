@@ -52,7 +52,17 @@
                         <li><a href="<?= base_url('admin/operasional') ?>">Operasional</a></li>
                         <li><a href="<?= base_url('admin/paylater') ?>">Market Place</a></li>
                         <li><a href="<?= base_url('admin/kasbon') ?>">Kasbon</a></li>
+                        <li><a href="<?= base_url('admin/kerugian') ?>">Kerugian</a></li>
+                        <li><a href="<?= base_url('admin/setor_tunai') ?>">Setor Tunai</a></li>
+                        <li><a href="<?= base_url('admin/laporan_modal') ?>">Sirkulasi Transaksi</a></li>
                     </ul>
+                </li>
+
+                <li class="<?= $this->uri->segment(2) == 'modal_awal' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('admin/modal_awal') ?>" class="waves-effect">
+                        <i class="bx bx-select-multiple"></i>
+                        <span>Modal Awal Cash</span>
+                    </a>
                 </li>
 
                 <li class="<?= $this->uri->segment(2) == 'servis_berat' ? 'mm-active' : '' ?> single-link">

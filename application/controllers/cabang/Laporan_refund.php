@@ -43,12 +43,13 @@ class Laporan_refund extends MY_controller
         ")->row();
 
         $data['detail'] = $this->db->query("SELECT a.*, 
-            case when a.pembayaran=1 then 'CASH' when a.pembayaran=2 then 'TRANSFER' end as nm_pembayaran,
+            e.nama as nm_pembayaran,
             b.nama as barang, c.nama as nm_klaim, d.nama as nm_pengganti
             from refund_detail a 
             left join barang b on b.id=a.id_barang
             left join ref_status_refund c on c.id=a.id_klaim
             left join barang d on d.id=a.id_pengganti
+            left join ref_jenis_pembayaran e on e.id=a.pembayaran
             where a.id_refund='$id' and a.deleted is null 
         ")->result();
 

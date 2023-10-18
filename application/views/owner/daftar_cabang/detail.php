@@ -22,9 +22,9 @@
 
 <div class="card-body bg1 rounded p-3 mb-3 d-flex align-items-center justify-content-between">
     <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
-    <div style="width: 230px;flex-wrap: wrap;" class="d-flex">
+    <div style="width: 250px;flex-wrap: wrap;" class="d-flex">
         <a href="<?= base_url($this->type . '/daftar_cabang/barang?id=') . encode_id($id_cabang) ?>" class="btn btn-light btn-sm mr-1"><i class="fa fa-database"></i> Stock Barang</a>
-        <input onchange="load_semua();" value="<?= date('Y-m-d') ?>" type="date" style="width: 110px;" class="form-control form-control-sm mt-1 mt-md-0" id="select_tanggal">
+        <input onchange="load_semua();" value="<?= date('Y-m') ?>" type="month" style="width: 120px;" class="form-control form-control-sm mt-1 mt-md-0" id="select_tanggal">
     </div>
 </div>
 

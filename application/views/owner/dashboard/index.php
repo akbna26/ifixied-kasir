@@ -42,3 +42,80 @@
 
     </div>
 </div>
+
+<?php if (session('type') == 'owner') : ?>
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card mini-stats-wid">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <p class="text-muted font-weight-medium">Total Item</p>
+                            <h4 class="mb-0"><?= rupiah($row_data->total_item) ?></h4>
+                        </div>
+
+                        <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                            <span class="avatar-title">
+                                <i class="bx bx-dollar-circle font-size-24"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card mini-stats-wid">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <p class="text-muted font-weight-medium">Total Stock</p>
+                            <h4 class="mb-0"><?= rupiah($row_data->total_stock) ?></h4>
+                        </div>
+
+                        <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                            <span class="avatar-title">
+                                <i class="bx bx-dollar-circle font-size-24"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card mini-stats-wid">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <p class="text-muted font-weight-medium">Total Modal Part</p>
+                            <h4 class="mb-0"><?= rupiah($row_data->total_modal_part) ?></h4>
+                        </div>
+
+                        <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                            <span class="avatar-title">
+                                <i class="bx bx-dollar-circle font-size-24"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card mini-stats-wid">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <p class="text-muted font-weight-medium">Total Modal ACC</p>
+                            <h4 class="mb-0"><?= rupiah($row_data->total_modal_acc) ?></h4>
+                        </div>
+
+                        <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                            <span class="avatar-title">
+                                <i class="bx bx-dollar-circle font-size-24"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

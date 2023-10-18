@@ -108,7 +108,9 @@ function detail_gambar(dt) {
 }
 
 function angka(x) {
-    if (!Number.isInteger(x)) {
+    if (x == undefined || x == '') {
+        return 0;
+    } else if (!Number.isInteger(x)) {
         let data = x.replaceAll('.', '');
         data = parseInt(data);
         if (isNaN(data)) {

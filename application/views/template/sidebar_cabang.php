@@ -68,6 +68,12 @@
                         <span>Kasbon</span>
                     </a>
                 </li>
+                <li class="<?= $this->uri->segment(2) == 'setor_tunai' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('cabang/setor_tunai') ?>" class="waves-effect">
+                        <i class="bx bx-dollar-circle"></i>
+                        <span>Setor Tunai</span>
+                    </a>
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-cube-alt"></i>
@@ -90,12 +96,11 @@
                         <li><a href="<?= base_url('cabang/laporan_transaksi') ?>">Rekap Transaksi</a></li>
                         <li><a href="<?= base_url('cabang/laporan_refund') ?>">Refund Barang</a></li>
                         <li><a href="<?= base_url('cabang/laporan_kerugian') ?>">Kerugian</a></li>
+                        <li><a href="<?= base_url('cabang/laporan_modal') ?>">Sirkulasi Transaksi</a></li>
                     </ul>
                 </li>
 
             </ul>
         </div>
-        <!-- Sidebar -->
     </div>
 </div>
-<!-- Left Sidebar End -->

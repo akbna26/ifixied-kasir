@@ -91,7 +91,7 @@
 
     function hapus(id) {
         Swal.fire({
-            title: 'Hapus Informasi ?',
+            title: 'Hapus Data ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',

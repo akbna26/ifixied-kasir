@@ -158,7 +158,7 @@
             </tr>
             <tr>
                 <td colspan="1" style="text-align: right;">Kembalian :</td>
-                <td style="text-align: right;" class="border-bottom"><?= (($row->bayar + $row->bayar_split) - $row->biaya) == 0 ? 0 : rupiah(($row->bayar + $row->bayar_split) - $row->biaya) ?></td>
+                <td style="text-align: right;" class="border-bottom"><?= $row->kembalian == 0 ? 0 : rupiah($row->kembalian) ?></td>
             </tr>
     </table>
 

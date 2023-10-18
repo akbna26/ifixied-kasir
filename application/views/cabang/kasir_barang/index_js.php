@@ -541,6 +541,8 @@
                 form.append('produk_hargamodal', produk_hargamodal);
                 form.append('produk_hargajual', produk_hargajual);
 
+                form.append('inv_dp', $('#span_inv_dp').html());
+
                 $.ajax({
                     type: "POST",
                     url: "<?= base_url('cabang/kasir_barang/do_submit') ?>",
@@ -580,6 +582,66 @@
             }
         })
 
+    }
+
+    function inv_dp() {
+        $('#modal_inv').modal('show');
+        setTimeout(() => {
+            $('#val_inv_dp').focus();
+        }, 800);
+    }
+
+    function cari_dp() {
+        var inv = $('#val_inv_dp').val();
+        if (!inv || inv == '') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'masukkan nomer invoice',
+                showConfirmButton: true,
+            });
+            throw false;
+        }
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url('cabang/kasir_barang/cari_dp') ?>",
+            data: {
+                inv: inv,
+            },
+            dataType: "JSON",
+            beforeSend: function() {
+                Swal.fire({
+                    title: 'Loading',
+                    html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            },
+            error: function() {
+                Swal.close();
+            },
+            success: function(res) {
+                if (res.status == 'success') {
+                    Swal.fire({
+                            icon: 'success',
+                            title: 'Data berhasil ditemukan',
+                            text: res.msg,
+                            showConfirmButton: true,
+                        })
+                        .then(() => {
+                            $('#modal_inv').modal('hide');
+                        })
+                    $('#span_inv_dp').html(inv);
+                    $('#total_dp').val(res.total).change();
+                } else {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: res.msg,
+                        showConfirmButton: true,
+                    })
+                }
+                $('#val_inv_dp').val('');
+            }
+        });
     }
 </script>
 

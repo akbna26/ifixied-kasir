@@ -16,7 +16,7 @@ class Table_stock_cabang extends CI_Model
         $id_cabang = decode_id($this->input->get('id_cabang'));
         $id_kategori = $this->input->get('id_kategori');
 
-        $this->db->select('a.*, c.nama as kategori, d.stock');
+        $this->db->select('a.*, c.nama as kategori, d.stock, d.updated as tanggal_restock');
         $this->db->from('barang a');
         $this->db->join('ref_kategori c', 'c.id = a.id_kategori', 'left');
         $this->db->join('barang_cabang d', 'd.id_barang = a.id and d.deleted is null', 'left');        
@@ -114,6 +114,7 @@ class Table_stock_cabang extends CI_Model
                 </tr>';
             }
 
+            $row[] = rupiah($field->harga_modal * $field->stock);
             $row[] = $field->barcode;
 
             $row[] = '<span class="d-block">Ket. : ' . $field->keterangan . '</span>'
