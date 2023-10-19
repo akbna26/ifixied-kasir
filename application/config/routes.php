@@ -115,3 +115,7 @@ $route['accounting/sirkulasi_part/(:any)'] = 'gudang/sirkulasi_part/$1';
 $route['accounting/sirkulasi_acc'] = 'gudang/sirkulasi_acc';
 $route['accounting/sirkulasi_acc/table'] = 'gudang/sirkulasi_acc/table';
 $route['accounting/sirkulasi_acc/(:any)'] = 'gudang/sirkulasi_acc/$1';
+
+$route['accounting/laporan_modal'] = 'cabang/laporan_modal';
+$route['accounting/laporan_modal/table'] = 'cabang/laporan_modal/table';
+$route['accounting/laporan_modal/(:any)'] = 'cabang/laporan_modal/$1';

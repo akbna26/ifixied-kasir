@@ -14,6 +14,12 @@
                         <span>Dashboard</span>
                     </a>
                 </li>            
+                <li class="<?= $this->uri->segment(2) == 'laporan_modal' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('accounting/laporan_modal') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-chart"></i>
+                        <span>Sirkulasi Transaksi</span>
+                    </a>
+                </li>
                 <li class="<?= $this->uri->segment(2) == 'sirkulasi_part' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('accounting/sirkulasi_part') ?>" class="waves-effect fw-600">
                         <i class="bx bx-store"></i>

@@ -18,7 +18,7 @@
                     <div style="width: 120px;" class="mr-1">
                         <input type="date" value="<?= date('Y-m-d') ?>" id="filter_tanggal" class="form-control" onchange="load_table();">
                     </div>
-                    <?php if (session('type') == 'admin') : ?>
+                    <?php if (in_array(session('type'), ['admin', 'accounting'])) : ?>
                         <div style="width: 120px;" class="mr-1">
                             <select onchange="load_table();" id="filter_cabang" class="js_select2">
                                 <option value="all" selected>Pilih Cabang</option>
