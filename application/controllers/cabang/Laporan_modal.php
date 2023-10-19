@@ -31,6 +31,7 @@ class Laporan_modal extends MY_controller
 
     public function generate_total()
     {
+        cek_post();
         $filter_rekening = $this->input->post('filter_rekening');
         $filter_cabang = $this->input->post('filter_cabang');
         $filter_tanggal = $this->input->post('filter_tanggal');
@@ -40,9 +41,9 @@ class Laporan_modal extends MY_controller
         $where = "";
         if ($filter_rekening != 'all') $where .= "AND b.nm_jenis='$filter_rekening' ";
         if ($filter_cabang != 'all') $where .= "AND a.id_cabang='$filter_cabang' ";
+        if ($filter_tanggal == '') $filter_tanggal = date('Y-m-d');
 
         if ($filter_rekening == 'cash') {
-            if ($filter_tanggal == '') $filter_tanggal = date('Y-m-d');
 
             $sub_query = "SELECT sum(a.kredit-a.debit)
             from ($query) as a
@@ -70,7 +71,7 @@ class Laporan_modal extends MY_controller
         } else {
             if ($filter_tanggal != '') $where .= "AND a.tanggal='$filter_tanggal' ";
 
-            $row = $this->db->query("SELECT sum(a.kredit) as kredit, sum(a.debit) as debit, sum(a.kredit+a.debit) as total, 0 as modal
+            $row = $this->db->query("SELECT sum(a.kredit) as kredit, sum(a.debit) as debit, sum(a.kredit-a.debit) as total, 0 as modal
                 from ($query) as a
                 left join ref_jenis_pembayaran b on b.id=a.id_pembayaran
                 WHERE 1=1 $where
@@ -79,10 +80,10 @@ class Laporan_modal extends MY_controller
 
         echo json_encode([
             'status' => 'success',
-            'total_modal' => rupiah($row->modal),
-            'total_kredit' => rupiah($row->kredit),
-            'total_debit' => rupiah($row->debit),
-            'total' => rupiah($row->total),
+            'total_modal' => rupiah(@$row->modal),
+            'total_kredit' => rupiah(@$row->kredit),
+            'total_debit' => rupiah(@$row->debit),
+            'total' => rupiah(@$row->total),
         ]);
     }
 }

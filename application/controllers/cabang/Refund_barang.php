@@ -41,19 +41,19 @@ class Refund_barang extends MY_controller
         cek_post();
         $invoice = str_replace(' ', '', $this->input->post('invoice'));
 
-        $cek_sudah_klaim = $this->db->query("SELECT * 
-            from transaksi a 
-            join refund b on b.id_transaksi=a.id and b.deleted is null
-            where a.no_invoice='$invoice' 
-        ")->row();
+        // $cek_sudah_klaim = $this->db->query("SELECT * 
+        //     from transaksi a 
+        //     join refund b on b.id_transaksi=a.id and b.deleted is null
+        //     where a.no_invoice='$invoice' 
+        // ")->row();
 
-        if (!empty($cek_sudah_klaim)) {
-            echo json_encode([
-                'status' => 'failed',
-                'msg' => 'invoice sudah diklaim sebelumnya',
-            ]);
-            die;
-        }
+        // if (!empty($cek_sudah_klaim)) {
+        //     echo json_encode([
+        //         'status' => 'failed',
+        //         'msg' => 'invoice sudah diklaim sebelumnya',
+        //     ]);
+        //     die;
+        // }
 
         $list = $this->db->query("SELECT c.id, c.barcode, c.nama, c.harga_modal, c.harga_jual 
             from transaksi a 

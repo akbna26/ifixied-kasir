@@ -9,25 +9,19 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-apps">Menu</li>
                 <li class="<?= $this->uri->segment(2) == 'dashboard' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('gudang/dashboard') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('accounting/dashboard') ?>" class="waves-effect fw-600">
                         <i class="bx bx-home-alt"></i>
                         <span>Dashboard</span>
                     </a>
-                </li>
-                <li class="<?= $this->uri->segment(2) == 'retur_barang' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('gudang/retur_barang') ?>" class="waves-effect fw-600">
-                        <i class="bx bx-check-shield"></i>
-                        <span>Verifikasi Retur</span>
-                    </a>
-                </li>
+                </li>            
                 <li class="<?= $this->uri->segment(2) == 'sirkulasi_part' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('gudang/sirkulasi_part') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('accounting/sirkulasi_part') ?>" class="waves-effect fw-600">
                         <i class="bx bx-store"></i>
                         <span>Sirkulasi Part</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'sirkulasi_acc' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('gudang/sirkulasi_acc') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('accounting/sirkulasi_acc') ?>" class="waves-effect fw-600">
                         <i class="bx bx-store"></i>
                         <span>Sirkulasi Acc</span>
                     </a>

@@ -112,7 +112,8 @@ class Table_retur_barang extends CI_Model
                 ';
             }
 
-            if (session('type') == 'gudang' && empty($field->status_retur)) $aksi .= '<button onclick="verifikasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-success fw-600"><i class="fas fa-check"></i> Verifikasi</button>';
+            if (session('type') == 'gudang' && $field->is_sampai == '0') $aksi .= '<button onclick="konfirmasi_tiba(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-warning fw-600"><i class="fas fa-car"></i> Barang Sampai</button>';
+            elseif (session('type') == 'gudang' && empty($field->status_retur)) $aksi .= '<button onclick="verifikasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-success fw-600"><i class="fas fa-check"></i> Verifikasi</button>';
             $row[] = $aksi;
 
             $data[] = $row;

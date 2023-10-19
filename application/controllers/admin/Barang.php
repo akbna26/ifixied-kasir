@@ -215,7 +215,7 @@ class Barang extends MY_controller
             'id_barang' => $barang_cabang->id_barang,
             'stock' => $qty,
             'is_transfer' => '1',
-            'id_asal' => $id,
+            'id_asal' => $barang_cabang->id_cabang,
             'created' => date('Y-m-d H:i:s'),
         ]);
 

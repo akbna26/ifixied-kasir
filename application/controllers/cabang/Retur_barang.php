@@ -210,4 +210,21 @@ class Retur_barang extends MY_controller
             'status' => 'success',
         ]);
     }
+
+    public function do_konfirmasi_tiba()
+    {
+        cek_post();
+        $id = decode_id($this->input->post('id'));
+
+        $this->db->where('id', $id);
+        $this->db->update('refund_detail', [
+            'is_sampai' => '1',
+            'tgl_sampai' => date('Y-m-d'),
+            'updated' => date('Y-m-d H:i:s'),
+        ]);
+
+        echo json_encode([
+            'status' => 'success',
+        ]);
+    }
 }
