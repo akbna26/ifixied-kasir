@@ -45,6 +45,7 @@ class Data_user extends MY_controller
         $data['ref_kab'] = [];
         $data['ref_kec'] = [];
         $data['ref_kel'] = [];
+        $data['arr_multi'] = [];
 
         $html = $this->load->view('admin/data_user/form', $data, true);
 

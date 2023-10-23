@@ -15,7 +15,7 @@
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'servis_berat' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('servis/servis_berat') ?>" class="waves-effect">
+                    <a href="<?= base_url('servis/pilih_servis_berat') ?>" class="waves-effect">
                         <i class="bx bx-wrench"></i>
                         <span>Servis Berat</span>
                     </a>

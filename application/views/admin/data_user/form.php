@@ -58,11 +58,11 @@
         </div>
     </div>
 
-    <?php if ($otoritas == 5) : ?>
+    <?php if (in_array($otoritas,[5,8])) : ?>
         <div class="row">
             <div class="col-md-12">
                 <div class="form-group">
-                    <label>Cabang Owner <small class="text-danger">*khusus owner cabang</small></label>
+                    <label>Cabang Owner <small class="text-danger">*khusus owner cabang &  admin servis</small></label>
                     <select required multiple name="id_cabang_multi[]" class="form-control js_select2" data-placeholder="pilih cabang">
                         <option value=""></option>
                         <?php foreach ($ref_cabang as $dt) : ?>

@@ -28,6 +28,7 @@
                 dataType: 'JSON',
                 data: {
                     id_status: $('.select_status.active').data('val'),
+                    kode: '<?= $kode ?>',
                 },
             },
             order: [],
@@ -47,7 +48,7 @@
             dataType: "JSON",
             success: function(res) {
                 if (res.status == 'success') {
-                    $.map(res.data, function (e, i) {
+                    $.map(res.data, function(e, i) {
                         $(`#total_${i}`).html(e)
                     });
                 }
@@ -399,7 +400,7 @@
     function cancelTransaksi(id, no_inv) {
         Swal.fire({
             title: 'Cancel Service ?',
-            html: 'pastikan anda sudah yakin<br>No Invoice : <span class="text-danger">' + no_inv+'</span>',
+            html: 'pastikan anda sudah yakin<br>No Invoice : <span class="text-danger">' + no_inv + '</span>',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',

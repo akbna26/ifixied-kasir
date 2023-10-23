@@ -53,6 +53,8 @@ class Servis_berat extends MY_controller
             ],
         ];
 
+        $data['kode'] = $this->input->get('kode');
+
         $this->templates->load($data);
     }
 
@@ -465,8 +467,10 @@ class Servis_berat extends MY_controller
 
     public function get_total()
     {
+        $kode = decode_id($this->input->get('kode'));
         $where = '';
         if (session('type') == 'cabang') $where = "and a.id_cabang='$this->id_cabang'";
+        if (session('type') == 'servis') $where = "and a.id_cabang='$kode'";
         $data = $this->db->query("SELECT 
             count(1) as 'all'
             ,count(case when status in(1) then 1 end) as 'belum'

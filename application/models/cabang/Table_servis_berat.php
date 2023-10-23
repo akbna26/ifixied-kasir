@@ -14,6 +14,7 @@ class Table_servis_berat extends CI_Model
     private function _get_datatables_query()
     {
         $id_status = $this->input->get('id_status');
+        $kode = decode_id($this->input->get('kode'));
 
         $this->db->select('a.*, b.nama as nm_status, ifnull(c.nama,"-") as nm_tindakan, ifnull(f.nama,"-") as nm_teknisi, 
         e.nama as nm_cabang, g.nama as nm_pengambilan, DATEDIFF(NOW(),tgl_keluar) AS jarak_hari');
@@ -29,6 +30,7 @@ class Table_servis_berat extends CI_Model
         if ($id_status != 'all') $this->db->where('a.status in (' . $id_status . ') ');
 
         if (session('type') == 'cabang') $this->db->where('a.id_cabang', $this->id_cabang);
+        if (session('type') == 'servis') $this->db->where('a.id_cabang', $kode);
 
         $i = 0;
 
