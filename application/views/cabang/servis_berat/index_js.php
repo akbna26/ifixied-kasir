@@ -44,7 +44,9 @@
         $.ajax({
             type: "POST",
             url: "<?= base_url(session('type') . '/servis_berat/get_total') ?>",
-            data: {},
+            data: {
+                kode: '<?= $kode ?>',
+            },
             dataType: "JSON",
             success: function(res) {
                 if (res.status == 'success') {

@@ -467,7 +467,7 @@ class Servis_berat extends MY_controller
 
     public function get_total()
     {
-        $kode = decode_id($this->input->get('kode'));
+        $kode = decode_id($this->input->post('kode'));
         $where = '';
         if (session('type') == 'cabang') $where = "and a.id_cabang='$this->id_cabang'";
         if (session('type') == 'servis') $where = "and a.id_cabang='$kode'";
