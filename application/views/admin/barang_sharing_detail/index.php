@@ -15,7 +15,7 @@
                             <i class="fa fa-plus mr-1"></i> Tambah Data
                         </button>
                     <?php endif; ?>
-                    <a target="_blank" href="<?= base_url('admin/cetak/detail_sharing/' . encode_id($row->id)) ?>" class="btn btn-light btn-sm fw-600">
+                    <a target="_blank" href="<?= base_url($this->type . '/cetak/detail_sharing/' . encode_id($row->id)) ?>" class="btn btn-light btn-sm fw-600">
                         <i class="fa fa-print mr-1"></i> Export Data
                     </a>
                 </div>

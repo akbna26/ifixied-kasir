@@ -44,7 +44,7 @@
     function sharing(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/barang/sharing') ?>",
+            url: "<?= base_url($this->type . '/barang/sharing') ?>",
             dataType: "JSON",
             data: {
                 id: id,

@@ -15,7 +15,7 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('admin/cancel_servis/table') ?>',
+                url: '<?= base_url($this->type . '/cancel_servis/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {

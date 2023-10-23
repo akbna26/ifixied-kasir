@@ -15,7 +15,7 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('admin/barang_sharing/table') ?>',
+                url: '<?= base_url($this->type . '/barang_sharing/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {},
@@ -35,7 +35,7 @@
     function tambah() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/barang_sharing/tambah') ?>",
+            url: "<?= base_url($this->type . '/barang_sharing/tambah') ?>",
             dataType: "JSON",
             data: {},
             beforeSend: function(res) {
@@ -64,7 +64,7 @@
     function ubah(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/barang_sharing/ubah') ?>",
+            url: "<?= base_url($this->type . '/barang_sharing/ubah') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -104,7 +104,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/barang_sharing/do_submit') ?>",
+                    url: "<?= base_url($this->type . '/barang_sharing/do_submit') ?>",
                     data: {
                         hapus: true,
                         id: id,
@@ -134,10 +134,10 @@
                                 });
                         } else {
                             Swal.fire({
-                                    icon: 'warning',
-                                    title: res.msg,
-                                    showConfirmButton: true,
-                                })
+                                icon: 'warning',
+                                title: res.msg,
+                                showConfirmButton: true,
+                            })
                         }
                     }
                 });
@@ -160,7 +160,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/barang_sharing/do_konfirmasi') ?>",
+                    url: "<?= base_url($this->type . '/barang_sharing/do_konfirmasi') ?>",
                     data: {
                         id: id,
                     },

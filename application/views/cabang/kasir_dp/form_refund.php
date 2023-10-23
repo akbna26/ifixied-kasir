@@ -58,7 +58,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/laporan_dp/do_refund') ?>",
+                    url: "<?= base_url($this->type . '/laporan_dp/do_refund') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

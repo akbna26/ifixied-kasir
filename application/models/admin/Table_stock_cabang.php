@@ -89,7 +89,7 @@ class Table_stock_cabang extends CI_Model
                 . '<span class="d-block text-primary fw-600">Kategori : ' . $field->kategori . '</span>';
 
             $modal = '';
-            if (session('type') == 'admin') {
+            if (session('type') == 'gudang') {
                 $modal .= '
                     <tr class="bg-white">
                         <th>Harga Modal</th>
@@ -126,7 +126,7 @@ class Table_stock_cabang extends CI_Model
             $row[] = '<span class="d-block">Ket. : ' . $field->keterangan . '</span>'
                 . $gambar;
 
-            if (session('type') == 'admin') {
+            if (session('type') == 'gudang') {
                 $row[] = '<button onclick="sharing(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600">Sharing</button>';
             }
 

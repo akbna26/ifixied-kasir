@@ -15,7 +15,7 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('admin/cancel_transaksi/table') ?>',
+                url: '<?= base_url($this->type . '/cancel_transaksi/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
@@ -37,7 +37,7 @@
     function detail(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/cancel_transaksi/detail') ?>",
+            url: "<?= base_url($this->type . '/cancel_transaksi/detail') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -68,7 +68,7 @@
     function cancelTransaksi(id, no_inv) {
         Swal.fire({
             title: 'Cancel Transaksi ?',
-            html: 'pastikan anda sudah yakin<br>No Invoice : <span class="text-danger">' + no_inv+'</span>',
+            html: 'pastikan anda sudah yakin<br>No Invoice : <span class="text-danger">' + no_inv + '</span>',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',

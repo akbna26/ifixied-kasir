@@ -15,7 +15,7 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('admin/paylater/table') ?>',
+                url: '<?= base_url($this->type . '/paylater/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
@@ -68,7 +68,7 @@
     function verif(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/paylater/verif') ?>",
+            url: "<?= base_url($this->type . '/paylater/verif') ?>",
             dataType: "JSON",
             data: {
                 id: id,

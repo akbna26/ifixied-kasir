@@ -17,7 +17,7 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('admin/barang_sharing_detail/table') ?>',
+                url: '<?= base_url($this->type . '/barang_sharing_detail/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
@@ -36,7 +36,7 @@
     function tambah() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/barang_sharing_detail/tambah') ?>",
+            url: "<?= base_url($this->type . '/barang_sharing_detail/tambah') ?>",
             dataType: "JSON",
             data: {},
             beforeSend: function(res) {
@@ -65,7 +65,7 @@
     function ubah(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/barang_sharing_detail/ubah') ?>",
+            url: "<?= base_url($this->type . '/barang_sharing_detail/ubah') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -105,7 +105,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/barang_sharing_detail/do_submit') ?>",
+                    url: "<?= base_url($this->type . '/barang_sharing_detail/do_submit') ?>",
                     data: {
                         hapus: true,
                         id: id,

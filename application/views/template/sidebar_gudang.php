@@ -14,6 +14,17 @@
                         <span>Dashboard</span>
                     </a>
                 </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-cube-alt"></i>
+                        <span>Master Barang</span>
+                    </a>
+                    <ul class="sub-menu <?= $this->uri->segment(2) == 'barang' ? 'mm-collapse mm-show' : '' ?>">
+                        <li><a href="<?= base_url('gudang/barang') ?>">List Barang</a></li>
+                        <li><a href="<?= base_url('gudang/barang_restock') ?>">Restock Barang</a></li>
+                        <li><a href="<?= base_url('gudang/barang_sharing') ?>">Sharing</a></li>
+                    </ul>
+                </li>
                 <li class="<?= $this->uri->segment(2) == 'retur_barang' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('gudang/retur_barang') ?>" class="waves-effect fw-600">
                         <i class="bx bx-check-shield"></i>

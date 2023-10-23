@@ -88,19 +88,19 @@ class Table_barang_sharing extends CI_Model
             $row[] = tgl_indo($field->tanggal);
             $row[] = $field->total ?? 0;
             $row[] = rupiah($field->modal) ?? 0;
-            
+
             if ($field->is_konfirmasi == '1') {
                 $row[] = '<span class="badge badge-success">Sudah dikonfirmasi</span>';
                 $row[] = '
                     <div class="btn-group">
-                        <a href="' . base_url('admin/barang_sharing_detail/index/' . encode_id($field->id)) . '" data-toggle="tooltip" data-placement="top" title="detail barang" class="btn btn-success fw-600"><i class="far fa-list-alt"></i></a>
+                        <a href="' . base_url($this->type . '/barang_sharing_detail/index/' . encode_id($field->id)) . '" data-toggle="tooltip" data-placement="top" title="detail barang" class="btn btn-success fw-600"><i class="far fa-list-alt"></i></a>
                     </div>
                 ';
             } else {
                 $row[] = '<button onclick="konfirmasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-outline-warning fw-600"><i class="fas fa-check"></i> Konfirmasi sharing</button>';
                 $row[] = '                    
                     <div class="btn-group">
-                        <a href="' . base_url('admin/barang_sharing_detail/index/' . encode_id($field->id)) . '" data-toggle="tooltip" data-placement="top" title="detail barang" class="btn btn-warning fw-600"><i class="far fa-list-alt"></i></a>
+                        <a href="' . base_url($this->type . '/barang_sharing_detail/index/' . encode_id($field->id)) . '" data-toggle="tooltip" data-placement="top" title="detail barang" class="btn btn-warning fw-600"><i class="far fa-list-alt"></i></a>
                         <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" data-toggle="tooltip" data-placement="top" title="edit sharing" class="btn btn-primary fw-600"><i class="fas fa-edit"></i></button>
                         <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" data-toggle="tooltip" data-placement="top" title="hapus sharing" class="btn btn-danger fw-600"><i class="fas fa-trash-alt"></i></button>
                     </div>

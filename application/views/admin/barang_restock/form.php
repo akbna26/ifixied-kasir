@@ -68,7 +68,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/barang_restock/do_submit') ?>",
+                    url: "<?= base_url($this->type . '/barang_restock/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

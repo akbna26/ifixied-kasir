@@ -92,8 +92,9 @@ class Barang_sharing_detail extends MY_controller
             ]);
             $row = $this->db->query("SELECT * from sharing_detail where id='$id' ")->row();
             if ($row->is_transfer == 1) {
-                $this->db->query("UPDATE barang_cabang set stock=(stock + $row->stock) where id='$row->id_asal' ");
+                $this->db->query("UPDATE barang_cabang set stock=(stock + $row->stock) where id_barang='$row->id_barang' and id_cabang='$row->id_asal' ");
             }
+
         } else {
             if (empty($id)) {
 

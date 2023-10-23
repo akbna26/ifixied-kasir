@@ -15,7 +15,7 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('admin/laporan_transaksi/table') ?>',
+                url: '<?= base_url($this->type.'/laporan_transaksi/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {
@@ -37,7 +37,7 @@
     function detail(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/laporan_transaksi/detail') ?>",
+            url: "<?= base_url($this->type.'/laporan_transaksi/detail') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -78,7 +78,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/laporan_transaksi/do_submit') ?>",
+                    url: "<?= base_url($this->type.'/laporan_transaksi/do_submit') ?>",
                     data: {
                         hapus: true,
                         id: id,

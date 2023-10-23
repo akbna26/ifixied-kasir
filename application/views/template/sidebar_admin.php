@@ -15,7 +15,7 @@
                     </a>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-cube-alt"></i>
                         <span>Master Barang</span>
@@ -25,7 +25,7 @@
                         <li><a href="<?= base_url('admin/barang_restock') ?>">Restock Barang</a></li>
                         <li><a href="<?= base_url('admin/barang_sharing') ?>">Sharing</a></li>
                     </ul>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
@@ -44,33 +44,33 @@
                         <span>Laporan</span>
                     </a>
                     <ul class="sub-menu <?= $this->uri->segment(2) == 'laporan' ? 'mm-collapse mm-show' : '' ?>">
-                        <li><a href="<?= base_url('admin/laporan_servis') ?>">Servis</a></li>
                         <li><a href="<?= base_url('admin/laporan_transaksi') ?>">Transaksi Kasir</a></li>
-                        <li><a href="<?= base_url('admin/laporan_dp') ?>">Transaksi DP</a></li>
                         <li><a href="<?= base_url('admin/laporan_refund') ?>">Refund Barang</a></li>
-                        <li><a href="<?= base_url('admin/retur_barang') ?>">Retur Barang</a></li>
+                        <li><a href="<?= base_url('admin/laporan_dp') ?>">Transaksi DP</a></li>
+                        <li><a href="<?= base_url('admin/laporan_servis') ?>">Servis</a></li>
+                        <!-- <li><a href="<?= base_url('admin/retur_barang') ?>">Retur Barang</a></li>
                         <li><a href="<?= base_url('admin/operasional') ?>">Operasional</a></li>
                         <li><a href="<?= base_url('admin/paylater') ?>">Market Place</a></li>
                         <li><a href="<?= base_url('admin/kasbon') ?>">Kasbon</a></li>
                         <li><a href="<?= base_url('admin/kerugian') ?>">Kerugian</a></li>
                         <li><a href="<?= base_url('admin/setor_tunai') ?>">Setor Tunai</a></li>
-                        <li><a href="<?= base_url('admin/laporan_modal') ?>">Sirkulasi Transaksi</a></li>
+                        <li><a href="<?= base_url('admin/laporan_modal') ?>">Sirkulasi Transaksi</a></li> -->
                     </ul>
                 </li>
 
-                <li class="<?= $this->uri->segment(2) == 'modal_awal' ? 'mm-active' : '' ?> single-link">
+                <!-- <li class="<?= $this->uri->segment(2) == 'modal_awal' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('admin/modal_awal') ?>" class="waves-effect">
                         <i class="bx bx-select-multiple"></i>
                         <span>Modal Awal Cash</span>
                     </a>
-                </li>
+                </li> -->
 
-                <li class="<?= $this->uri->segment(2) == 'servis_berat' ? 'mm-active' : '' ?> single-link">
+                <!-- <li class="<?= $this->uri->segment(2) == 'servis_berat' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('admin/servis_berat') ?>" class="waves-effect">
                         <i class="bx bx-wrench"></i>
                         <span>Servis Berat</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">

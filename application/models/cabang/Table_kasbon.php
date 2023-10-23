@@ -93,7 +93,7 @@ class Table_kasbon extends CI_Model
             $row[] = rupiah($field->jumlah);
             $row[] = $field->keterangan;
 
-            if (session('type') == 'admin') {
+            if (session('type') == 'accounting') {
                 $row[] = '
                 <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
                 <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>

@@ -119,3 +119,43 @@ $route['accounting/sirkulasi_acc/(:any)'] = 'gudang/sirkulasi_acc/$1';
 $route['accounting/laporan_modal'] = 'cabang/laporan_modal';
 $route['accounting/laporan_modal/table'] = 'cabang/laporan_modal/table';
 $route['accounting/laporan_modal/(:any)'] = 'cabang/laporan_modal/$1';
+
+$route['accounting/laporan_transaksi'] = 'admin/laporan_transaksi';
+$route['accounting/laporan_transaksi/(:any)'] = 'admin/laporan_transaksi/$1';
+
+$route['accounting/laporan_dp'] = 'cabang/kasir_dp';
+$route['accounting/kasir_dp/table'] = 'cabang/kasir_dp/table';
+$route['accounting/cetak/nota_dp/(:any)'] = 'cabang/cetak/nota_dp/$1';
+$route['accounting/laporan_dp/(:any)'] = 'cabang/kasir_dp/$1';
+
+$route['accounting/paylater'] = 'admin/paylater';
+$route['accounting/paylater/(:any)'] = 'admin/paylater/$1';
+
+$route['accounting/kasbon'] = 'cabang/kasbon';
+$route['accounting/kasbon/(:any)'] = 'cabang/kasbon/$1';
+
+$route['accounting/setor_tunai'] = 'cabang/setor_tunai';
+$route['accounting/setor_tunai/(:any)'] = 'cabang/setor_tunai/$1';
+
+$route['accounting/modal_awal'] = 'admin/modal_awal';
+$route['accounting/modal_awal/(:any)'] = 'admin/modal_awal/$1';
+
+$route['accounting/cancel_transaksi'] = 'admin/cancel_transaksi';
+$route['accounting/cancel_transaksi/(:any)'] = 'admin/cancel_transaksi/$1';
+
+$route['accounting/cancel_servis'] = 'admin/cancel_servis';
+$route['accounting/cancel_servis/(:any)'] = 'admin/cancel_servis/$1';
+
+$route['gudang/barang'] = 'admin/barang';
+$route['gudang/barang/(:any)'] = 'admin/barang/$1';
+
+$route['gudang/barang_restock'] = 'admin/barang_restock';
+$route['gudang/barang_restock/(:any)'] = 'admin/barang_restock/$1';
+
+$route['gudang/barang_sharing'] = 'admin/barang_sharing';
+$route['gudang/barang_sharing/(:any)'] = 'admin/barang_sharing/$1';
+
+$route['gudang/barang_sharing_detail'] = 'admin/barang_sharing_detail';
+$route['gudang/barang_sharing_detail/(:any)/(:any)'] = 'admin/barang_sharing_detail/$1/$2';
+$route['gudang/barang_sharing_detail/(:any)'] = 'admin/barang_sharing_detail/$1';
+$route['gudang/cetak/detail_sharing/(:any)'] = 'admin/cetak/detail_sharing/$1';

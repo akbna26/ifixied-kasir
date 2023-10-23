@@ -15,7 +15,7 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('admin/modal_awal/table') ?>',
+                url: '<?= base_url($this->type . '/modal_awal/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {},
@@ -32,7 +32,7 @@
     function tambah() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/modal_awal/tambah') ?>",
+            url: "<?= base_url($this->type . '/modal_awal/tambah') ?>",
             dataType: "JSON",
             data: {},
             beforeSend: function(res) {
@@ -61,7 +61,7 @@
     function ubah(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/modal_awal/ubah') ?>",
+            url: "<?= base_url($this->type . '/modal_awal/ubah') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -101,7 +101,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/modal_awal/do_submit') ?>",
+                    url: "<?= base_url($this->type . '/modal_awal/do_submit') ?>",
                     data: {
                         hapus: true,
                         id: id,

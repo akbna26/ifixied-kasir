@@ -39,7 +39,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/barang_sharing/do_submit') ?>",
+                    url: "<?= base_url($this->type . '/barang_sharing/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

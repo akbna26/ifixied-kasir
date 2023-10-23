@@ -4,7 +4,7 @@
             <div class="card-body bg1 br-atas p-3 mb-0 d-flex justify-content-between">
                 <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
                 <div>
-                    <a href="<?= base_url('admin/barang/stock_cabang') ?>" class="btn btn-light fw-600 btn-sm mr-1">
+                    <a href="<?= base_url($this->type . '/barang/stock_cabang') ?>" class="btn btn-light fw-600 btn-sm mr-1">
                         <i class="fa fa-list mr-1"></i> Lihat Stock Cabang
                     </a>
                     <button onclick="tambah();" class="btn btn-light fw-600 btn-sm">

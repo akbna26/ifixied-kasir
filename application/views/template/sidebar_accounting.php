@@ -32,6 +32,52 @@
                         <span>Sirkulasi Acc</span>
                     </a>
                 </li>
+                <li class="<?= $this->uri->segment(2) == 'laporan_transaksi' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('accounting/laporan_transaksi') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-store"></i>
+                        <span>Transaksi Kasir</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'laporan_dp' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('accounting/laporan_dp') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-store"></i>
+                        <span>Transaksi DP</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'paylater' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('accounting/paylater') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-store"></i>
+                        <span>Market Place</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'kasbon' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('accounting/kasbon') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-store"></i>
+                        <span>Kasbon</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'setor_tunai' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('accounting/setor_tunai') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-store"></i>
+                        <span>Setor Tunai</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'modal_awal' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('accounting/modal_awal') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-store"></i>
+                        <span>Modal Awal Cash</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-file-find"></i>
+                        <span>Log</span>
+                    </a>
+                    <ul class="sub-menu <?= $this->uri->segment(2) == 'log' ? 'mm-collapse mm-show' : '' ?>">
+                        <li><a href="<?= base_url('accounting/cancel_transaksi') ?>">Transaksi Cancel</a></li>
+                        <li><a href="<?= base_url('accounting/cancel_servis') ?>">Servis Cancel</a></li>
+                    </ul>
+                </li>
 
             </ul>
         </div>

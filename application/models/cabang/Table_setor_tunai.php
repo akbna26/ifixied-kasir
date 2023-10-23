@@ -91,7 +91,7 @@ class Table_setor_tunai extends CI_Model
             if ($field->deleted != null) {
                 $row[] = '<div class="text-danger">cancel</div>';
             } elseif ($field->is_konfirmasi == 0) {
-                if (session('type') == 'admin') {
+                if (session('type') == 'accounting') {
                     $row[] = '<button onclick="konfirmasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-success mr-1 fw-600"><i class="fas fa-check"></i> Konfirmasi</button>';
                 } else {
                     $row[] = '<div class="text-danger">Belum dikonfirmasi</div>';
@@ -104,7 +104,7 @@ class Table_setor_tunai extends CI_Model
             if ($field->deleted != null) {
                 $row[] = '<div class="text-danger">dicancel oleh admin</div>';
             } elseif ($field->is_konfirmasi == 0) {
-                if (session('type') == 'admin') {
+                if (session('type') == 'accounting') {
                     $row[] = '<button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-times"></i> Cancel</button>';
                 } else {
                     $row[] = '<div class="text-info">jika terjadi kesalahan hubungi admin</div>';

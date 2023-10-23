@@ -61,7 +61,7 @@
     function form_refund(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/laporan_dp/form_refund') ?>",
+            url: "<?= base_url($this->type . '/laporan_dp/form_refund') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -122,7 +122,7 @@
 
     function hapus(id) {
         Swal.fire({
-            title: 'Hapus Informasi ?',
+            title: 'Hapus Data ?',
             icon: 'question',
             showCancelButton: true,
             confirmButtonText: 'Ya',
@@ -180,7 +180,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/laporan_dp/do_konfirmasi') ?>",
+                    url: "<?= base_url($this->type . '/laporan_dp/do_konfirmasi') ?>",
                     data: {
                         id: id,
                     },
@@ -227,7 +227,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/laporan_dp/do_cancel') ?>",
+                    url: "<?= base_url($this->type . '/laporan_dp/do_cancel') ?>",
                     data: {
                         id: id,
                     },
@@ -274,7 +274,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/laporan_dp/do_refund') ?>",
+                    url: "<?= base_url($this->type . '/laporan_dp/do_refund') ?>",
                     data: {
                         id: id,
                     },

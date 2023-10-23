@@ -61,7 +61,8 @@ class Barang_sharing extends MY_controller
         $tanggal = date('Y-m-d', strtotime($this->input->post('tanggal')));
 
         if (!empty($hapus)) {
-            $cek = $this->db->query("SELECT * from sharing_detail where id_sharing='$id' and is_transfer='1' ")->result();
+            $cek = $this->db->query("SELECT * from sharing_detail where id_sharing='$id' and is_transfer='1' and deleted is null ")->result();
+
             if (!empty($cek)) {
                 echo json_encode([
                     'status' => 'failed',

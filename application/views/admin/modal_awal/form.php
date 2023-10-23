@@ -55,7 +55,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/modal_awal/do_submit') ?>",
+                    url: "<?= base_url($this->type . '/modal_awal/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

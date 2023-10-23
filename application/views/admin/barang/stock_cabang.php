@@ -47,7 +47,7 @@
                                 <th class="fw-600">STOCK</th>
                                 <th class="fw-600">KODE BARCODE</th>
                                 <th class="fw-600">INFORMASI</th>
-                                <?php if (session('type') == 'admin') : ?>
+                                <?php if (session('type') == 'gudang') : ?>
                                     <th class="fw-600">AKSI</th>
                                 <?php endif; ?>
                             </tr>
