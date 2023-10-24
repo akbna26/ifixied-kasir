@@ -35,6 +35,7 @@ class Cetak extends MY_controller
         include('sheet_1_cash.php');
         include('sheet_1_bca.php');
         include('sheet_1_bni.php');
+        include('sheet_1_profit.php');
 
         $spreadsheet->setActiveSheetIndex(0);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');

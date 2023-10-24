@@ -93,7 +93,7 @@ foreach ($data as $row) {
         ->setCellValue('B' . $awal, $jenis_transaksi)
         ->setCellValue('C' . $awal, $row->kredit)
         ->setCellValue('D' . $awal, $row->debit)
-        ->setCellValue('E' . $awal, $row->jenis_pembayaran)
+        ->setCellValue('E' . $awal, $row->jenis_pembayaran == 'CASH(0)' ? 'CASH' : $row->jenis_pembayaran)
         ->setCellValue('F' . $awal, $keterangan);
     $awal++;
 
