@@ -106,8 +106,6 @@ $route['admin/setor_tunai'] = 'cabang/setor_tunai';
 $route['admin/setor_tunai/table'] = 'cabang/setor_tunai/table';
 $route['admin/setor_tunai/(:any)'] = 'cabang/setor_tunai/$1';
 
-$route['accounting/dashboard'] = 'cabang/dashboard';
-
 $route['accounting/sirkulasi_part'] = 'gudang/sirkulasi_part';
 $route['accounting/sirkulasi_part/table'] = 'gudang/sirkulasi_part/table';
 $route['accounting/sirkulasi_part/(:any)'] = 'gudang/sirkulasi_part/$1';

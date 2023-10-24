@@ -31,7 +31,6 @@ class Table_laporan_modal extends CI_Model
         if ($filter_rekening != 'all') $this->db->where('b.nm_jenis', $filter_rekening);
         if ($filter_tanggal != '') $this->db->where('tanggal', $filter_tanggal);
 
-
         $i = 0;
 
         foreach ($this->column_search as $item) { // looping awal

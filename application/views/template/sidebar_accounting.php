@@ -78,6 +78,15 @@
                         <li><a href="<?= base_url('accounting/cancel_servis') ?>">Servis Cancel</a></li>
                     </ul>
                 </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-printer"></i>
+                        <span>Manajemen Export</span>
+                    </a>
+                    <ul class="sub-menu <?= $this->uri->segment(2) == 'report_harian' ? 'mm-collapse mm-show' : '' ?>">
+                        <li><a href="<?= base_url('accounting/report_harian') ?>">Report Harian</a></li>
+                    </ul>
+                </li>
 
             </ul>
         </div>
