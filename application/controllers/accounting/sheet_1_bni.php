@@ -18,7 +18,7 @@ $sheet->getStyle('A' . $awal . ':F' . $awal)->applyFromArray([
     'fill' => [
         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
         'startColor' => [
-            'argb' => '01FF00',
+            'argb' => 'FF9902',
         ],
     ],
 ]);
@@ -28,7 +28,7 @@ $awal += 1;
 $no = 1;
 $query = $this->query_global->modal();
 
-$data = $this->db->query("SELECT * 
+$data = $this->db->query("SELECT a.* 
             from ($query) as a 
             left join ref_jenis_pembayaran b on b.id=a.id_pembayaran
             where a.id_cabang='$id_cabang' and b.nm_jenis='bni' and a.tanggal='$tgl'
@@ -88,7 +88,7 @@ $sheet->getStyle('A' . $awal . ':F' . $awal)->applyFromArray([
     'fill' => [
         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
         'startColor' => [
-            'argb' => '01FF00',
+            'argb' => 'FF9902',
         ],
     ],
 ]);

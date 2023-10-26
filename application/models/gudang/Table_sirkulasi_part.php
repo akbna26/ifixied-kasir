@@ -23,7 +23,6 @@ class Table_sirkulasi_part extends CI_Model
         if ($filter_cabang != 'all') $this->db->where('id_cabang', $filter_cabang);
         if ($filter_tanggal != '') $this->db->where('tanggal', $filter_tanggal);
 
-
         $i = 0;
 
         foreach ($this->column_search as $item) { // looping awal

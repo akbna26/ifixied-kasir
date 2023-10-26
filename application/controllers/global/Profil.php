@@ -224,11 +224,28 @@ class Profil extends MY_controller
     public function get_barang()
     {
         $id_kategori = $this->input->post('id_kategori');
-        $this->db->order_by('nama', 'asc');        
+        $this->db->order_by('nama', 'asc');
         $data = $this->db->get_where('barang', [
             'id_kategori' => $id_kategori,
             'deleted' => null,
         ])->result();
+        echo json_encode([
+            'status' => 'success',
+            'data' => $data,
+        ]);
+    }
+
+    public function get_barang_cabang()
+    {
+        $id_kategori = $this->input->post('id_kategori');
+        $id_cabang = decode_id($this->input->post('id_cabang'));
+
+        $data = $this->db->query("SELECT b.*, a.stock
+            from barang_cabang a 
+            left join barang b on b.id=a.id_barang
+            where a.id_cabang='$id_cabang' and b.id_kategori='$id_kategori' and a.deleted is null
+        ")->result();
+
         echo json_encode([
             'status' => 'success',
             'data' => $data,

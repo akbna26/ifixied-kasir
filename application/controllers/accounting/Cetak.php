@@ -31,13 +31,22 @@ class Cetak extends MY_controller
         $row_cabang = $this->db->query("SELECT * from ref_cabang where id='$id_cabang' and deleted is null ")->row();
 
         $spreadsheet = new Spreadsheet();
-        
+
         include('sheet_1_cash.php');
         include('sheet_1_bca.php');
         include('sheet_1_bni.php');
+        include('sheet_1_mandiri.php');
         include('sheet_1_profit.php');
+        include('sheet_2_part.php');
+        include('sheet_2_acc.php');
+        include('sheet_2_retur.php');
+        include('sheet_3_profit.php');
+        include('sheet_4_operasional.php');
+        include('sheet_5_kerugian.php');
+        include('sheet_6_kasbon.php');
+        include('sheet_7_modal_servis.php');
 
-        $spreadsheet->setActiveSheetIndex(0);
+        // $spreadsheet->setActiveSheetIndex(0);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
         header('Content-Disposition: attachment;filename="Laporan_harian_' . $row_cabang->nama . '_' . date('d-F-Y ', strtotime($tgl)) . '.xlsx"');
         header('Cache-Control: max-age=0');
@@ -74,7 +83,49 @@ class Cetak extends MY_controller
                 WHERE 1=1 $where
             ")->row();
 
-        return $row->modal;
+        return empty($row->modal) ? 0 : $row->modal;
+    }
+
+    private function get_modal_part($filter_cabang, $filter_tanggal)
+    {
+        $query = $this->query_global->part();
+
+        $where = "";
+        if ($filter_cabang != 'all') $where .= "AND a.id_cabang='$filter_cabang' ";
+
+        $sub_query = "SELECT IFNULL(sum(a.kredit-a.debit),0)
+        from ($query) as a
+        WHERE 1=1 $where and a.tanggal < '$filter_tanggal' ";
+
+        $where .= "AND a.tanggal <= '$filter_tanggal' ";
+
+        $row = $this->db->query("SELECT ($sub_query) as modal
+            from ($query) as a
+            WHERE 1=1 $where
+        ")->row();
+
+        return empty($row->modal) ? 0 : $row->modal;
+    }
+
+    private function get_modal_acc($filter_cabang, $filter_tanggal)
+    {
+        $query = $this->query_global->acc();
+
+        $where = "";
+        if ($filter_cabang != 'all') $where .= "AND a.id_cabang='$filter_cabang' ";
+
+        $sub_query = "SELECT IFNULL(sum(a.kredit-a.debit),0)
+        from ($query) as a
+        WHERE 1=1 $where and a.tanggal < '$filter_tanggal' ";
+
+        $where .= "AND a.tanggal <= '$filter_tanggal' ";
+
+        $row = $this->db->query("SELECT ($sub_query) as modal
+            from ($query) as a
+            WHERE 1=1 $where
+        ")->row();
+
+        return empty($row->modal) ? 0 : $row->modal;
     }
 }
 

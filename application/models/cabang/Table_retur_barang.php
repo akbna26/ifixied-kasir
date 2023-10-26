@@ -95,7 +95,8 @@ class Table_retur_barang extends CI_Model
 
             $retur = '';
 
-            if (empty($field->status_retur)) $retur = '<span class="fw-600 text-primary">Belum diverifikasi</span>';
+            if (empty($field->status_retur) && empty($field->is_sampai)) $retur = '<span class="fw-600 text-primary">Barang Dicabang</span>';
+            elseif ($field->is_sampai == 1 && empty($field->status_retur)) $retur = '<span class="fw-600 text-warning">Barang tiba digudang, Menunggu konfirmasi</span>';
             elseif ($field->status_retur == 1) $retur = '<span class="fw-600 text-danger">Kerugian</span>';
             elseif ($field->status_retur == 2) $retur = '<span class="fw-600 text-success">Disetujui</span>';
 
@@ -104,7 +105,7 @@ class Table_retur_barang extends CI_Model
 
             $aksi = '';
 
-            if (empty($field->status_retur) && session('type') == 'cabang' && $field->id_klaim == 5) {
+            if (empty($field->status_retur) && session('type') == 'cabang' && $field->id_klaim == 5 && empty($field->is_sampai)) {
                 $aksi .= '
                     <button onclick="detail(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-warning mr-1 fw-600"><i class="fas fa-eye"></i> Detail</button>
                     <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>

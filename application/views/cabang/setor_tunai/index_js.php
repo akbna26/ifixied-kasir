@@ -149,7 +149,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/setor_tunai/do_konfirmasi') ?>",
+                    url: "<?= base_url($this->type . '/setor_tunai/do_konfirmasi') ?>",
                     data: {
                         id: id,
                     },

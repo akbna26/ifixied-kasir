@@ -13,11 +13,16 @@ class Table_human_error extends CI_Model
 
     private function _get_datatables_query()
     {
-        $this->db->select('a.*, concat(b.barcode," - ",b.nama) as nm_barang, b.harga_modal, c.nama as nm_cabang, d.nama as nm_pegawai');
+        $this->db->select("a.*, 
+        case when a.id_klaim=1 then 'HUMAN ERROR' else 'KLAIM SERVIS IC' end as status_klaim,
+        case when a.id_klaim=1 then d.nama else CONCAT('OFFICE - ',e.nama) end as nm_pegawai,
+        concat(b.barcode,' - ',b.nama) as nm_barang, b.harga_modal, c.nama as nm_cabang");
         $this->db->from('human_error a');
         $this->db->join('barang b', 'b.id = a.id_barang', 'left');
         $this->db->join('ref_cabang c ', 'c.id = a.id_cabang', 'left');
         $this->db->join('pegawai d ', 'd.id = a.id_pegawai', 'left');
+        $this->db->join('pegawai e ', 'e.id = a.id_pegawai_office', 'left');
+        $this->db->where('a.deleted', null);
         if (session('type') == 'cabang') $this->db->where('a.id_cabang', $this->id_cabang);
 
         $i = 0;
@@ -81,20 +86,21 @@ class Table_human_error extends CI_Model
 
             $row[] = $no;
             $row[] = $field->nm_cabang;
+            $row[] = $field->status_klaim;
             $row[] = $field->nm_pegawai;
             $row[] = $field->nm_barang;
-            // $row[] = rupiah($field->harga_modal);
             $row[] = tgl_indo($field->tanggal);
             $row[] = $field->keterangan;
 
-            if (session('type') == 'cabang') {
+            if (session('type') == 'admin') {
+                // <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
                 $aksi = '
-                    <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
-                    <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger mt-1 fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>
+                    <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger mt-1 fw-600"><i class="fas fa-times"></i> Cancel</button>
                 ';
+            }else{
+                $aksi = '<span class="text-danger">Jika terjadi kesalahan hubungi admin</span>';
             }
 
-            if (session('type') == 'gudang' && empty($field->status_retur)) $aksi .= '<button onclick="verifikasi(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-success fw-600"><i class="fas fa-check"></i> Verifikasi</button>';
             $row[] = $aksi;
 
             $data[] = $row;

@@ -89,6 +89,12 @@ class Servis_berat extends MY_controller
             a.deleted IS NULL and a.id='$id'
         ")->row();
 
+        $data['part'] = $this->db->query("SELECT a.*, b.nama, b.barcode 
+            from servis_detail_part a 
+            left join barang b on b.id=a.id_barang
+            where a.id_servis='$id' and a.deleted is null 
+        ")->result();
+
         $html = $this->load->view('cabang/servis_berat/detail', $data, true);
 
         echo json_encode([
@@ -139,6 +145,20 @@ class Servis_berat extends MY_controller
         ]);
     }
 
+    public function show_tabel_part()
+    {
+        $id = decode_id($this->input->post('id'));
+        $data['id'] = $id;
+        $data['row'] = $this->db->query("SELECT * from servis_berat where id='$id' and deleted is null")->row();
+        $data['ref_kategori'] = $this->db->query("SELECT * from ref_kategori where deleted is null")->result();
+        $html = $this->load->view('cabang/servis_berat/show_tabel_part', $data, true);
+
+        echo json_encode([
+            'status' => 'success',
+            'html' => $html,
+        ]);
+    }
+
     public function tambah()
     {
         $data = [];
@@ -160,6 +180,21 @@ class Servis_berat extends MY_controller
         echo json_encode([
             'status' => 'success',
             'html' => $html,
+        ]);
+    }
+
+    public function hapus_part()
+    {
+        cek_post();
+        $id = $this->input->post('id');
+
+        $this->db->where('id', $id);
+        $this->db->update('servis_detail_part', [
+            'deleted' => date('Y-m-d H:i:s'),
+        ]);
+
+        echo json_encode([
+            'status' => 'success',
         ]);
     }
 
@@ -297,6 +332,15 @@ class Servis_berat extends MY_controller
             'updated' => date('Y-m-d H:i:s'),
         ]);
 
+        $all_part = $this->db->query("SELECT * from servis_detail_part where id_servis='$id' and deleted is null ")->result();
+        foreach ($all_part as $dt) {
+            $stock = $dt->qty;
+            $id_barang = $dt->id_barang;
+            $id_cabang = $row->id_cabang;
+            
+            $this->db->query("UPDATE barang_cabang set stock=(stock-$stock) where id_cabang='$id_cabang' and id_barang='$id_barang' ");
+        }
+
         echo json_encode([
             'status' => 'success',
             'link' => base_url('cabang/cetak/nota_servis_berat/') . encode_id($id),
@@ -311,6 +355,11 @@ class Servis_berat extends MY_controller
         $id_servis = decode_id($this->input->post('id_servis'));
         $row = $this->db->query("SELECT * from servis_berat where id='$id_servis' ")->row();
         $data['data'] = $row;
+        $data['part'] = $this->db->query("SELECT a.*, b.nama, b.barcode 
+            from servis_detail_part a 
+            left join barang b on b.id=a.id_barang
+            where a.id_servis='$id_servis' and a.deleted is null 
+        ")->result();
 
         $data['ref_tindakan'] = $this->db->query("SELECT * from ref_tindakan")->result();
         $data['ref_teknisi'] =  $this->db->query("SELECT a.*, b.nama as nm_pegawai
@@ -375,16 +424,41 @@ class Servis_berat extends MY_controller
         }
 
         if ($status == 5) {
+            $cek_prosen_teknisi = $this->db->query("SELECT * from setting_pegawai where id='$id_teknisi' ")->row();
+
             $this->db->where('id', $id);
             $this->db->update('servis_berat', [
                 'id_teknisi_setting' => $id_teknisi,
                 'id_tindakan' => $id_tindakan,
+                'prosen_teknisi' => $cek_prosen_teknisi->prosentase,
                 'biaya' => $biaya,
                 'harga_part' => $harga_part,
                 'modal' => $modal,
                 'status' => $status,
                 'updated' => date('Y-m-d H:i:s'),
             ]);
+
+            $barang_id = explode(',', $this->input->post('barang_id'));
+            $barang_qty = explode(',', $this->input->post('barang_qty'));
+            $barang_modal = explode(',', $this->input->post('barang_modal'));
+            $barang_total = explode(',', $this->input->post('barang_total'));
+
+            if (!empty($barang_id)) {
+                for ($i = 0; $i < count($barang_id); $i++) {
+                    $arr_insert[] = [
+                        'id_servis' => $id,
+                        'id_barang' => $barang_id[$i],
+                        'harga_modal' => $barang_modal[$i],
+                        'qty' => $barang_qty[$i],
+                        'total' => $barang_total[$i],
+                        'created' => date('Y-m-d H:i:s'),
+                    ];
+                }
+
+                if (count($arr_insert) > 0) {
+                    $this->db->insert_batch('servis_detail_part', $arr_insert);
+                }
+            }
         } else {
             $this->db->where('id', $id);
             $this->db->update('servis_berat', [

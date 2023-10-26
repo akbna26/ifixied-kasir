@@ -32,7 +32,7 @@
     function tambah() {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('cabang/human_error/tambah') ?>",
+            url: "<?= base_url(session('type') . '/human_error/tambah') ?>",
             dataType: "JSON",
             data: {},
             beforeSend: function(res) {
@@ -61,7 +61,7 @@
     function ubah(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('cabang/human_error/ubah') ?>",
+            url: "<?= base_url(session('type') . '/human_error/ubah') ?>",
             dataType: "JSON",
             data: {
                 id: id,
@@ -101,7 +101,7 @@
             if (result.value) {
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('cabang/human_error/do_submit') ?>",
+                    url: "<?= base_url(session('type') . '/human_error/do_submit') ?>",
                     data: {
                         hapus: true,
                         id: id,

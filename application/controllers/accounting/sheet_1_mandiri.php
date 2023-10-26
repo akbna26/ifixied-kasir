@@ -2,7 +2,7 @@
 
 $awal += 2;
 
-$sheet->setCellValue('B' . $awal, 'REK BCA');
+$sheet->setCellValue('B' . $awal, 'REK MANDIRI');
 
 $awal += 1;
 // judul
@@ -31,7 +31,7 @@ $query = $this->query_global->modal();
 $data = $this->db->query("SELECT a.* 
             from ($query) as a 
             left join ref_jenis_pembayaran b on b.id=a.id_pembayaran
-            where a.id_cabang='$id_cabang' and b.nm_jenis='bca' and a.tanggal='$tgl'
+            where a.id_cabang='$id_cabang' and b.nm_jenis='mandiri' and a.tanggal='$tgl'
             order by case when a.jenis_transaksi='SETOR TUNAI' then 0 else tanggal end
         ")->result();
 
@@ -92,3 +92,8 @@ $sheet->getStyle('A' . $awal . ':F' . $awal)->applyFromArray([
         ],
     ],
 ]);
+
+$currencyFormat = '#,##';
+$lastRow = $sheet->getHighestRow();
+$sheet->getStyle('C1:E' . $lastRow)->getNumberFormat()->setFormatCode($currencyFormat);
+$sheet->getStyle('J1:N' . $lastRow)->getNumberFormat()->setFormatCode($currencyFormat);

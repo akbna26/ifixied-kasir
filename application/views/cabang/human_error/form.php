@@ -1,13 +1,36 @@
 <form onsubmit="event.preventDefault();do_submit(this);">
 
     <div class="form-group">
-        <label>Pegawai</label>
-        <select required name="id_pegawai" class="form-control js_select2" data-placeholder="pilih pegawai">
-            <option value=""></option>
-            <?php foreach ($pegawai as $dt) : ?>
-                <option <?= $dt->id == @$data->id_pegawai ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
-            <?php endforeach; ?>
+        <label>Status Klaim</label>
+        <select required name="id_klaim" class="form-control js_select2" data-placeholder="pilih status klaim" onchange="cek_klaim(this);">
+            <option <?= @$data->id_klaim == 1 ? 'selected' : '' ?> value="1">Human Error</option>
+            <option <?= @$data->id_klaim == 2 ? 'selected' : '' ?> value="2">Klaim Servis IC</option>
         </select>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12" id="select_cabang">
+            <div class="form-group">
+                <label>Pegawai</label>
+                <select required name="id_pegawai" id="pilih_pegawai_cabang" class="form-control js_select2 pilih_pegawai" data-placeholder="pilih pegawai">
+                    <option value=""></option>
+                    <?php foreach ($pegawai as $dt) : ?>
+                        <option <?= $dt->id == @$data->id_pegawai ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+        <div class="col-md-12" style="display: none;" id="select_office">
+            <div class="form-group">
+                <label>Pegawai Office <small class="text-danger">* khusus servis IC</small></label>
+                <select id="pilih_pegawai_office" name="id_pegawai_office" class="form-control js_select2 pilih_pegawai" data-placeholder="pilih pegawai office">
+                    <option value=""></option>
+                    <?php foreach ($pegawai_office as $dt) : ?>
+                        <option <?= $dt->id == @$data->id_pegawai_office ? 'selected' : '' ?> value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
     </div>
 
     <div class="row">
@@ -32,7 +55,7 @@
 
     <div class="form-group">
         <label>Tanggal</label>
-        <input type="date" required name="tanggal" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal) ? '' : date('Y-m-d', strtotime($data->tanggal)) ?>">
+        <input type="date" required name="tanggal" placeholder="Masukkan isian" class="form-control" value="<?= empty($data->tanggal) ? date('Y-m-d') : date('Y-m-d', strtotime($data->tanggal)) ?>">
     </div>
 
     <div class="form-group">
@@ -51,6 +74,22 @@
             width: '100%'
         });
     });
+
+    function cek_klaim(dt) {
+        var status = $(dt).val();
+        $('.pilih_pegawai').prop('required', false);
+        if (status == 1) {
+            $('#pilih_pegawai_office').val('').change();
+            $('#pilih_pegawai_cabang').prop('required', true);
+            $('#select_cabang').show(500);
+            $('#select_office').hide();
+        } else {
+            $('#pilih_pegawai_cabang').val('').change();
+            $('#select_office').show(500);
+            $('#select_cabang').hide();
+            $('#pilih_pegawai_office').prop('required', true);
+        }
+    }
 
     function select_harga_modal(dt) {
         var harga = $('option:selected', dt).data('hargamodal');
@@ -71,7 +110,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('cabang/human_error/do_submit') ?>",
+                    url: "<?= base_url(session('type') . '/human_error/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,

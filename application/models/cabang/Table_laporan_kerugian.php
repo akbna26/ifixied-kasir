@@ -9,6 +9,7 @@ class Table_laporan_kerugian extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('query_global');        
     }
 
     private function _get_datatables_query()
@@ -18,7 +19,9 @@ class Table_laporan_kerugian extends CI_Model
         $where = '';
         if (!empty($tanggal)) $where .= "AND DATE(tanggal)='$tanggal' ";
 
-        $query = "SELECT * from data_kerugian a where a.id_cabang='$this->id_cabang' $where ";
+        $query = $this->query_global->data_kerugian();
+
+        $query = "SELECT * from ($query) a where a.id_cabang='$this->id_cabang' $where ";
         $this->db->from("($query) as tabel");
 
         $i = 0;

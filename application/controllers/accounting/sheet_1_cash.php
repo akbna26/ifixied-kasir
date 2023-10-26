@@ -3,7 +3,7 @@
 $sheet = $spreadsheet->createSheet(0);
 $sheet->setTitle('REPORT');
 $sheet->setCellValue('A1', 'REPORT HARIAN IFIXIED ' . $row_cabang->nama . ' ' . date('d-m-Y', strtotime($tgl)));
-$sheet->mergeCells('A1:B1');
+$sheet->mergeCells('A1:F1');
 $sheet->setCellValue('B2', 'CASH');
 
 // judul
@@ -21,7 +21,7 @@ $sheet->getStyle('A3:F3')->applyFromArray([
     'fill' => [
         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
         'startColor' => [
-            'argb' => '01FF00',
+            'argb' => 'FF9902',
         ],
     ],
 ]);
@@ -49,7 +49,7 @@ $awal = 5;
 $no = 1;
 $query = $this->query_global->modal();
 
-$data = $this->db->query("SELECT * 
+$data = $this->db->query("SELECT a.* 
             from ($query) as a 
             left join ref_jenis_pembayaran b on b.id=a.id_pembayaran
             where a.id_cabang='$id_cabang' and b.nm_jenis='cash' and a.tanggal='$tgl'
@@ -109,7 +109,7 @@ $sheet->getStyle('A' . $awal . ':F' . $awal)->applyFromArray([
     'fill' => [
         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
         'startColor' => [
-            'argb' => '01FF00',
+            'argb' => 'FF9902',
         ],
     ],
 ]);

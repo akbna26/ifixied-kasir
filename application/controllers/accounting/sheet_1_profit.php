@@ -19,14 +19,14 @@ $sheet->getStyle('H3:P3')->applyFromArray([
     'fill' => [
         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
         'startColor' => [
-            'argb' => '01FF00',
+            'argb' => 'FF9902',
         ],
     ],
 ]);
 
 $sheet->getStyle('H3:P3')->getAlignment()->setHorizontal('center');
 
-foreach (['H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'] as $column) $sheet->getColumnDimension($column)->setAutoSize(true);
+foreach (['I', 'J', 'K', 'L', 'M', 'N', 'O', 'P'] as $column) $sheet->getColumnDimension($column)->setAutoSize(true);
 
 $awal = 4;
 $no = 1;
@@ -48,7 +48,7 @@ $total_profit = 0;
 foreach ($data as $row) {
     $sheet
         ->setCellValue('H' . $awal, $no)
-        ->setCellValue('I' . $awal, $row->pelanggan . '/' . $row->no_hp . ' - ' . $row->tipe_unit . ' (' . $row->kerusakan . ')')
+        ->setCellValue('I' . $awal, $row->pelanggan . ' / ' . $row->no_hp . ' - ' . $row->tipe_unit . ' (' . $row->kerusakan . ')')
         ->setCellValue('J' . $awal, $row->modal)
         ->setCellValue('K' . $awal, $row->biaya)
         ->setCellValue('L' . $awal, 1)
@@ -106,7 +106,7 @@ $sheet->getStyle('H' . $awal . ':P' . $awal)->applyFromArray([
     'fill' => [
         'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
         'startColor' => [
-            'argb' => '01FF00',
+            'argb' => 'FF9902',
         ],
     ],
 ]);

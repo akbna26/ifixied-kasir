@@ -1,3 +1,9 @@
+<style>
+    .modal {
+        overflow-y: scroll;
+    }
+</style>
+
 <div class="row" id="target_full_page">
     <div class="col-md-12">
         <div class="card">

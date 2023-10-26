@@ -163,3 +163,8 @@ function angkaKeNamaBulan($angkaBulan)
     }
     return $namaBulan;
 }
+
+function zerofill($number, $length)
+{
+    return str_pad($number, $length, '0', STR_PAD_LEFT);
+}

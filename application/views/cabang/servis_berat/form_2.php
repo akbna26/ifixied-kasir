@@ -63,6 +63,47 @@
                     </div>
                 </div>
 
+                <div class="card">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-item-center mb-2">
+                            <h4 class="mb-0">Part Yang Dibutuhkan</h4>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="show_tabel_part();"><i class="fa fa-plus"></i> Tambah Part</button>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-bordered striped table-sm mb-0" id="table_part">
+                                <thead class="bg-primary text-white text-center">
+                                    <tr>
+                                        <th>BARCODE</th>
+                                        <th>NAMA PART</th>
+                                        <th>HARGA MODAL</th>
+                                        <th>QTY</th>
+                                        <th>TOTAL</th>
+                                        <th>HAPUS</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php foreach ($part as $dt) :
+                                        $time = time();
+                                    ?>
+                                        <tr id="tr_part_<?= $time ?>">
+                                            <td><?= $dt->barcode ?></td>
+                                            <td class="text-center"><?= $dt->nama ?></td>
+                                            <td class="text-center"><?= rupiah($dt->harga_modal) ?></td>
+                                            <td class="text-center"><?= $dt->qty ?></td>
+                                            <td class="text-center"><?= rupiah($dt->total) ?></td>
+                                            <td class="text-center">
+                                                <button type="button" onclick="hapus_part(<?= $dt->id ?>,'<?= $time ?>');hitung_total_part();" class="btn btn-outline-warning btn-sm part_terpilih_old" data-id="<?= $dt->id_barang ?>" data-modal="<?= $dt->harga_modal ?>" data-qty="<?= $dt->qty ?>" data-total="<?= $dt->total ?>">
+                                                    <i class="fa fa-trash-alt"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="row">
                     <div class="col-md-4">
                         <div class="form-group">
@@ -73,7 +114,7 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Harga PART/IC Nand</label>
-                            <input type="text" required id="part" name="harga_part" onchange="hitung_modal();" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah wajib" value="<?= !empty($data->harga_part) ? rupiah($data->harga_part) : '' ?>">
+                            <input type="text" readonly id="part" name="harga_part" onchange="hitung_modal();" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah wajib" value="<?= !empty($data->harga_part) ? rupiah($data->harga_part) : '' ?>">
                         </div>
                     </div>
                     <div class="col-md-4">
@@ -83,15 +124,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- <div class="row">
-                    <div class="col-md-12">
-                        <div class="form-group">
-                            <label>Biaya Tambahan<small class="text-danger fw-600">(Jika klaim garansi)</small></label>
-                            <input type="text" name="biaya_klaim_garansi" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= !empty($data->biaya_klaim_garansi) ? rupiah($data->biaya_klaim_garansi) : '' ?>">
-                        </div>
-                    </div>
-                </div> -->
 
             </div>
         </div>
@@ -113,6 +145,101 @@
             width: '100%'
         });
     });
+
+    function hapus_part(id, target) {
+        Swal.fire({
+            title: 'Hapus Data Part ?',
+            icon: 'question',
+            showCancelButton: true,
+            confirmButtonText: 'Ya',
+            cancelButtonText: 'Batal',
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                $.ajax({
+                    type: "POST",
+                    url: "<?= base_url(session('type') . '/servis_berat/hapus_part') ?>",
+                    data: {
+                        id: id,
+                    },
+                    dataType: "JSON",
+                    beforeSend: function(res) {
+                        Swal.fire({
+                            title: 'Loading ...',
+                            html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                            allowOutsideClick: false,
+                            showConfirmButton: false,
+                        });
+                    },
+                    error: function(res) {
+                        Swal.close();
+                    },
+                    success: function(res) {
+                        if (res.status == 'success') {
+                            Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil dihapus',
+                                    showConfirmButton: true,
+                                })
+                                .then(() => {
+                                    $('#tr_part_' + target).remove();
+                                    hitung_total_part();
+                                });
+                        }
+                    }
+                });
+            } else {
+                return false;
+            }
+        })
+    }
+
+    function hitung_total_part() {
+        var total = 0;
+
+        $('.part_terpilih').each(function(i, obj) {
+            var val = $(this).data('total');
+            total += parseInt(val);
+        })
+
+        $('.part_terpilih_old').each(function(i, obj) {
+            var val = $(this).data('total');
+            total += parseInt(val);
+        })
+
+        $('#part').val(formatRupiah(total + '')).change();
+    }
+
+    function show_tabel_part() {
+        $.ajax({
+            type: "POST",
+            url: "<?= base_url(session('type') . '/servis_berat/show_tabel_part') ?>",
+            dataType: "JSON",
+            data: {
+                id: "<?= encode_id(@$data->id) ?>",
+            },
+            beforeSend: function(res) {
+                Swal.fire({
+                    title: 'Loading ...',
+                    html: '<i style="font-size:25px;" class="fa fa-spinner fa-spin"></i>',
+                    allowOutsideClick: false,
+                    showConfirmButton: false,
+                });
+            },
+            complete: function(res) {
+                Swal.close();
+            },
+            success: function(res) {
+                if (res.status == 'success') {
+                    show_modal_custom_2({
+                        judul: 'PART SERVIS',
+                        html: res.html,
+                        size: 'modal-xl',
+                    });
+                }
+            }
+        });
+    }
 
     function hitung_modal() {
         var prosen = parseFloat($('option:selected', $('#teknisi')).data('prosen'));
@@ -178,8 +305,29 @@
         }).then((result) => {
             if (result.value) {
 
+                var barang_id = [];
+                var barang_qty = [];
+                var barang_modal = [];
+                var barang_total = [];
+
+                $('.part_terpilih').each(function(i, obj) {
+                    var id = $(this).data('id');
+                    var qty = $(this).data('qty');
+                    var modal = $(this).data('modal');
+                    var total = $(this).data('total');
+
+                    barang_id.push(id);
+                    barang_qty.push(qty);
+                    barang_modal.push(modal);
+                    barang_total.push(total);
+                });
+
                 var form = new FormData(dt);
                 form.append('status', status);
+                form.append('barang_id', barang_id);
+                form.append('barang_qty', barang_qty);
+                form.append('barang_modal', barang_modal);
+                form.append('barang_total', barang_total);
 
                 $.ajax({
                     type: "POST",

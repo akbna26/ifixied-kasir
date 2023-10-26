@@ -103,3 +103,42 @@
         </table>
     </div>
 </div>
+
+<?php if (session('type') == 'servis') : ?>
+    <h4>Part yang Digunakan</h4>
+    <div class="table-responsive">
+        <table class="table table-bordered striped table-sm mb-0">
+            <thead class="bg-primary text-white text-center">
+                <tr>
+                    <th>BARCODE</th>
+                    <th>NAMA PART</th>
+                    <th>HARGA MODAL</th>
+                    <th>QTY</th>
+                    <th>SUB TOTAL</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+                $total = 0;
+                foreach ($part as $dt) : ?>
+                    <tr>
+                        <td><?= $dt->barcode ?></td>
+                        <td class="text-center"><?= $dt->nama ?></td>
+                        <td class="text-center"><?= rupiah($dt->harga_modal) ?></td>
+                        <td class="text-center"><?= $dt->qty ?></td>
+                        <td class="text-center"><?= rupiah($dt->total) ?></td>
+                    </tr>
+
+                <?php
+                    $total += $dt->total;
+                endforeach; ?>
+            </tbody>
+            <tfoot>
+                <tr class="bg-primary text-white">
+                    <td colspan="4" class="text-right">Total</td>
+                    <td class="text-center"><?= rupiah($total) ?></td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+<?php endif; ?>

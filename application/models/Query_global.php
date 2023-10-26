@@ -192,10 +192,28 @@ class Query_global extends CI_Model
         left join ref_cabang c on c.id=a.id_cabang
         left join barang d on d.id=a.id_barang
         WHERE a.deleted is null and a.id_klaim in (5) and d.id_kategori !=2 and a.id_refund='0'
-        ";        
+        ";
+
+        $stock_part_servis = "SELECT a.id_cabang, c.nama as nm_cabang, 'PART SERVIS IC' as jenis_transaksi, 0 as kredit, aa.total as debit,
+        DATE(a.tgl_keluar) as tanggal, aa.qty, aa.harga_modal, CONCAT(d.barcode,' -> ',d.nama) as keterangan, '' as nm_cabang_asal
+        FROM servis_berat a
+        left join servis_detail_part aa on aa.id_servis=a.id
+        left join ref_cabang c on c.id=a.id_cabang
+        left join barang d on d.id=aa.id_barang
+        WHERE a.deleted is null and aa.deleted is null and d.id_kategori !=2 and a.tgl_keluar is not null
+        ";
+
+        $stock_human_error = "SELECT a.id_cabang, c.nama as nm_cabang, 'HUMAN ERROR PART' as jenis_transaksi, 0 as kredit, a.modal as debit,
+        a.tanggal, 1 as qty, a.modal, CONCAT(d.barcode,' -> ',d.nama,' (',a.keterangan,')') as keterangan, '' as nm_cabang_asal
+        FROM human_error a
+        left join ref_cabang c on c.id=a.id_cabang
+        left join barang d on d.id=a.id_barang
+        WHERE a.deleted is null and d.id_kategori !=2
+        ";
 
         $query = "($transaksi_debit) UNION ALL ($stock_kredit_pusat) UNION ALL ($stock_kredit_transfer)
-        UNION ALL ($stock_debit_transfer) UNION ALL ($stock_retur) UNION ALL ($stock_retur_teknisi) ";
+        UNION ALL ($stock_debit_transfer) UNION ALL ($stock_retur) UNION ALL ($stock_retur_teknisi) 
+        UNION ALL ($stock_part_servis) UNION ALL ($stock_human_error)";
 
         return $query;
     }
@@ -255,10 +273,58 @@ class Query_global extends CI_Model
         left join ref_cabang c on c.id=a.id_cabang
         left join barang d on d.id=a.id_barang
         WHERE a.deleted is null and a.id_klaim in (5) and d.id_kategori =2 and a.id_refund='0'
-        ";        
+        ";
+
+        $stock_human_error = "SELECT a.id_cabang, c.nama as nm_cabang, 'HUMAN ERROR ACC' as jenis_transaksi, 0 as kredit, a.modal as debit,
+        a.tanggal, 1 as qty, a.modal, CONCAT(d.barcode,' -> ',d.nama,' (',a.keterangan,')') as keterangan, '' as nm_cabang_asal
+        FROM human_error a
+        left join ref_cabang c on c.id=a.id_cabang
+        left join barang d on d.id=a.id_barang
+        WHERE a.deleted is null and d.id_kategori =2
+        ";
 
         $query = "($transaksi_debit) UNION ALL ($stock_kredit_pusat) UNION ALL ($stock_kredit_transfer)
-        UNION ALL ($stock_debit_transfer) UNION ALL ($stock_retur) UNION ALL ($stock_retur_teknisi) ";
+        UNION ALL ($stock_debit_transfer) UNION ALL ($stock_retur) UNION ALL ($stock_retur_teknisi) 
+        UNION ALL ($stock_human_error)";
+
+        return $query;
+    }
+
+    public function data_kerugian()
+    {
+        $refund_detail = "SELECT
+            CASE WHEN ISNULL(a.id_cabang) THEN b.id_cabang ELSE a.id_cabang END AS id_cabang, a.potong_profit AS jumlah, a.tanggal_konfirmasi AS tanggal,
+            'retur' AS jenis, a.id AS id_asal,
+            CONCAT(c.barcode, ' - ', c.nama) AS keterangan
+        FROM
+            refund_detail a
+            LEFT JOIN refund b ON b.id = a.id_refund
+            LEFT JOIN barang c ON c.id = a.id_barang
+        WHERE
+            ISNULL(a.deleted)
+            AND a.status_retur = 1";
+
+        $kerugian = "SELECT a.id_cabang AS id_cabang, a.jumlah AS jumlah, a.tanggal AS tanggal, 'kerugian' AS jenis, a.id AS id_asal, a.keterangan AS keterangan
+        FROM kerugian a
+        WHERE ISNULL(a.deleted)";
+
+        $servis_berat = "SELECT a.id_cabang AS id_cabang, b.profit AS jumlah, a.tgl_refund AS tanggal, 'servis' AS jenis, a.id AS id_asal, 
+        concat(a.pelanggan,' / ',a.no_hp, ' - ',a.tipe_unit,' (',a.kerusakan,')')  AS keterangan
+        FROM servis_berat a
+        LEFT JOIN profit_servis b ON a.id = b.id
+        WHERE ISNULL(a.deleted) AND a.is_refund = 1";
+
+        $human_error = "SELECT a.id_cabang AS id_cabang, a.modal AS jumlah, a.tanggal AS tanggal, 'human_error' AS jenis, a.id AS id_asal, 
+        case when a.id_klaim=1 then concat('HUMAN ERROR, ',b.barcode, ' - ' ,b.nama, ' / ',c.nama,' (',a.keterangan,')') 
+        else concat('KLAIM SERVIS IC, ',b.barcode, ' - ' ,b.nama, ' / OFFICE, ',d.nama,' (',a.keterangan,')')  end
+        AS keterangan
+        FROM human_error a
+        left join barang b on b.id=a.id_barang
+        left join pegawai c on c.id=a.id_pegawai
+        left join pegawai d on d.id=a.id_pegawai_office
+        WHERE ISNULL(a.deleted)";
+
+        $query = "($refund_detail) UNION ALL ($kerugian) UNION ALL ($servis_berat) UNION ALL ($human_error)";
 
         return $query;
     }

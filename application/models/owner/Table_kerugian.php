@@ -9,6 +9,7 @@ class Table_kerugian extends CI_Model
     public function __construct()
     {
         parent::__construct();
+        $this->load->model('query_global');        
     }
 
     private function _get_datatables_query()
@@ -23,7 +24,9 @@ class Table_kerugian extends CI_Model
             $where .= "AND MONTH(a.tanggal)='$bulan' AND YEAR(a.tanggal)='$tahun' ";
         }
 
-        $query = "SELECT a.*, b.nama as nm_cabang from data_kerugian a 
+        $query = $this->query_global->data_kerugian();
+
+        $query = "SELECT a.*, b.nama as nm_cabang from ($query) a 
             left join ref_cabang b on b.id=a.id_cabang
             where a.id_cabang='$id_cabang' $where 
         ";

@@ -8,6 +8,7 @@ class Sirkulasi_part extends MY_controller
     {
         parent::__construct();
         $this->load->model('gudang/table_sirkulasi_part', 'table');
+        $this->load->model('query_global');
     }
 
     public function index()
