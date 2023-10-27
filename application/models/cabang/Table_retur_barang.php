@@ -13,6 +13,8 @@ class Table_retur_barang extends CI_Model
 
     private function _get_datatables_query()
     {
+        $filter_jenis = $this->input->get('filter_jenis');
+        
         $this->db->select('a.*, a.created as tanggal, concat(b.barcode," - ",b.nama) as nm_barang, c.no_invoice, 
         case when a.id_klaim=5 then f.nama else d.nama end as nm_cabang, e.nama as nm_klaim ', false);
         $this->db->from('refund_detail a');
@@ -25,6 +27,10 @@ class Table_retur_barang extends CI_Model
         $this->db->where_in('a.id_klaim', [1, 3, 5]);
         $this->db->where('a.deleted', null);
         $this->db->where('aa.deleted', null);
+        if($filter_jenis !='all'){
+            if($filter_jenis=='part') $this->db->where('b.id_kategori != 2');            
+            elseif($filter_jenis=='acc') $this->db->where('b.id_kategori =2');
+        }
         if (session('type') == 'cabang') $this->db->where("(a.id_cabang = $this->id_cabang OR aa.id_cabang=$this->id_cabang )");
 
         $i = 0;

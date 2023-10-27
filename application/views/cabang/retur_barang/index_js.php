@@ -18,7 +18,9 @@
                 url: '<?= base_url(session('type') . '/retur_barang/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
-                data: {},
+                data: {
+                    filter_jenis: $('#filter_jenis').val(),
+                },
             },
             order: [],
             columnDefs: [{

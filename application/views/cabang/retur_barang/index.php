@@ -8,6 +8,13 @@
                         <i class="fa fa-plus mr-1"></i> Retur Oleh Teknisi
                     </button>
                 <?php endif; ?>
+                <div style="width: 150px;" onchange="load_table();">
+                    <select id="filter_jenis" class="form-control js_select2">
+                        <option value="all" selected>semua jenis</option>
+                        <option value="part">PART</option>
+                        <option value="acc">ACC</option>
+                    </select>
+                </div>
             </div>
 
             <div class="card-body">
