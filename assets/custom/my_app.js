@@ -18,6 +18,10 @@ $('body').on('keyup', '.rupiah', function() {
     $(this).val(formatRupiah(this.value));
 });
 
+$('body').tooltip({
+    selector: '.my_tooltip'
+});
+
 function set_radio(dt, kelas) {
     $('.' + kelas).removeClass('active');
     $(dt).addClass('active');

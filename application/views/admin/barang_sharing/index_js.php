@@ -20,9 +20,6 @@
                 dataType: 'JSON',
                 data: {},
             },
-            initComplete: function() {
-                $('[data-toggle="tooltip"]').tooltip()
-            },
             order: [],
             columnDefs: [{
                 targets: [0, 3, 4, -1],

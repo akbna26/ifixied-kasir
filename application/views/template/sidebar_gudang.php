@@ -31,6 +31,12 @@
                         <span>Verifikasi Retur</span>
                     </a>
                 </li>
+                <li class="<?= $this->uri->segment(2) == 'part_servis' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('gudang/part_servis') ?>" class="waves-effect fw-600">
+                        <i class="bx bx-check-shield"></i>
+                        <span>Verifikasi Part Servis</span>
+                    </a>
+                </li>
                 <li class="<?= $this->uri->segment(2) == 'sirkulasi_part' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('gudang/sirkulasi_part') ?>" class="waves-effect fw-600">
                         <i class="bx bx-store"></i>

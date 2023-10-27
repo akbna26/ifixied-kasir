@@ -48,7 +48,7 @@ class Cetak extends MY_controller
 
         // $spreadsheet->setActiveSheetIndex(0);
         header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
-        header('Content-Disposition: attachment;filename="Laporan_harian_' . $row_cabang->nama . '_' . date('d-F-Y ', strtotime($tgl)) . '.xlsx"');
+        header('Content-Disposition: attachment;filename="Laporan harian ' . $row_cabang->nama . ' ' . date('d-F-Y ', strtotime($tgl)) . '.xlsx"');
         header('Cache-Control: max-age=0');
         header('Cache-Control: max-age=1');
 

@@ -211,9 +211,27 @@ class Query_global extends CI_Model
         WHERE a.deleted is null and d.id_kategori !=2
         ";
 
+        $stock_servis_refund = "SELECT a.id_cabang, c.nama as nm_cabang, 'USER REFUND SERVIS IC' as jenis_transaksi, b.total as kredit, 0 as debit,
+        a.tgl_refund as tanggal, b.qty as qty, b.harga_modal, CONCAT(d.barcode,' -> ',d.nama) as keterangan, '' as nm_cabang_asal
+        FROM servis_berat a
+        left join servis_detail_part b on b.id_servis=a.id
+        left join ref_cabang c on c.id=a.id_cabang
+        left join barang d on d.id=b.id_barang
+        WHERE a.deleted is null and b.deleted is null and a.is_refund='1' and b.id is not null
+        ";
+
+        $stock_servis_retur = "SELECT a.id_cabang, c.nama as nm_cabang, 'RETUR SERVIS' as jenis_transaksi, 0 as kredit, b.total as debit,
+        a.tgl_refund as tanggal, b.qty as qty, b.harga_modal, CONCAT(d.barcode,' -> ',d.nama) as keterangan, '' as nm_cabang_asal
+        FROM servis_berat a
+        left join servis_detail_part b on b.id_servis=a.id
+        left join ref_cabang c on c.id=a.id_cabang
+        left join barang d on d.id=b.id_barang
+        WHERE a.deleted is null and b.deleted is null and a.is_refund='1' and b.id is not null
+        ";
+
         $query = "($transaksi_debit) UNION ALL ($stock_kredit_pusat) UNION ALL ($stock_kredit_transfer)
         UNION ALL ($stock_debit_transfer) UNION ALL ($stock_retur) UNION ALL ($stock_retur_teknisi) 
-        UNION ALL ($stock_part_servis) UNION ALL ($stock_human_error)";
+        UNION ALL ($stock_part_servis) UNION ALL ($stock_human_error) UNION ALL ($stock_servis_refund) UNION ALL ($stock_servis_retur)";
 
         return $query;
     }
@@ -324,7 +342,16 @@ class Query_global extends CI_Model
         left join pegawai d on d.id=a.id_pegawai_office
         WHERE ISNULL(a.deleted)";
 
-        $query = "($refund_detail) UNION ALL ($kerugian) UNION ALL ($servis_berat) UNION ALL ($human_error)";
+        $query_part = "SELECT a.id_cabang as id_cabang, b.total as jumlah, b.tgl_verifikasi as tanggal, 'PART REFUND USER SERVIS' as jenis, b.id as id_asal,
+        CONCAT(c.barcode, ' - ', c.nama,' (',a.invoice,')') AS keterangan
+        FROM servis_berat a
+        left join ref_cabang aa on aa.id=a.id_cabang
+        left join servis_detail_part b on b.id_servis=a.id
+        left join barang c on c.id=b.id_barang
+        where a.deleted is null and a.is_refund='1' and b.id is not null and b.verif_refund='0' ";
+
+        $query = "($refund_detail) UNION ALL ($kerugian) UNION ALL ($servis_berat) 
+        UNION ALL ($human_error) UNION ALL ($query_part)";
 
         return $query;
     }

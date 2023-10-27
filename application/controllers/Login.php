@@ -29,8 +29,8 @@ class Login extends CI_Controller
     {
         cek_post();
 
-        $username = $this->input->post('username', true);
-        $password = $this->input->post('password', true);
+        $username = htmlspecialchars($this->input->post('username', true));
+        $password = htmlspecialchars($this->input->post('password', true));
 
         $this->db->select('a.*, b.otoritas');
         $this->db->where('a.username', $username);

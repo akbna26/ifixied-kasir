@@ -1,6 +1,6 @@
 <?php
 
-$sheet->setCellValue('B2', 'PART RETUR');
+$sheet->setCellValue('G2', 'PART RETUR');
 
 // judul
 $sheet->setCellValue('G3', 'NO');
@@ -34,32 +34,47 @@ $no = 1;
 $bulan = date('m', strtotime($tgl));
 $tahun = date('Y', strtotime($tgl));
 
-$data = $this->db->query("SELECT a.*, DATE(a.created) AS tanggal, CONCAT(b.barcode, ' - ', b.nama) AS nm_barang, c.no_invoice, 
-    CASE WHEN a.id_klaim = 5 THEN f.nama ELSE d.nama END AS nm_cabang,
-    e.nama AS nm_klaim, b.harga_modal
-    FROM refund_detail a
-    LEFT JOIN refund aa ON aa.id = a.id_refund
-    LEFT JOIN barang b ON b.id = a.id_barang
-    LEFT JOIN transaksi c ON c.id = aa.id_transaksi AND c.deleted IS NULL
-    LEFT JOIN ref_cabang d ON d.id = aa.id_cabang
-    LEFT JOIN ref_status_refund e ON e.id = a.id_klaim
-    LEFT JOIN ref_cabang f ON f.id = a.id_cabang
-    WHERE a.id_klaim IN (1, 3, 5) AND a.deleted IS NULL AND aa.deleted IS NULL 
-    and (a.id_cabang = $id_cabang OR aa.id_cabang=$id_cabang ) and (MONTH(a.created)='$bulan' and YEAR(a.created)='$tahun' or a.status_retur is null)
-    and a.status_retur is null
-    order by a.created asc
-")->result();
+$query_refund = "SELECT a.qty, DATE(a.created) AS tanggal, CONCAT(b.barcode, ' - ', b.nama) AS nm_barang, c.no_invoice, 
+CASE WHEN a.id_klaim = 5 THEN f.nama ELSE d.nama END AS nm_cabang,
+e.nama AS nm_klaim, b.harga_modal
+FROM refund_detail a
+LEFT JOIN refund aa ON aa.id = a.id_refund
+LEFT JOIN barang b ON b.id = a.id_barang
+LEFT JOIN transaksi c ON c.id = aa.id_transaksi AND c.deleted IS NULL
+LEFT JOIN ref_cabang d ON d.id = aa.id_cabang
+LEFT JOIN ref_status_refund e ON e.id = a.id_klaim
+LEFT JOIN ref_cabang f ON f.id = a.id_cabang
+WHERE a.id_klaim IN (1, 3, 5) AND a.deleted IS NULL AND aa.deleted IS NULL 
+and (a.id_cabang = $id_cabang OR aa.id_cabang=$id_cabang ) and (MONTH(a.created)='$bulan' and YEAR(a.created)='$tahun' or a.status_retur is null)
+and a.status_retur is null
+order by a.created asc";
+
+$query_part = "SELECT b.qty, a.tgl_refund as tanggal, CONCAT(c.barcode, ' - ', c.nama) AS nm_barang, a.invoice as no_invoice, 
+aa.nama as nm_cabang, 'PART REFUND USER SERVIS' as nm_klaim, b.total
+FROM servis_berat a
+left join ref_cabang aa on aa.id=a.id_cabang
+left join servis_detail_part b on b.id_servis=a.id
+left join barang c on c.id=b.id_barang
+where a.id_cabang='$id_cabang' and MONTH(a.tgl_refund)='$bulan' and YEAR(a.tgl_refund)='$tahun' and a.deleted is null and a.is_refund='1' and b.id is not null and b.verif_refund is null";
+
+$query = "($query_refund) UNION ALL ($query_part)";
+
+$data = $this->db->query("SELECT * FROM ($query) a order by tanggal asc")->result();
 
 $total_modal = 0;
 
-foreach ($data as $row) {    
+foreach ($data as $row) {
 
     $retur = '';
 
-    if (empty($row->status_retur) && empty($row->is_sampai)) $retur = 'Barang Dicabang';
-    elseif ($row->is_sampai == 1 && empty($row->status_retur)) $retur = 'Barang tiba digudang, Menunggu konfirmasi'; 
-    elseif ($row->status_retur == 1) $retur = 'Kerugian';
-    elseif ($row->status_retur == 2) $retur = 'Disetujui';
+    if ($row->nm_klaim != 'PART REFUND USER SERVIS') {
+        if (empty($row->status_retur) && empty($row->is_sampai)) $retur = 'Barang Dicabang';
+        elseif ($row->is_sampai == 1 && empty($row->status_retur)) $retur = 'Barang tiba digudang, Menunggu konfirmasi';
+        elseif ($row->status_retur == 1) $retur = 'Kerugian';
+        elseif ($row->status_retur == 2) $retur = 'Disetujui';
+    } else {
+        $retur = 'BELUM DIKONFIRMASI';
+    }
 
     $total_modal += $row->harga_modal;
 
