@@ -27,6 +27,8 @@
                                 <?php endforeach; ?>
                             </select>
                         </div>
+                    <?php elseif (session('type') == 'cabang') : ?>
+                        <input type="hidden" id="filter_cabang" value="<?= $this->id_cabang ?>">
                     <?php endif; ?>
                     <div style="width: 120px;">
                         <select onchange="load_table();" id="filter_rekening" class="js_select2">

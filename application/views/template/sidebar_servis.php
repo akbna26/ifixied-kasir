@@ -9,7 +9,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-apps">Menu</li>
                 <li class="<?= $this->uri->segment(2) == 'dashboard' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('servis/dashboard') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('servis/dashboard') ?>" class="waves-effect">
                         <i class="bx bx-home-alt"></i>
                         <span>Dashboard</span>
                     </a>

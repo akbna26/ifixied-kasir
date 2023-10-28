@@ -60,6 +60,7 @@ class Setor_tunai extends MY_controller
         $id_pembayaran = $this->input->post('id_pembayaran');
         $tanggal = date('Y-m-d', strtotime($this->input->post('tanggal')));
         $jumlah = clear_koma($this->input->post('jumlah'));
+        $keterangan = $this->input->post('keterangan');
 
         if (!empty($hapus)) {
             $this->db->where('id', $id);
@@ -73,6 +74,7 @@ class Setor_tunai extends MY_controller
                     'id_pembayaran' => $id_pembayaran,
                     'tanggal' => $tanggal,
                     'nominal' => $jumlah,
+                    'keterangan' => $keterangan,
                     'created' => date('Y-m-d H:i:s'),
                 ]);
             } else {
@@ -81,6 +83,7 @@ class Setor_tunai extends MY_controller
                     'id_pembayaran' => $id_pembayaran,
                     'tanggal' => $tanggal,
                     'nominal' => $jumlah,
+                    'keterangan' => $keterangan,
                     'updated' => date('Y-m-d H:i:s'),
                 ]);
             }
@@ -106,5 +109,4 @@ class Setor_tunai extends MY_controller
             'status' => 'success'
         ]);
     }
-
 }

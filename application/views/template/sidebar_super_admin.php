@@ -8,7 +8,7 @@
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="<?= $this->uri->segment(2) == 'dashboard' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('super_admin/dashboard') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('super_admin/dashboard') ?>" class="waves-effect">
                         <i class="fa fa-home"></i>
                         <span>Dashboard</span>
                     </a>

@@ -68,15 +68,10 @@ class Daftar_cabang extends MY_controller
         $id = decode_id($id);
         $data['id_cabang'] = $id;
         $data['cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null and id='$id' ")->row();
+        $data['tahun'] = $this->list_tahun();
+        $data['bulan'] = $this->list_bulan();
 
-        $this->templates->load($data);
-    }
-
-    public function get_data()
-    {
-        $id = decode_id($this->input->post('id_cabang'));
-        $tanggal = date('Y-m-d', strtotime($this->input->post('tanggal')));
-
+        $tanggal = date('Y-m-d');
         $total_profit_penjualan = $this->db->query("SELECT sum(total_profit) as total from profit where id_cabang='$id' and date(created)='$tanggal' ")->row();
         $total_profit_servis = $this->db->query("SELECT sum(profit) as total from profit_servis where id_cabang='$id' and date(tgl_keluar)='$tanggal' ")->row();
         $total_profit_harian = @$total_profit_penjualan->total + @$total_profit_servis->total;
@@ -97,17 +92,31 @@ class Daftar_cabang extends MY_controller
         ) as tabel
         ")->row();
 
+        $data['total_profit_penjualan'] = empty($total_profit_penjualan->total) ? 0 : rupiah($total_profit_penjualan->total);
+        $data['total_profit_servis'] = empty($total_profit_servis->total) ? 0 : rupiah($total_profit_servis->total);
+        $data['total_profit_harian'] = empty($total_profit_harian) ? 0 : rupiah($total_profit_harian);
+        $data['total_profit_bulanan'] = empty($total_profit_bulanan->total) ? 0 : rupiah($total_profit_bulanan->total);
+
+        $this->templates->load($data);
+    }
+
+    public function get_data()
+    {
+        $id_cabang = decode_id($this->input->post('id_cabang'));
+        $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
+
         $grafik = $this->db->query("SELECT sum(total) as total, waktu FROM (
-            SELECT SUM(total_profit) AS total, DATE(created) as waktu
-            FROM profit
-            WHERE id_cabang = '$id' AND MONTH(created) = MONTH('$tanggal') AND YEAR(created) = YEAR('$tanggal')
+                SELECT total_profit AS total, DATE(created) as waktu
+                FROM profit
+                WHERE id_cabang='$id_cabang' AND MONTH(created) =$bulan AND YEAR(created) =$tahun
 
-            UNION
+                UNION ALL
 
-            SELECT SUM(profit) AS total, tgl_keluar as waktu
-            FROM profit_servis
-            WHERE id_cabang = '$id' AND MONTH(tgl_keluar) = MONTH('$tanggal') AND YEAR(tgl_keluar) = YEAR('$tanggal')
-        ) as tabel 
+                SELECT profit AS total, tgl_keluar as waktu
+                FROM profit_servis
+                WHERE id_cabang='$id_cabang' AND MONTH(tgl_keluar) =$bulan AND YEAR(tgl_keluar) =$tahun
+            ) as tabel 
            group by waktu order by waktu
         ")->result();
 
@@ -120,15 +129,37 @@ class Daftar_cabang extends MY_controller
 
         echo json_encode([
             'status' => 'success',
-            'data' => [
-                'total_profit_penjualan' => empty($total_profit_penjualan->total) ? 0 : rupiah($total_profit_penjualan->total),
-                'total_profit_servis' => empty($total_profit_servis->total) ? 0 : rupiah($total_profit_servis->total),
-                'total_profit_harian' => empty($total_profit_harian) ? 0 : rupiah($total_profit_harian),
-                'total_profit_bulanan' => empty($total_profit_bulanan->total) ? 0 : rupiah($total_profit_bulanan->total),
-            ],
             'grafik' => [
-                'waktu' => angkaKeNamaBulan(date('m', strtotime($tanggal))) . ' ' . date('Y', strtotime($tanggal)),
                 'kategori' => $kategori,
+                'series' => $series,
+            ]
+        ]);
+    }
+
+    public function get_data_penjualan()
+    {
+        $id_cabang = decode_id($this->input->post('id_cabang'));
+        $bulan = $this->input->post('bulan');
+        $tahun = $this->input->post('tahun');
+
+        $grafik = $this->db->query("SELECT sum(qty) AS total, concat(c.barcode,', ',c.nama) as nm_barang
+            FROM transaksi a
+            left join transaksi_detail b on b.id_transaksi=a.id
+            left join barang c on c.id=b.id_barang
+            WHERE a.id_cabang='$id_cabang' AND MONTH(a.created) =$bulan AND YEAR(a.created) =$tahun and a.deleted is null and b.deleted is null
+            group by b.id_barang    
+            order by sum(qty) desc
+            limit 15
+        ")->result();
+
+        $series = [];
+        foreach ($grafik as $dt) {
+            $series[] = [$dt->nm_barang, (int)$dt->total];
+        }
+
+        echo json_encode([
+            'status' => 'success',
+            'grafik' => [
                 'series' => $series,
             ]
         ]);

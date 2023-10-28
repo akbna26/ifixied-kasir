@@ -87,6 +87,7 @@ class Table_setor_tunai extends CI_Model
             $row[] = $field->nm_pembayaran;
             $row[] = tgl_indo($field->tanggal);
             $row[] = rupiah($field->nominal);
+            $row[] = $field->keterangan;
 
             if ($field->deleted != null) {
                 $row[] = '<div class="text-danger">cancel</div>';

@@ -9,7 +9,7 @@
             <ul class="metismenu list-unstyled" id="side-menu">
                 <li class="menu-title" key="t-apps">Menu</li>
                 <li class="<?= $this->uri->segment(2) == 'dashboard' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('admin/dashboard') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('admin/dashboard') ?>" class="waves-effect">
                         <i class="bx bx-home-alt"></i>
                         <span>Dashboard</span>
                     </a>
@@ -102,13 +102,13 @@
                     </ul>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'data_user' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('admin/data_user') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('admin/data_user') ?>" class="waves-effect">
                         <i class="bx bxs-user"></i>
                         <span>Data User</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'informasi' ? 'mm-active' : '' ?> single-link">
-                    <a href="<?= base_url('admin/informasi') ?>" class="waves-effect fw-600">
+                    <a href="<?= base_url('admin/informasi') ?>" class="waves-effect">
                         <i class="bx bx-info-circle"></i>
                         <span>Informasi</span>
                     </a>

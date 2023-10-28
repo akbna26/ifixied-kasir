@@ -44,8 +44,9 @@
 </div>
 
 <?php if (session('type') == 'owner') : ?>
+    <h3 class="text-primary">Gudang</h3>
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-12 col-md-6">
             <div class="card mini-stats-wid">
                 <div class="card-body">
                     <div class="media">
@@ -56,14 +57,14 @@
 
                         <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
                             <span class="avatar-title">
-                                <i class="bx bx-dollar-circle font-size-24"></i>
+                                <i class="fa fa-dollar-sign font-size-24"></i>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-12 col-md-6">
             <div class="card mini-stats-wid">
                 <div class="card-body">
                     <div class="media">
@@ -74,14 +75,14 @@
 
                         <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
                             <span class="avatar-title">
-                                <i class="bx bx-dollar-circle font-size-24"></i>
+                                <i class="fa fa-tag font-size-24"></i>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-12 col-md-6">
             <div class="card mini-stats-wid">
                 <div class="card-body">
                     <div class="media">
@@ -92,14 +93,14 @@
 
                         <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
                             <span class="avatar-title">
-                                <i class="bx bx-dollar-circle font-size-24"></i>
+                                <i class="fa fa-percent font-size-24"></i>
                             </span>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        <div class="col-12 col-md-6">
             <div class="card mini-stats-wid">
                 <div class="card-body">
                     <div class="media">
@@ -110,7 +111,83 @@
 
                         <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
                             <span class="avatar-title">
-                                <i class="bx bx-dollar-circle font-size-24"></i>
+                                <i class="fa fa-mouse-pointer font-size-24"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3 class="text-primary">Semua Cabang</h3>
+    <div class="row">
+        <div class="col-12 col-md-6">
+            <div class="card mini-stats-wid">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <p class="text-muted font-weight-medium">Total Item</p>
+                            <h4 class="mb-0"><?= rupiah($row_data_cabang->total_item) ?></h4>
+                        </div>
+
+                        <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                            <span class="avatar-title">
+                                <i class="fa fa-dollar-sign font-size-24"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mini-stats-wid">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <p class="text-muted font-weight-medium">Total Stock</p>
+                            <h4 class="mb-0"><?= rupiah($row_data_cabang->total_stock) ?></h4>
+                        </div>
+
+                        <div class="mini-stat-icon avatar-sm rounded-circle align-self-center">
+                            <span class="avatar-title">
+                                <i class="fa fa-tag font-size-24"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mini-stats-wid">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <p class="text-muted font-weight-medium">Total Modal Part</p>
+                            <h4 class="mb-0"><?= rupiah($row_data_cabang->total_modal_part) ?></h4>
+                        </div>
+
+                        <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                            <span class="avatar-title">
+                                <i class="fa fa-percent font-size-24"></i>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="card mini-stats-wid">
+                <div class="card-body">
+                    <div class="media">
+                        <div class="media-body">
+                            <p class="text-muted font-weight-medium">Total Modal ACC</p>
+                            <h4 class="mb-0"><?= rupiah($row_data_cabang->total_modal_acc) ?></h4>
+                        </div>
+
+                        <div class="mini-stat-icon avatar-sm rounded-circle bg-primary align-self-center">
+                            <span class="avatar-title">
+                                <i class="fa fa-mouse-pointer font-size-24"></i>
                             </span>
                         </div>
                     </div>

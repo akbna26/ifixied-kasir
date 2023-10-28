@@ -20,6 +20,11 @@
         <input type="text" required name="jumlah" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah" value="<?= empty($data->jumlah) ? '' : rupiah($data->jumlah) ?>">
     </div>
 
+    <div class="form-group">
+        <label>Keterangan ( <small class="text-danger">opsional</small> )</label>
+        <textarea name="keterangan" rows="3" placeholder="gesek tunai dll..." class="form-control"><?= @$data->keterangan ?></textarea>
+    </div>
+
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
     <button type="submit" class="btn btn-block btn-rounded fw-600 btn-primary"><i class="fas fa-check"></i> KLIK DISINI UNTUK SIMPAN</button>
 </form>

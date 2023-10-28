@@ -107,14 +107,14 @@ class Query_global extends CI_Model
         where a.deleted is null and a.tgl_keluar is not null and a.is_refund='1' ";
 
         $setor_tunai_debit = "SELECT a.id_cabang, a.tanggal, 'SETOR TUNAI' as jenis_transaksi, 0 as kredit, a.nominal as debit, 0 as dp, 'CASH' as jenis_pembayaran, 2 as id_pembayaran,
-        CONCAT('') as keterangan, '' as no_hp, '' as tgl_dp, '' as nama_user, c.nama as nm_cabang
+        CONCAT(a.keterangan) as keterangan, '' as no_hp, '' as tgl_dp, '' as nama_user, c.nama as nm_cabang
         from setor_tunai a
         left join ref_jenis_pembayaran b on b.id=a.id_pembayaran
         left join ref_cabang c on c.id=a.id_cabang
         where a.deleted is null and a.is_konfirmasi='1' ";
 
         $setor_tunai_kredit = "SELECT a.id_cabang, a.tanggal, 'SETOR TUNAI' as jenis_transaksi, a.nominal as kredit, 0 as debit, 0 as dp, b.nama as jenis_pembayaran, a.id_pembayaran as id_pembayaran,
-        CONCAT('') as keterangan, '' as no_hp, '' as tgl_dp, '' as nama_user, c.nama as nm_cabang
+        CONCAT(a.keterangan) as keterangan, '' as no_hp, '' as tgl_dp, '' as nama_user, c.nama as nm_cabang
         from setor_tunai a
         left join ref_jenis_pembayaran b on b.id=a.id_pembayaran
         left join ref_cabang c on c.id=a.id_cabang

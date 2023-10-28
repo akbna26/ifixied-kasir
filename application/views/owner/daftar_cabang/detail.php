@@ -1,192 +1,278 @@
 <style>
-    .grafik_custom {
+    #grafik_profit,
+    #grafik_profit_penjualan {
         width: 100%;
-        height: 450px;
+        height: 400px;
     }
 </style>
 
-<div class="row">
-    <div class="col-12">
-        <div class="page-title-box d-flex align-items-center justify-content-between">
-            <h4 class="mb-0 font-size-18"><?= $title ?></h4>
-
-            <div class="page-title-right">
-                <ol class="breadcrumb m-0">
-                    <li class="breadcrumb-item"><a href="javascript: void(0);"><?= $cabang->nama ?></a></li>
-                </ol>
-            </div>
-
-        </div>
-    </div>
+<h3 class="fw-600">Dashboard Sistem Informasi iFixied Global Indonesia </h3>
+<div>
+    <span style="font-weight: 500;" class="text-primary"><?= date('l') ?>,</span>
+    <?= date('d F Y') ?> | <span class="fw-600" style="font-size: 18px;"><?= $cabang->nama ?></span>
 </div>
 
-<div class="card-body bg1 rounded p-3 mb-3 d-flex align-items-center justify-content-between">
-    <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
-    <div style="width: 250px;flex-wrap: wrap;" class="d-flex">
-        <a href="<?= base_url($this->type . '/daftar_cabang/barang?id=') . encode_id($id_cabang) ?>" class="btn btn-light btn-sm mr-1"><i class="fa fa-database"></i> Stock Barang</a>
-        <input onchange="load_semua();" value="<?= date('Y-m-d') ?>" type="date" style="width: 120px;" class="form-control form-control-sm mt-1 mt-md-0" id="select_tanggal">
-    </div>
-</div>
-
-<div class="row">
-    <div class="col-6">
-        <div class="card">
+<div class="row mt-4">
+    <div class="col-12 col-md-6">
+        <div class="card" style="border: none !important;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);border-left: 3px solid #0161f2 !important;">
             <div class="card-body">
-                <h3 class="fw-600">Rp. <span id="total_profit_penjualan">0</span></h3>
-                <div>Profit Penjualan Hari ini</div>
+                <div style="color: #0161f2;">Profit Penjualan Hari Ini</div>
+                <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                    <h3 class="mb-0"><?= $total_profit_penjualan ?></h3>
+                    <i style="font-size: 25px;color: #0161f275;" class="fa fa-dollar-sign"></i>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-6">
-        <div class="card">
+    <div class="col-12 col-md-6">
+        <div class="card" style="border: none !important;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);border-left: 3px solid #9452d5 !important;">
             <div class="card-body">
-                <h3 class="fw-600">Rp. <span id="total_profit_servis">0</span></h3>
-                <div>Profit Service Berat Hari ini</div>
+                <div style="color: #9452d5;">Profit Servis IC</div>
+                <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                    <h3 class="mb-0"><?= $total_profit_servis ?></h3>
+                    <i style="font-size: 25px;color: #9452d575;" class="fas fa-tag"></i>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-6">
-        <div class="card">
+    <div class="col-12 col-md-6">
+        <div class="card" style="border: none !important;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);border-left: 3px solid #10ad6c !important;">
             <div class="card-body">
-                <h3 class="fw-600">Rp. <span id="total_profit_harian">0</span></h3>
-                <div>Total Profit Harian</div>
+                <div style="color: #10ad6c;">Total Profit Harian</div>
+                <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                    <h3 class="mb-0"><?= $total_profit_harian ?></h3>
+                    <i style="font-size: 25px;color: #10ad6c75;" class="fas fa-mouse-pointer"></i>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-6">
-        <div class="card">
+    <div class="col-12 col-md-6">
+        <div class="card" style="border: none !important;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);border-left: 3px solid #04cfd5 !important;">
             <div class="card-body">
-                <h3 class="fw-600">Rp. <span id="total_profit_bulanan">0</span></h3>
-                <div>Total Profit Bulanan</div>
+                <div style="color: #04cfd5;">Total Profit Bulanan</div>
+                <div class="d-flex justify-content-between align-items-center mt-2 mb-3">
+                    <h3 class="mb-0"><?= $total_profit_bulanan ?></h3>
+                    <i style="font-size: 25px;color: #04cfd575;" class="fas fa-percent"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card" style="border: none !important;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+            <div class="card-header" style="background-color: #01293c;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="card-title text-white mb-0">GRAFIK PROFIT</h3>
+                    <div style="width: 200px;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select id="filter_bulan_profit" class="form-control js_select2" onchange="load_grafik_profit();">
+                                    <?php foreach ($bulan as $val => $dt) : ?>
+                                        <option <?= date('m') == $dt ? 'selected' : '' ?> value="<?= $dt ?>"><?= $val ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="filter_tahun_profit" class="form-control js_select2" onchange="load_grafik_profit();">
+                                    <?php foreach ($tahun as $dt) : ?>
+                                        <option <?= date('Y') == $dt ? 'selected' : '' ?> value="<?= $dt ?>"><?= $dt ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="grafik_profit"></div>
             </div>
         </div>
     </div>
 
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <div id="grafik" class="grafik_custom"></div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <h4>Laporan Transaksi</h4>
-        <hr>
-        <div class="table-responsive">
-            <table class="mt-3 table table-striped table-bordered" id="table_data">
-                <thead class="bg1">
-                    <tr>
-                        <th class="fw-600 text1">NO</th>
-                        <th class="fw-600 text1">TANGGAL</th>
-                        <th class="fw-600 text1">NAMA BARANG</th>
-                        <th class="fw-600 text1">MODAL</th>
-                        <th class="fw-600 text1">HARGA SATUAN</th>
-                        <th class="fw-600 text1">QTY</th>
-                        <th class="fw-600 text1">SUB TOTAL<br>(dikurangi potongan)</th>
-                        <th class="fw-600 text1">PROFIT</th>
-                        <th class="fw-600 text1">METODE PEMBAYARAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+    <div class="col-md-8">
+        <div class="card" style="border: none !important;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);">
+            <div class="card-header" style="background-color: #01293c;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="card-title text-white mb-0">GRAFIK PART & ACC</h3>
+                    <div style="width: 200px;">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <select id="filter_bulan_penjualan" class="form-control js_select2" onchange="load_grafik_profit();">
+                                    <?php foreach ($bulan as $val => $dt) : ?>
+                                        <option <?= date('m') == $dt ? 'selected' : '' ?> value="<?= $dt ?>"><?= $val ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="filter_tahun_penjualan" class="form-control js_select2" onchange="load_grafik_penjualan();">
+                                    <?php foreach ($tahun as $dt) : ?>
+                                        <option <?= date('Y') == $dt ? 'selected' : '' ?> value="<?= $dt ?>"><?= $dt ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div id="grafik_profit_penjualan"></div>
+            </div>
         </div>
     </div>
-</div>
 
-<div class="card">
-    <div class="card-body">
-        <h4>Laporan Servis</h4>
-        <hr>
-        <div class="table-responsive">
-            <table class="mt-3 table table-striped table-bordered" id="table_servis">
-                <thead class="bg1">
-                    <tr>
-                        <th class="fw-600 text1">NO</th>
-                        <th class="fw-600 text1">TANGGAL</th>
-                        <th class="fw-600 text1">INFORMASI</th>
-                        <th class="fw-600 text1">HARGA JUAL</th>
-                        <th class="fw-600 text1">MODAL</th>
-                        <th class="fw-600 text1">PROFIT</th>
-                        <th class="fw-600 text1">TEKNISI</th>
-                        <th class="fw-600 text1">TINDAKAN</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
+    <div class="col-md-4">
+        <div class="card" style="border: none !important;box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);min-height: 500px;">
+            <div class="card-header" style="background-color: #01293c;">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h3 class="card-title text-white mb-0 p-2">Report</h3>
+                </div>
+            </div>
+            <div class="card-body">
+
+                <table class="table table-centered table-nowrap table-sm table-hover">
+                    <tbody>
+                        <tr>
+                            <td style="width: 50px;">
+                                <div class="font-size-16 text-primary">
+                                    <i class="fa fa-dollar-sign"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h5 class="font-size-14 mb-0">Laporan Transaksi Penjualan</h5>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#transaksi_penjualan" class="btn btn-sm btn-primary">lihat <i class="fa fa-arrow-right"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px;">
+                                <div class="font-size-16 text-warning">
+                                    <i class="fa fa-tag"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h5 class="font-size-14 mb-0">Laporan Service IC</h5>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#servis_ic" class="btn btn-sm btn-primary">lihat <i class="fa fa-arrow-right"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px;">
+                                <div class="font-size-16 text-danger">
+                                    <i class="fa fa-mouse-pointer"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h5 class="font-size-14 mb-0">Laporan Operasional</h5>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#laporan_operasional" class="btn btn-sm btn-primary">lihat <i class="fa fa-arrow-right"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px;">
+                                <div class="font-size-16 text-info">
+                                    <i class="fas fa-percent"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h5 class="font-size-14 mb-0">Laporan Kerugian</h5>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#laporan_kerugian" class="btn btn-sm btn-primary">lihat <i class="fa fa-arrow-right"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px;">
+                                <div class="font-size-16 text-success">
+                                    <i class="fa fa-tag"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h5 class="font-size-14 mb-0">Laporan Kasbon</h5>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#laporan_kasbon" class="btn btn-sm btn-primary">lihat <i class="fa fa-arrow-right"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px;">
+                                <div class="font-size-16 text-danger">
+                                    <i class="fa fa-chart-line"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h5 class="font-size-14 mb-0">Modal Service</h5>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#modal_servis" class="btn btn-sm btn-primary">lihat <i class="fa fa-arrow-right"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px;">
+                                <div class="font-size-16 text-warning">
+                                    <i class="fa fa-chart-pie"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h5 class="font-size-14 mb-0">Sirkulasi Keuangan</h5>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#sirkulasi_keuangan" class="btn btn-sm btn-primary">lihat <i class="fa fa-arrow-right"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px;">
+                                <div class="font-size-16 text-info">
+                                    <i class="fa fa-chart-bar"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h5 class="font-size-14 mb-0">Rincian Profit</h5>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="#rincian_profit" class="btn btn-sm btn-primary">lihat <i class="fa fa-arrow-right"></i></a>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td style="width: 50px;">
+                                <div class="font-size-16 text-success">
+                                    <i class="fa fa-chart-area"></i>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <h5 class="font-size-14 mb-0">Check Stock</h5>
+                                </div>
+                            </td>
+                            <td>
+                                <a href="<?= base_url($this->type . '/daftar_cabang/barang?id=' . encode_id($cabang->id)) ?>" class="btn btn-sm btn-primary">lihat <i class="fa fa-arrow-right"></i></a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
         </div>
     </div>
-</div>
 
-<div class="card">
-    <div class="card-body">
-        <h4>Laporan Operasional</h4>
-        <hr>
-        <div class="table-responsive">
-            <table class="mt-3 table table-striped table-bordered" id="table_operasional">
-                <thead class="bg1">
-                    <tr>
-                        <th class="fw-600 text1">NO</th>
-                        <th class="fw-600 text1">CABANG</th>
-                        <th class="fw-600 text1">JENIS OPERASIONAL</th>
-                        <th class="fw-600 text1">TANGGAL</th>
-                        <th class="fw-600 text1">KETERANGAN</th>
-                        <th class="fw-600 text1">JUMLAH</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <h4>Laporan Kerugian</h4>
-        <hr>
-        <div class="table-responsive">
-            <table class="mt-3 table table-striped table-bordered" id="table_kerugian">
-                <thead class="bg1">
-                    <tr>
-                        <th class="fw-600 text1">NO</th>
-                        <th class="fw-600 text1">CABANG</th>
-                        <th class="fw-600 text1">TANGGAL</th>
-                        <th class="fw-600 text1">JENIS</th>
-                        <th class="fw-600 text1">KETERANGAN</th>
-                        <th class="fw-600 text1">JUMLAH</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
-
-<div class="card">
-    <div class="card-body">
-        <h4>Laporan Kasbon</h4>
-        <hr>
-        <div class="table-responsive">
-            <table class="mt-3 table table-striped table-bordered" id="table_kasbon">
-                <thead class="bg1">
-                    <tr>
-                        <th class="fw-600 text1">NO</th>
-                        <th class="fw-600 text1">CABANG</th>
-                        <th class="fw-600 text1">NAMA PEGAWAI</th>
-                        <th class="fw-600 text1">SUMBER DANA</th>
-                        <th class="fw-600 text1">TANGGAL</th>
-                        <th class="fw-600 text1">KETERANGAN</th>
-                        <th class="fw-600 text1">JUMLAH</th>
-                    </tr>
-                </thead>
-                <tbody>
-                </tbody>
-            </table>
-        </div>
-    </div>
 </div>
