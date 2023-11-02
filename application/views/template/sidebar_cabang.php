@@ -96,6 +96,7 @@
                         <li><a href="<?= base_url('cabang/laporan_transaksi') ?>">Rekap Transaksi</a></li>
                         <li><a href="<?= base_url('cabang/laporan_refund') ?>">Refund Barang</a></li>
                         <li><a href="<?= base_url('cabang/laporan_kerugian') ?>">Kerugian</a></li>
+                        <li><a href="<?= base_url('cabang/laporan_servis') ?>">Servis</a></li>
                         <li><a href="<?= base_url('cabang/laporan_modal') ?>">Sirkulasi Transaksi</a></li>
                     </ul>
                 </li>

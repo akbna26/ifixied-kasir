@@ -3,13 +3,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>Nama Lengkap</label>
-                <input type="text" required name="nama" autocomplete="off" placeholder="Tulis nama lengkap" class="form-control" value="<?= @$data->nama ?>">
+                <input minlength="5" type="text" required name="nama" autocomplete="off" placeholder="Tulis nama lengkap" class="form-control" value="<?= @$data->nama ?>">
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label>Username</label>
-                <input type="text" required autocomplete="new-password" name="username" autocomplete="off" placeholder="Tulis username" class="form-control" value="<?= @$data->username ?>">
+                <input minlength="5" type="text" required autocomplete="new-password" name="username" autocomplete="off" placeholder="Tulis username" class="form-control" value="<?= @$data->username ?>">
             </div>
         </div>
     </div>
@@ -18,7 +18,7 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>Password</label>
-                <input type="password" autocomplete="new-password" <?= empty($data->id) ? 'required' : '' ?> name="password" autocomplete="off" placeholder="Tulis password" class="form-control" value="">
+                <input minlength="5" type="password" autocomplete="new-password" <?= empty($data->id) ? 'required' : '' ?> name="password" autocomplete="off" placeholder="Tulis password" class="form-control" value="">
             </div>
         </div>
         <div class="col-md-6">
@@ -33,13 +33,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" required name="email" autocomplete="off" placeholder="Tulis email aktif" class="form-control" value="<?= @$data->email ?>">
+                <input minlength="5" type="email" required name="email" autocomplete="off" placeholder="Tulis email aktif" class="form-control" value="<?= @$data->email ?>">
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label>Nomer HP</label>
-                <input type="number" required name="no_hp" autocomplete="off" placeholder="Tulis nomer hp yang aktif" class="form-control" value="<?= @$data->no_hp ?>">
+                <input minlength="5" type="number" required name="no_hp" autocomplete="off" placeholder="Tulis nomer hp yang aktif" class="form-control" value="<?= @$data->no_hp ?>">
             </div>
         </div>
     </div>
@@ -128,7 +128,7 @@
         <div class="col-md-12">
             <div class="form-group">
                 <label>Alamat</label>
-                <textarea name="alamat" rows="5" class="form-control" placeholder="tulis alamat yang sesuai"><?= @$data->alamat ?></textarea>
+                <textarea minlength="5" name="alamat" rows="5" class="form-control" placeholder="tulis alamat yang sesuai"><?= @$data->alamat ?></textarea>
             </div>
         </div>
     </div>

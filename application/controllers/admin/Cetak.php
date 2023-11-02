@@ -146,6 +146,81 @@ class Cetak extends MY_controller
         $writer->save('php://output');
         exit;
     }
+
+    public function barang_cabang()
+    {
+        $id_cabang = $this->input->get('id_cabang');
+
+        if (!$id_cabang) {
+            dd('not allowed');
+        }
+
+        $data = $this->db->query("SELECT
+            b.barcode, b.nama as nm_barang, a.stock, c.nama as nm_kategori
+        FROM
+            barang_cabang a
+            LEFT JOIN barang b ON b.id = a.id_barang
+            LEFT JOIN ref_kategori c ON c.id = b.id_kategori
+        WHERE
+            a.deleted IS NULL AND a.id_cabang='$id_cabang'
+            order by c.nama asc, b.nama asc
+        ")->result();
+
+        $row_cabang = $this->db->query("SELECT * from ref_cabang where id='$id_cabang' and deleted is null ")->row();
+        $spreadsheet = new Spreadsheet();
+
+        $sheet = $spreadsheet->createSheet(0);
+        $sheet->setTitle('BARANG CABANG');
+        // judul
+        $sheet->setCellValue('A1', 'BARCODE');
+        $sheet->setCellValue('B1', 'NAMA BARANG');
+        $sheet->setCellValue('C1', 'STOCK');
+        $sheet->setCellValue('D1', 'KATEGORI');
+        // end judul
+        $sheet->getStyle('A1:D1')->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+
+        $sheet->getStyle('A1:D1')->applyFromArray([
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => [
+                    'argb' => 'FF9902',
+                ],
+            ],
+        ]);
+
+        $sheet->getStyle('A1:D1')->getAlignment()->setHorizontal('center');
+
+        foreach (['A', 'B', 'C', 'D'] as $column) $sheet->getColumnDimension($column)->setAutoSize(true);
+
+        $awal = 2;
+        $no = 1;
+
+        foreach ($data as $row) {
+
+            $sheet
+                ->setCellValue('A' . $awal, $row->barcode)
+                ->setCellValue('B' . $awal, $row->nm_barang)
+                ->setCellValue('C' . $awal, $row->stock)
+                ->setCellValue('D' . $awal, $row->nm_kategori);
+
+            $sheet->getStyle('A' . $awal . ':D' . $awal)->getBorders()->getAllBorders()->setBorderStyle(\PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THIN);
+            $awal++;
+        }
+
+        header('Content-Type: application/vnd.openxmlformats-officedocument.spreadsheetml.sheet');
+        header('Content-Disposition: attachment;filename="Barang Cabang ' . $row_cabang->nama . ' ' . date('d-F-Y') . '.xlsx"');
+        header('Cache-Control: max-age=0');
+        header('Cache-Control: max-age=1');
+
+        header('Expires: Mon, 26 Jul 1997 05:00:00 GMT'); // Date in the past
+        header('Last-Modified: ' . gmdate('D, d M Y H:i:s') . ' GMT'); // always modified
+        header('Cache-Control: cache, must-revalidate'); // HTTP/1.1
+        header('Pragma: public'); // HTTP/1.0
+
+        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
+        $writer->save('php://output');
+        exit;
+    }
 }
 
 /* End of file Dashboard.php */

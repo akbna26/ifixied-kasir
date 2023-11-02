@@ -18,7 +18,13 @@ class Sirkulasi_acc extends MY_controller
             'title' => 'Sirkulasi Acc',
         ];
 
-        $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null")->result();
+        $where = '';
+        if (session('type') == 'owner_cabang') {
+            $row = $this->db->query("SELECT * from data_user where id='$this->id_akun' ")->row();
+            $where .= "AND id in ($row->id_cabang_multi)";
+        }
+
+        $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null $where")->result();
 
         $this->templates->load($data);
     }
@@ -37,7 +43,15 @@ class Sirkulasi_acc extends MY_controller
         $query = $this->query_global->acc();
 
         $where = "";
-        if ($filter_cabang != 'all') $where .= "AND a.id_cabang='$filter_cabang' ";
+        if ($filter_cabang != 'all') {
+            $where .= "AND a.id_cabang='$filter_cabang' ";
+        } else {
+            if ($this->type == 'owner_cabang') {
+                $row = $this->db->query("SELECT * from data_user where id='$this->id_akun' ")->row();
+                $where .= "AND a.id_cabang in ($row->id_cabang_multi) ";
+            }
+        }
+
         if ($filter_tanggal == '') $filter_tanggal = date('Y-m-d');
 
         $sub_query = "SELECT IFNULL(sum(a.kredit-a.debit),0)

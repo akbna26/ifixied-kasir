@@ -15,7 +15,7 @@
                 [10, 25, 50, 100, "All"]
             ],
             ajax: {
-                url: '<?= base_url('admin/laporan_servis/table') ?>',
+                url: '<?= base_url($this->type . '/laporan_servis/table') ?>',
                 type: 'GET',
                 dataType: 'JSON',
                 data: {

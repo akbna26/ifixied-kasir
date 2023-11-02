@@ -15,14 +15,12 @@ class Table_kerugian extends CI_Model
     private function _get_datatables_query()
     {
         $id_cabang = decode_id($this->input->get('id_cabang'));
-        $tanggal = $this->input->get('tanggal');
+        $tgl_start = $this->input->get('tgl_start');
+        $tgl_end = $this->input->get('tgl_end');
 
         $where = '';
-        if (!empty($tanggal)) {
-            $bulan = date('m',strtotime($tanggal));
-            $tahun = date('Y',strtotime($tanggal));
-            $where .= "AND MONTH(a.tanggal)='$bulan' AND YEAR(a.tanggal)='$tahun' ";
-        }
+        if (!empty($tgl_start)) $where .= "AND DATE(a.tanggal) >= '$tgl_start' ";
+        if (!empty($tgl_end)) $where .= "AND DATE(a.tanggal) <= '$tgl_end' ";
 
         $query = $this->query_global->data_kerugian();
 

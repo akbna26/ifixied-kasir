@@ -40,12 +40,12 @@ class Laporan_transaksi extends MY_controller
             left join pegawai c on c.id=a.id_pegawai
             left join ref_jenis_pembayaran d on d.id=a.id_jenis_pembayaran
             left join ref_jenis_pembayaran e on e.id=a.id_jenis_pembayaran_2
-            where a.id='$id' and a.deleted is null 
+            where a.id='$id'
         ")->row();
 
         $data['detail'] = $this->db->query("SELECT a.*, b.nama as barang from transaksi_detail a 
             left join barang b on b.id=a.id_barang
-            where a.id_transaksi='$id' and a.deleted is null 
+            where a.id_transaksi='$id'
         ")->result();
 
         $html = $this->load->view('cabang/laporan_transaksi/detail', $data, true);

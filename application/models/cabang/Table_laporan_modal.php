@@ -25,7 +25,14 @@ class Table_laporan_modal extends CI_Model
 
         if ($this->type == 'cabang') $this->db->where('id_cabang', $this->id_cabang);
         else {
-            if ($filter_cabang != 'all') $this->db->where('id_cabang', $filter_cabang);
+            if ($filter_cabang != 'all') {
+                $this->db->where('id_cabang', $filter_cabang);
+            } else {
+                if (session('type') == 'owner_cabang') {
+                    $row = $this->db->query("SELECT * from data_user where id='$this->id_akun' ")->row();
+                    $this->db->where("id_cabang in ($row->id_cabang_multi)");
+                }
+            }
         }
 
         if ($filter_rekening != 'all') $this->db->where('b.nm_jenis', $filter_rekening);

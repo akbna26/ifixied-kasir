@@ -19,7 +19,12 @@ class Laporan_modal extends MY_controller
             'title' => 'Laporan Sirkulasi Transaksi',
         ];
 
-        $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null")->result();
+        $where = '';
+        if (session('type') == 'owner_cabang') {
+            $row = $this->db->query("SELECT * from data_user where id='$this->id_akun' ")->row();
+            $where .= "AND id in ($row->id_cabang_multi)";
+        }
+        $data['ref_cabang'] = $this->db->query("SELECT * from ref_cabang where deleted is null $where")->result();
 
         $this->templates->load($data);
     }

@@ -20,9 +20,10 @@
                                 <th class="fw-600">KETERANGAN</th>
                                 <th class="fw-600">PEMBAYARAN</th>
                                 <th class="fw-600">TOTAL</th>
-                                <th class="fw-600">TANGGAL</th>
+                                <th class="fw-600">TGL</th>
                                 <th class="fw-600">INVOICE</th>
                                 <th class="fw-600">CETAK INVOICE</th>
+                                <th class="fw-600">TGL KONFIRMASI</th>
                                 <th class="fw-600" style="width: 100px;">REFUND</th>
                                 <th class="fw-600" style="width: 250px;">STATUS</th>
                             </tr>

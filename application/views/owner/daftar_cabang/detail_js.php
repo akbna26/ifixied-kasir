@@ -119,3 +119,166 @@
         });
     }
 </script>
+
+<script>
+    const id_cabang = '<?= encode_id($id_cabang) ?>';
+
+    $(document).ready(function() {
+        $('.scroll_link').on('click', function(event) {
+            event.preventDefault();
+            var target = $($(this).attr('href'));
+
+            $('html, body').animate({
+                scrollTop: target.offset().top - 100,
+            }, 1000);
+        });
+
+        var lastScrollTop = 0;
+        var element = $('#tombol_naik');
+
+        $(window).scroll(function() {
+            var st = $(this).scrollTop();
+            if (st > lastScrollTop) {
+                element.hide();
+            } else {
+                element.show();
+            }
+            lastScrollTop = st;
+        });
+
+        reload_table();
+    });
+
+    function reload_table() {
+        load_table_transaksi();
+        load_table_servis();
+        load_table_operasional();
+        load_table_kerugian();
+        load_table_kasbon();
+    }
+
+    function load_table_transaksi() {
+        $('#table_data_transaksi').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?= base_url($this->type . '/daftar_cabang/table_transaksi') ?>',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    tgl_start: $('#tgl_start').val(),
+                    tgl_end: $('#tgl_end').val(),
+                    id_cabang: id_cabang,
+                },
+            },
+            order: [],
+        })
+    }
+
+    function load_table_servis() {
+        $('#table_servis').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?= base_url($this->type . '/daftar_cabang/table_servis') ?>',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    tgl_start: $('#tgl_start').val(),
+                    tgl_end: $('#tgl_end').val(),
+                    id_cabang: id_cabang,
+                },
+            },
+            order: [],
+        })
+    }
+
+    function load_table_operasional() {
+        $('#table_operasional').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?= base_url($this->type . '/daftar_cabang/table_operasional') ?>',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    tgl_start: $('#tgl_start').val(),
+                    tgl_end: $('#tgl_end').val(),
+                    id_cabang: '<?= encode_id($id_cabang) ?>',
+                },
+            },
+            order: [],
+        })
+    }
+
+    function load_table_kerugian() {
+        $('#table_kerugian').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?= base_url($this->type . '/daftar_cabang/table_kerugian') ?>',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    tgl_start: $('#tgl_start').val(),
+                    tgl_end: $('#tgl_end').val(),
+                    id_cabang: '<?= encode_id($id_cabang) ?>',
+                },
+            },
+            order: [],
+        })
+    }
+
+    function load_table_kasbon() {
+        $('#table_kasbon').DataTable({
+            destroy: true,
+            processing: true,
+            serverSide: true,
+            ordering: false,
+            autoWidth: false,
+            lengthMenu: [
+                [10, 25, 50, 100, -1],
+                [10, 25, 50, 100, "All"]
+            ],
+            ajax: {
+                url: '<?= base_url($this->type . '/daftar_cabang/table_kasbon') ?>',
+                type: 'GET',
+                dataType: 'JSON',
+                data: {
+                    tgl_start: $('#tgl_start').val(),
+                    tgl_end: $('#tgl_end').val(),
+                    id_cabang: '<?= encode_id($id_cabang) ?>',
+                },
+            },
+            order: [],
+        })
+    }
+</script>

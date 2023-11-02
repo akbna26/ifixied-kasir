@@ -4,6 +4,11 @@
             <div class="card-body bg1 br-atas p-3 mb-0 d-flex justify-content-between">
                 <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
                 <div>
+                    <?php if (session('type') == 'gudang') : ?>
+                        <button onclick="cetak_cabang()" class="btn btn-light fw-600 btn-sm mr-2">
+                            <i class="fa fa-print mr-1"></i> Export Excel
+                        </button>
+                    <?php endif ?>
                     <button onclick="history.go(-1);" class="btn btn-light fw-600 btn-sm">
                         <i class="fa fa-arrow-left mr-1"></i> Kembali
                     </button>

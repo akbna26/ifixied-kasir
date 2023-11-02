@@ -1,6 +1,6 @@
 <script>
     function cetak_harian(id, inc) {
-        var link = '<?= base_url('accounting/cetak/laporan_harian') ?>';
+        var link = '<?= base_url($this->type . '/cetak/laporan_harian') ?>';
         var tanggal = $('#pilih_tanggal_' + inc).val();
         if (tanggal == '') {
             Swal.fire({
