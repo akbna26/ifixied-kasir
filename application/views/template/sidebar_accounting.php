@@ -68,6 +68,12 @@
                         <span>Modal Awal Cash</span>
                     </a>
                 </li>
+                <li class="<?= $this->uri->segment(2) == 'modal_neraca' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('accounting/modal_neraca') ?>" class="waves-effect">
+                        <i class="bx bx-notepad"></i>
+                        <span>Modal Awal Neraca</span>
+                    </a>
+                </li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-file-find"></i>
@@ -85,6 +91,7 @@
                     </a>
                     <ul class="sub-menu <?= $this->uri->segment(2) == 'report_harian' ? 'mm-collapse mm-show' : '' ?>">
                         <li><a href="<?= base_url('accounting/report_harian') ?>">Report Harian</a></li>
+                        <li><a href="<?= base_url('accounting/report_neraca') ?>">Neraca Harian</a></li>
                     </ul>
                 </li>
 

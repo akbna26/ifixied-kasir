@@ -122,6 +122,6 @@ function angka(x) {
         }
         return data;
     } else {
-        return angka;
+        return x;
     }
 }
