@@ -18,6 +18,10 @@
     .nav-tabs {
         border-bottom: none;
     }
+
+    input[type="text"]:disabled {
+        background: #dddddd;
+    }
 </style>
 <div class="card bg_bawah_">
     <div class="card-body">

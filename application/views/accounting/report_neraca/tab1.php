@@ -46,11 +46,21 @@
     <tbody>
         <tr>
             <td>SPAREPART</td>
-            <td>0</td>
+            <td>
+                <input disabled ondblclick="remove_disable(this);" onblur="add_disabled(this)" type="text" class="form-control rupiah" placeholder="sekali saja">
+            </td>
         </tr>
         <tr>
             <td>ACCESSIORIES</td>
-            <td>0</td>
+            <td>
+                <input disabled ondblclick="remove_disable(this);" onblur="add_disabled(this)" type="text" class="form-control rupiah" placeholder="sekali saja">
+            </td>
+        </tr>
+        <tr>
+            <td>HANDPHONE</td>
+            <td>
+                <input disabled ondblclick="remove_disable(this);" onblur="add_disabled(this)" type="text" class="form-control rupiah" placeholder="sekali saja">
+            </td>
         </tr>
     </tbody>
     <tfoot>
