@@ -27,10 +27,54 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="3" class="text-right">Total</td>
-                    <td><?= rupiah($total) ?></td>
+                    <th colspan="3" class="text-right">Total</th>
+                    <th><?= $total == 0 ? 0 : rupiah($total) ?></th>
                 </tr>
             </tfoot>
         </table>
     </div>
 <?php endforeach; ?>
+
+<h3>ASSET BERGERAK</h3>
+<table class="table table-bordered">
+    <thead style="background-color: #2143EB;" class="text-white">
+        <tr>
+            <th>NAMA/JENIS</th>
+            <th>NOMINAL</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>SPAREPART</td>
+            <td>0</td>
+        </tr>
+        <tr>
+            <td>ACCESSIORIES</td>
+            <td>0</td>
+        </tr>
+    </tbody>
+    <tfoot>
+        <tr>
+            <th class="text-right">Total</th>
+            <th>0</th>
+        </tr>
+    </tfoot>
+</table>
+
+<h3>TOTAL MODAL</h3>
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <th style="background-color: #2143EB;width: 250px;" class="text-white">ASSET BERGERAK</th>
+            <tH>0</tH>
+        </tr>
+        <tr>
+            <th style="background-color: #2143EB;" class="text-white">ASSET TIDAK BERGERAK</th>
+            <tH>0</tH>
+        </tr>
+        <tr>
+            <th style="background-color: #2143EB;" class="text-white">TOTAL KESELURUHAN</th>
+            <tH>0</tH>
+        </tr>
+    </tbody>
+</table>
