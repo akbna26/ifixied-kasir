@@ -62,8 +62,48 @@ class Report_neraca extends MY_controller
         }
 
         $data['modal_neraca'] = $fix_modal_neraca;
+        $modal_one = $this->db->query("SELECT * from modal_one where id_cabang='$id_cabang' ")->result();
+        $modal_one_fix = [];
+        foreach ($modal_one as $key) {
+            $modal_one_fix[$key->jenis] = $key;
+        }
+        $data['modal_one'] = $modal_one_fix;
+        $data['modal_awal'] = $this->db->query("SELECT * from modal_awal where id_cabang='$id_cabang' order by id desc ")->row();
 
         $this->templates->load($data);
+    }
+
+    public function save_one()
+    {
+        cek_post();
+
+        $id_cabang = $this->input->post('id_cabang');
+        $jenis = $this->input->post('jenis');
+        $value = clear_koma($this->input->post('value'));
+
+        $cek_input = $this->db->get_where('modal_one', [
+            'id_cabang' => $id_cabang,
+            'jenis' => $jenis,
+        ])->row();
+
+        if (!empty($cek_input)) {
+            $this->db->where('id', $cek_input->id);
+            $this->db->update('modal_one', [
+                'nominal' => $value,
+                'updated' => date('Y-m-d H:i:s'),
+            ]);
+        } else {
+            $this->db->insert('modal_one', [
+                'id_cabang' => $id_cabang,
+                'nominal' => $value,
+                'jenis' => $jenis,
+                'created' => date('Y-m-d H:i:s'),
+            ]);
+        }
+
+        echo json_encode([
+            'status' => 'success',
+        ]);
     }
 }
 

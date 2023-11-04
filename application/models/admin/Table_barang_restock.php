@@ -2,8 +2,8 @@
 
 class Table_barang_restock extends CI_Model
 {
-    var $column_order = array(null, 'c.nama' ,'b.nama', 'a.stock', 'a.tanggal_restock', null); //field yang ada di table user
-    var $column_search = array('b.nama','b.barcode','c.nama'); //field yang diizin untuk pencarian
+    var $column_order = array(null, 'c.nama', 'b.nama', 'a.stock', 'a.tanggal_restock', null); //field yang ada di table user
+    var $column_search = array('b.nama', 'b.barcode', 'c.nama'); //field yang diizin untuk pencarian
     var $order = array('a.id' => 'desc'); // default order
 
     public function __construct()
@@ -15,8 +15,8 @@ class Table_barang_restock extends CI_Model
     {
         $this->db->select('a.*, (a.stock * b.harga_modal) as modal, b.nama as barang, b.barcode, c.nama as kategori');
         $this->db->from('barang_stock a');
-        $this->db->join('barang b', 'b.id = a.id_barang and b.deleted is null', 'left');        
-        $this->db->join('ref_kategori c', 'c.id = b.id_kategori', 'left');        
+        $this->db->join('barang b', 'b.id = a.id_barang and b.deleted is null', 'left');
+        $this->db->join('ref_kategori c', 'c.id = b.id_kategori', 'left');
         $this->db->where('a.deleted', null);
 
         $i = 0;
@@ -78,10 +78,15 @@ class Table_barang_restock extends CI_Model
             $no++;
             $row = [];
 
+            $is_baru = '';
+            if ($field->is_baru == 1) $is_baru .= '<span class="d-block text-success">(Stock Baru)</span>';
+
             $row[] = $no;
             $row[] = $field->kategori;
             $row[] = $field->barang
-            . '<span class="d-block text-primary fw-600">' . $field->barcode . '</span>';
+                . '<span class="d-block text-primary fw-600">' . $field->barcode . '</span>'
+                . $is_baru;
+
             $row[] = rupiah($field->stock);
             $row[] = rupiah($field->modal);
             $row[] = tgl_indo($field->tanggal_restock);

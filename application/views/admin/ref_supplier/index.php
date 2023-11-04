@@ -15,6 +15,7 @@
                             <tr>
                                 <th class="fw-600">NO</th>
                                 <th class="fw-600">SUPPLIER</th>
+                                <th class="fw-600">JENIS (Online/Offline)</th>
                                 <th class="fw-600" style="width: 250px;">AKSI</th>
                             </tr>
                         </thead>

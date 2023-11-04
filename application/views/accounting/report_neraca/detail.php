@@ -2,8 +2,9 @@
     .bg_bawah {
         background-image: url('<?= base_url('uploads/img/logo.png') ?>');
         background-repeat: no-repeat;
-        background-size: 100px;
+        background-size: 150px;
         background-position: right bottom;
+        background-blend-mode: difference;
     }
 
     .nav-link {
@@ -20,10 +21,10 @@
     }
 
     input[type="text"]:disabled {
-        background: #dddddd;
+        background: #eeeeee;
     }
 </style>
-<div class="card bg_bawah_">
+<div class="card bg_bawah">
     <div class="card-body">
 
         <!-- Nav tabs -->

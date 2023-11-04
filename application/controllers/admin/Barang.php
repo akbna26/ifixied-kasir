@@ -146,6 +146,7 @@ class Barang extends MY_controller
                 $this->db->insert('barang_stock', [
                     'id_barang' => $id_barang,
                     'stock' => $stock,
+                    'is_baru' => '1',
                     'tanggal_restock' => $tanggal_restock,
                     'created' => date('Y-m-d H:i:s'),
                 ]);

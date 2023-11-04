@@ -4,11 +4,26 @@
         <input type="text" required name="nama" autocomplete="off" placeholder="Masukkan isian" class="form-control" value="<?= @$data->nama ?>">
     </div>
 
+    <div class="form-group">
+        <label>Jenis Supplier (Online / Offline)</label>
+        <select required name="is_jenis" class="form-control js_select2" data-placeholder="pilih jenis supplier">
+            <option selected value=""></option>
+            <option <?= @$data->is_jenis === 0 ? 'selected' : '' ?> value="0">Offline</option>
+            <option <?= @$data->is_jenis == 1 ? 'selected' : '' ?> value="1">Online</option>
+        </select>
+    </div>
+
     <input type="hidden" name="id" value="<?= encode_id(@$data->id) ?>">
     <button type="submit" class="btn btn-block btn-rounded fw-600 btn-primary"><i class="fas fa-check"></i> KLIK DISINI UNTUK SIMPAN</button>
 </form>
 
 <script>
+    $(document).ready(function() {
+        $('.js_select2').select2({
+            width: '100%'
+        });
+    });
+
     function do_submit(dt) {
 
         Swal.fire({
