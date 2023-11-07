@@ -3,11 +3,19 @@
         <div class="card">
             <div class="card-body bg1 br-atas p-3 mb-0 d-flex justify-content-between">
                 <h3 style="display: inline-block;" class="fw-600 mb-0 text1"><i class="fas fa-info-circle mr-2"></i> <?= $title ?></h3>
-                <?php if (session('type') == 'cabang') : ?>
+                <div class="d-flex">
+                    <div style="width: 120px;" class="mr-1">
+                        <select onchange="load_table();" id="filter_cabang" class="js_select2">
+                            <option value="all" selected>Pilih Cabang</option>
+                            <?php foreach ($ref_cabang as $dt) : ?>
+                                <option value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
                     <button onclick="tambah();" class="btn btn-light btn-sm fw-600">
-                        <i class="fa fa-plus mr-1"></i> Tambah Data Transaksi
+                        <i class="fa fa-plus mr-1"></i> Tambah Data
                     </button>
-                <?php endif; ?>
+                </div>
             </div>
 
             <div class="card-body">
@@ -17,15 +25,13 @@
                             <tr>
                                 <th class="fw-600">NO</th>
                                 <th class="fw-600">CABANG</th>
-                                <th class="fw-600">KETERANGAN</th>
-                                <th class="fw-600">PEMBAYARAN</th>
+                                <th class="fw-600">PENGELUARAN</th>
+                                <th class="fw-600">JENIS</th>
+                                <th class="fw-600">TANGGAL</th>
+                                <th class="fw-600">HARGA</th>
+                                <th class="fw-600">JUMLAH</th>
                                 <th class="fw-600">TOTAL</th>
-                                <th class="fw-600">TGL</th>
-                                <th class="fw-600">INVOICE</th>
-                                <th class="fw-600">CETAK INVOICE</th>
-                                <th class="fw-600">TGL KONFIRMASI</th>
-                                <th class="fw-600" style="width: 100px;">REFUND</th>
-                                <th class="fw-600" style="width: 250px;">STATUS</th>
+                                <th class="fw-600" style="width: 150px;">AKSI</th>
                             </tr>
                         </thead>
                         <tbody>

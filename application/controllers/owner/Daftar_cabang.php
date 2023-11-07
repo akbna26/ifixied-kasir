@@ -8,7 +8,7 @@ class Daftar_cabang extends MY_controller
     public function __construct()
     {
         parent::__construct();
-        $this->load->model('owner/table_mutasi', 'table');
+        $this->load->model('owner/table_mutasi', 'table_transaksi');
         $this->load->model('owner/table_mutasi_servis', 'table_servis');
         $this->load->model('owner/table_operasional', 'table_operasional');
         $this->load->model('owner/table_kerugian', 'table_kerugian');
@@ -32,9 +32,9 @@ class Daftar_cabang extends MY_controller
         $this->templates->load($data);
     }
 
-    public function table()
+    public function table_transaksi()
     {
-        echo $this->table->generate_table();
+        echo $this->table_transaksi->generate_table();
     }
 
     public function table_servis()
@@ -149,7 +149,7 @@ class Daftar_cabang extends MY_controller
             WHERE a.id_cabang='$id_cabang' AND MONTH(a.created) =$bulan AND YEAR(a.created) =$tahun and a.deleted is null and b.deleted is null
             group by b.id_barang    
             order by sum(qty) desc
-            limit 15
+            limit 10
         ")->result();
 
         $series = [];

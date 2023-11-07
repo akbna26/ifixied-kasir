@@ -7,22 +7,24 @@
 
             <div class="card-body">
 
-                <div class="row bg2 border1 rounded p-3 mb-3">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <label>Filter Cabang</label>
-                            <select id="id_cabang" class="form-control js_select2" data-placeholder="pilih cabang" onchange="load_table();">
-                                <option selected value="all">Semua Data</option>
-                                <?php foreach ($ref_cabang as $dt) : ?>
-                                    <option value="<?= $dt->id ?>"><?= $dt->nama ?></option>
-                                <?php endforeach; ?>
-                            </select>
+                <?php if (in_array(session('type'), ['admin'])) : ?>
+                    <div class="row bg2 border1 rounded p-3 mb-3">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Filter Cabang</label>
+                                <select id="id_cabang" class="form-control js_select2" data-placeholder="pilih cabang" onchange="load_table();">
+                                    <option selected value="all">Semua Data</option>
+                                    <?php foreach ($ref_cabang as $dt) : ?>
+                                        <option value="<?= $dt->id ?>"><?= $dt->nama ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php endif; ?>
 
                 <div class="table-responsive">
-                    <table class="mt-3 table table-striped" id="table_data">
+                    <table class="mt-3 table table-striped table-bordered" id="table_data">
                         <thead class="bg1 text-white">
                             <tr>
                                 <th class="fw-600 text1">NO</th>
@@ -30,9 +32,11 @@
                                 <th class="fw-600 text1">TANGGAL</th>
                                 <th class="fw-600 text1">INFORMASI</th>
                                 <th class="fw-600 text1">HARGA JUAL</th>
-                                <th class="fw-600 text1">MODAL</th>
-                                <th class="fw-600 text1">PROFIT</th>
-                                <th class="fw-600 text1">TEKNISI</th>
+                                <?php if (in_array(session('type'), ['admin'])) : ?>
+                                    <th class="fw-600 text1">MODAL</th>
+                                    <th class="fw-600 text1">PROFIT</th>
+                                    <th class="fw-600 text1">TEKNISI</th>
+                                <?php endif; ?>
                                 <th class="fw-600 text1">TINDAKAN</th>
                             </tr>
                         </thead>

@@ -104,6 +104,36 @@
     </div>
 </div>
 
+<h4>Informasi Tambahan</h4>
+<div class="table-responsive">
+    <table class="table table-bordered">
+        <tr>
+            <th style="width: 150px;">Password Layar</th>
+            <td>
+                <?= $row->pass_layar ?>
+            </td>
+        </tr>
+        <tr>
+            <th>iCloud</th>
+            <td>
+                <?= $row->email ?>
+            </td>
+        </tr>
+        <tr>
+            <th>Warna</th>
+            <td>
+                <?= $row->warna ?>
+            </td>
+        </tr>
+        <tr>
+            <th>Kapasitas Memory (GB)</th>
+            <td>
+                <?= $row->kapasitas_memori ?>
+            </td>
+        </tr>
+    </table>
+</div>
+
 <?php if (session('type') == 'servis') : ?>
     <h4>Part yang Digunakan</h4>
     <div class="table-responsive">

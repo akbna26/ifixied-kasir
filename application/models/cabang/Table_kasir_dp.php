@@ -13,7 +13,7 @@ class Table_kasir_dp extends CI_Model
 
     private function _get_datatables_query()
     {
-        $this->db->select('a.*, b.nama as nm_pembayaran, c.inv_dp, d.nama as nm_cabang');
+        $this->db->select('a.*, a.tgl_refund, b.nama as nm_pembayaran, c.inv_dp, d.nama as nm_cabang');
         $this->db->from('dp a');
         $this->db->join('ref_jenis_pembayaran b', 'b.id = a.pembayaran', 'left');
         $this->db->join('(select inv_dp from transaksi where deleted is null group by inv_dp) c', 'c.inv_dp = a.kode', 'left');
@@ -90,7 +90,7 @@ class Table_kasir_dp extends CI_Model
             $row[] = tgl_indo($field->tanggal);
             $row[] = $field->kode;
             $row[] = '<a href="' . base_url($this->type . '/cetak/nota_dp/' . encode_id($field->id)) . '" target="_blank" class="btn btn-sm btn-success fw-600"><i class="fas fa-print"></i> Cetak</a>';
-
+            $row[] = tgl_indo($field->tgl_refund);
             if ($field->inv_dp != '') {
                 $row[] = '<div class="text-info">Sudah selesai transaksi</div>';
             } elseif ($field->is_refund == '1') {

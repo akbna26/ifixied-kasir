@@ -170,7 +170,7 @@ class Table_servis_berat extends CI_Model
             $aksi .= '<button onclick="log(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-dark fw-600 ml-1 mt-1"><i class="far fa-list-alt mr-1"></i> Log</button>';
 
             if (in_array(session('type'), ['admin', 'servis'])) {
-                $aksi .= '<button onclick="cancelTransaksi(\'' . encode_id($field->id) . '\',\'' . $field->invoice . '\');" type="button" class="btn btn-sm btn-danger mr-1 fw-600"><i class="fas fa-times"></i> Cancel</button>';
+                $aksi .= '<button onclick="cancelTransaksi(\'' . encode_id($field->id) . '\',\'' . $field->invoice . '\');" type="button" class="btn btn-sm btn-danger ml-1 mt-1 fw-600"><i class="fas fa-times"></i> Cancel</button>';
             }
 
             $row[] = $aksi;

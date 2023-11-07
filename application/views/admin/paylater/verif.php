@@ -23,7 +23,7 @@
 
                 $.ajax({
                     type: "POST",
-                    url: "<?= base_url('admin/paylater/do_submit') ?>",
+                    url: "<?= base_url($this->type . '/paylater/do_submit') ?>",
                     data: new FormData(dt),
                     dataType: "JSON",
                     contentType: false,
@@ -53,7 +53,7 @@
                         }
                     }
                 });
-                
+
             } else {
                 return false;
             }

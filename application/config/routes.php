@@ -79,6 +79,9 @@ $route['admin/cetak/nota_servis_berat/(:any)'] = 'cabang/cetak/nota_servis_berat
 
 $route['cabang/stock_cabang_lain'] = 'admin/barang/stock_cabang';
 
+$route['cabang/laporan_servis'] = 'admin/laporan_servis';
+$route['cabang/laporan_servis/(:any)'] = 'admin/laporan_servis/$1';
+
 $route['owner_cabang/dashboard'] = 'owner/dashboard';
 $route['owner_cabang/daftar_cabang'] = 'owner/daftar_cabang';
 $route['owner_cabang/daftar_cabang/detail/(:any)'] = 'owner/daftar_cabang/detail/$1';
@@ -122,6 +125,7 @@ $route['accounting/laporan_modal/table'] = 'cabang/laporan_modal/table';
 $route['accounting/laporan_modal/(:any)'] = 'cabang/laporan_modal/$1';
 
 $route['accounting/laporan_transaksi'] = 'admin/laporan_transaksi';
+$route['accounting/laporan_transaksi/detail'] = 'cabang/laporan_transaksi/detail';
 $route['accounting/laporan_transaksi/(:any)'] = 'admin/laporan_transaksi/$1';
 
 $route['accounting/laporan_dp'] = 'cabang/kasir_dp';
@@ -142,6 +146,7 @@ $route['accounting/modal_awal'] = 'admin/modal_awal';
 $route['accounting/modal_awal/(:any)'] = 'admin/modal_awal/$1';
 
 $route['accounting/cancel_transaksi'] = 'admin/cancel_transaksi';
+$route['accounting/cancel_transaksi/detail'] = 'cabang/laporan_transaksi/detail';
 $route['accounting/cancel_transaksi/(:any)'] = 'admin/cancel_transaksi/$1';
 
 $route['accounting/cancel_servis'] = 'admin/cancel_servis';
@@ -159,4 +164,37 @@ $route['gudang/barang_sharing/(:any)'] = 'admin/barang_sharing/$1';
 $route['gudang/barang_sharing_detail'] = 'admin/barang_sharing_detail';
 $route['gudang/barang_sharing_detail/(:any)/(:any)'] = 'admin/barang_sharing_detail/$1/$2';
 $route['gudang/barang_sharing_detail/(:any)'] = 'admin/barang_sharing_detail/$1';
+$route['gudang/cetak/barang_cabang'] = 'admin/cetak/barang_cabang';
 $route['gudang/cetak/detail_sharing/(:any)'] = 'admin/cetak/detail_sharing/$1';
+
+$route['owner/laporan_modal'] = 'cabang/laporan_modal';
+$route['owner/laporan_modal/table'] = 'cabang/laporan_modal/table';
+$route['owner/laporan_modal/(:any)'] = 'cabang/laporan_modal/$1';
+
+$route['owner/sirkulasi_part'] = 'gudang/sirkulasi_part';
+$route['owner/sirkulasi_part/table'] = 'gudang/sirkulasi_part/table';
+$route['owner/sirkulasi_part/(:any)'] = 'gudang/sirkulasi_part/$1';
+
+$route['owner/sirkulasi_acc'] = 'gudang/sirkulasi_acc';
+$route['owner/sirkulasi_acc/table'] = 'gudang/sirkulasi_acc/table';
+$route['owner/sirkulasi_acc/(:any)'] = 'gudang/sirkulasi_acc/$1';
+
+$route['owner_cabang/laporan_modal'] = 'cabang/laporan_modal';
+$route['owner_cabang/laporan_modal/table'] = 'cabang/laporan_modal/table';
+$route['owner_cabang/laporan_modal/(:any)'] = 'cabang/laporan_modal/$1';
+
+$route['owner_cabang/sirkulasi_part'] = 'gudang/sirkulasi_part';
+$route['owner_cabang/sirkulasi_part/table'] = 'gudang/sirkulasi_part/table';
+$route['owner_cabang/sirkulasi_part/(:any)'] = 'gudang/sirkulasi_part/$1';
+
+$route['owner_cabang/sirkulasi_acc'] = 'gudang/sirkulasi_acc';
+$route['owner_cabang/sirkulasi_acc/table'] = 'gudang/sirkulasi_acc/table';
+$route['owner_cabang/sirkulasi_acc/(:any)'] = 'gudang/sirkulasi_acc/$1';
+
+$route['owner/report_harian'] = 'accounting/report_harian';
+$route['owner/report_harian/(:any)'] = 'accounting/report_harian/$1';
+$route['owner/cetak/laporan_harian'] = 'accounting/cetak/laporan_harian';
+
+$route['owner_cabang/report_harian'] = 'accounting/report_harian';
+$route['owner_cabang/report_harian/(:any)'] = 'accounting/report_harian/$1';
+$route['owner_cabang/cetak/laporan_harian'] = 'accounting/cetak/laporan_harian';

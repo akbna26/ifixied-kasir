@@ -15,6 +15,8 @@ class Table_mutasi_servis extends CI_Model
     {
         $id_cabang = $this->input->get('id_cabang');
 
+        if(session('type')=='cabang') $id_cabang = $this->id_cabang;
+
         $where = '';
         if ($id_cabang != 'all') $where .= "AND a.id_cabang='$id_cabang'";
 
@@ -95,9 +97,13 @@ class Table_mutasi_servis extends CI_Model
             $row[] = 'Pelanggan : ' . $field->pelanggan
                 . '<div class="text-primary">Tipe Unit : ' . $field->tipe_unit . '<span class="text-danger"> (' . $field->kerusakan . ')</span></div>';
             $row[] = rupiah($field->biaya);
-            $row[] = rupiah($field->modal);
-            $row[] = rupiah($field->profit);
-            $row[] = $field->nm_teknisi;
+
+            if (in_array(session('type'), ['admin'])) :
+                $row[] = rupiah($field->modal);
+                $row[] = rupiah($field->profit);
+                $row[] = $field->nm_teknisi;
+            endif;
+
             $row[] = $field->nm_tindakan;
 
             $data[] = $row;

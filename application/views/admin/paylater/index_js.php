@@ -37,7 +37,7 @@
     function detail(id) {
         $.ajax({
             type: "POST",
-            url: "<?= base_url('admin/laporan_transaksi/detail') ?>",
+            url: "<?= base_url($this->type . '/laporan_transaksi/detail') ?>",
             dataType: "JSON",
             data: {
                 id: id,

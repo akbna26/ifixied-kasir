@@ -28,44 +28,50 @@
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'sirkulasi_acc' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('accounting/sirkulasi_acc') ?>" class="waves-effect">
-                        <i class="bx bx-store"></i>
+                        <i class="bx bx-cube-alt"></i>
                         <span>Sirkulasi Acc</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'laporan_transaksi' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('accounting/laporan_transaksi') ?>" class="waves-effect">
-                        <i class="bx bx-store"></i>
+                        <i class="bx bx-gas-pump"></i>
                         <span>Transaksi Kasir</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'laporan_dp' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('accounting/laporan_dp') ?>" class="waves-effect">
-                        <i class="bx bx-store"></i>
+                        <i class="bx bx-doughnut-chart"></i>
                         <span>Transaksi DP</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'paylater' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('accounting/paylater') ?>" class="waves-effect">
-                        <i class="bx bx-store"></i>
+                        <i class="bx bx-mail-send"></i>
                         <span>Market Place</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'kasbon' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('accounting/kasbon') ?>" class="waves-effect">
-                        <i class="bx bx-store"></i>
+                        <i class="bx bx-money"></i>
                         <span>Kasbon</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'setor_tunai' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('accounting/setor_tunai') ?>" class="waves-effect">
-                        <i class="bx bx-store"></i>
+                        <i class="bx bx-money"></i>
                         <span>Setor Tunai</span>
                     </a>
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'modal_awal' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('accounting/modal_awal') ?>" class="waves-effect">
-                        <i class="bx bx-store"></i>
+                        <i class="bx bx-dollar-circle"></i>
                         <span>Modal Awal Cash</span>
+                    </a>
+                </li>
+                <li class="<?= $this->uri->segment(2) == 'modal_neraca' ? 'mm-active' : '' ?> single-link">
+                    <a href="<?= base_url('accounting/modal_neraca') ?>" class="waves-effect">
+                        <i class="bx bx-notepad"></i>
+                        <span>Modal Awal Neraca</span>
                     </a>
                 </li>
                 <li>
@@ -85,6 +91,7 @@
                     </a>
                     <ul class="sub-menu <?= $this->uri->segment(2) == 'report_harian' ? 'mm-collapse mm-show' : '' ?>">
                         <li><a href="<?= base_url('accounting/report_harian') ?>">Report Harian</a></li>
+                        <li><a href="<?= base_url('accounting/report_neraca') ?>">Neraca Harian</a></li>
                     </ul>
                 </li>
 

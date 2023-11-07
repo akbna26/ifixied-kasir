@@ -110,13 +110,13 @@
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Harga PART/IC Nand</label>
-                            <input type="text" required id="part" name="harga_part" onchange="hitung_modal();" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah wajib" value="<?= !empty($data->harga_part) ? rupiah($data->harga_part) : '' ?>">
+                            <input type="text" readonly required id="part" name="harga_part" onchange="hitung_modal();" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah wajib" value="0">
                         </div>
                     </div>
                     <div class="col-md-4">
                         <div class="form-group">
                             <label>Modal <small class="flash1 fw-600">(otomatis dari sistem)</small></label>
-                            <input type="text" readonly required id="modal_servis" name="modal" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah wajib" value="<?= !empty($data->modal) ? rupiah($data->modal) : '' ?>">
+                            <input type="text" readonly required id="modal_servis" name="modal" autocomplete="off" placeholder="Masukkan isian" class="form-control rupiah wajib" value="0">
                         </div>
                     </div>
                 </div>
@@ -243,6 +243,7 @@
         var biaya = angka($('#biaya').val());
 
         var hasil = ((biaya - part) * (prosen / 100)) + part;
+        hasil = Math.round(hasil);
         $('#modal_servis').val(formatRupiah(hasil + ''));
     }
 

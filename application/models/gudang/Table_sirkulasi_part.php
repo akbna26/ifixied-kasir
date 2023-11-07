@@ -20,7 +20,16 @@ class Table_sirkulasi_part extends CI_Model
 
         $this->db->select('a.*');
         $this->db->from("($query) as a");
-        if ($filter_cabang != 'all') $this->db->where('id_cabang', $filter_cabang);
+
+        if ($filter_cabang != 'all') {
+            $this->db->where('id_cabang', $filter_cabang);
+        } else {
+            if ($this->type == 'owner_cabang') {
+                $row = $this->db->query("SELECT * from data_user where id='$this->id_akun' ")->row();
+                $this->db->where("id_cabang in ($row->id_cabang_multi)");
+            }
+        }
+
         if ($filter_tanggal != '') $this->db->where('tanggal', $filter_tanggal);
 
         $i = 0;

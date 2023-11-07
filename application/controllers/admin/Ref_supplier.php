@@ -57,6 +57,7 @@ class Ref_supplier extends MY_controller
         $hapus = $this->input->post('hapus');
 
         $nama = $this->input->post('nama');
+        $is_jenis = $this->input->post('is_jenis');
 
         if (!empty($hapus)) {
             $this->db->where('id', $id);
@@ -67,12 +68,14 @@ class Ref_supplier extends MY_controller
             if (empty($id)) {
                 $this->db->insert('ref_supplier', [
                     'nama' => $nama,
+                    'is_jenis' => $is_jenis,
                     'created' => date('Y-m-d H:i:s'),
                 ]);
             } else {
                 $this->db->where('id', $id);
                 $this->db->update('ref_supplier', [
                     'nama' => $nama,
+                    'is_jenis' => $is_jenis,
                     'updated' => date('Y-m-d H:i:s'),
                 ]);
             }

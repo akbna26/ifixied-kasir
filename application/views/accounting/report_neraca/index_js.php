@@ -1,6 +1,6 @@
 <script>
     function cetak_harian(id, inc) {
-        var link = '<?= base_url($this->type . '/cetak/laporan_harian') ?>';
+        var link = '<?= base_url($this->type . '/report_neraca/detail') ?>';
         var tanggal = $('#pilih_tanggal_' + inc).val();
         if (tanggal == '') {
             Swal.fire({
@@ -10,6 +10,6 @@
             })
             throw false;
         }
-        window.open(link + '?tanggal=' + tanggal + '&id_cabang=' + id);
+        location.href = link + '?tanggal=' + tanggal + '&id_cabang=' + id;
     }
 </script>

@@ -75,8 +75,13 @@ class Table_supplier extends CI_Model
             $no++;
             $row = [];
 
+            $jenis = '';
+            if ($field->is_jenis === '0') $jenis = 'Offline';
+            elseif ($field->is_jenis === '1') $jenis = 'Online';
+
             $row[] = $no;
             $row[] = $field->nama;
+            $row[] = $jenis;
             $row[] = '
                 <button onclick="ubah(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-primary mr-1 fw-600"><i class="fas fa-edit"></i> Ubah</button>
                 <button onclick="hapus(\'' . encode_id($field->id) . '\');" type="button" class="btn btn-sm btn-danger fw-600"><i class="fas fa-trash-alt"></i> Hapus</button>

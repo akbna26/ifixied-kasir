@@ -71,4 +71,18 @@
             }
         });
     }
+
+    function cetak_cabang() {
+        const url = "<?= base_url($this->type . '/cetak/barang_cabang?id_cabang=') ?>";
+        const id_cabang = $('#id_cabang').val();
+        if (id_cabang == '-') {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Pilih cabang terlebih dahulu',
+                showConfirmButton: true,
+            })
+            throw false;
+        }
+        window.open(url + id_cabang);
+    }
 </script>

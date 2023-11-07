@@ -45,7 +45,7 @@
                 </li>
                 <li class="<?= $this->uri->segment(2) == 'sirkulasi_acc' ? 'mm-active' : '' ?> single-link">
                     <a href="<?= base_url('gudang/sirkulasi_acc') ?>" class="waves-effect">
-                        <i class="bx bx-store"></i>
+                        <i class="bx bx-cylinder"></i>
                         <span>Sirkulasi Acc</span>
                     </a>
                 </li>

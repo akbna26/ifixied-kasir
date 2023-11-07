@@ -14,10 +14,12 @@ class Table_mutasi extends CI_Model
     private function _get_datatables_query()
     {
         $id_cabang = decode_id($this->input->get('id_cabang'));
-        $tanggal = $this->input->get('tanggal');
+        $tgl_start = $this->input->get('tgl_start');
+        $tgl_end = $this->input->get('tgl_end');
 
         $where = '';
-        if (!empty($tanggal)) $where .= "AND DATE(created)='$tanggal' ";
+        if (!empty($tgl_start)) $where .= "AND DATE(created) >= '$tgl_start' ";
+        if (!empty($tgl_end)) $where .= "AND DATE(created) <= '$tgl_end' ";
 
         $query = "SELECT * from profit a where a.id_cabang='$id_cabang' $where ";
         $this->db->from("($query) as tabel");
